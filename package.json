@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test.js",
-    "checkVersion": "mocha --version"
+    "checkVersion": "mocha --version",
+    "server": "server.js"
   },
   "author": "Trav Holton",
   "license": "ISC",
