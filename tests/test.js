@@ -1,4 +1,4 @@
-var up = require('./'),
+var up = require('../'),
     expect = require('chai').expect;
 
 describe('my file', function() {
