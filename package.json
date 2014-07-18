@@ -4,12 +4,14 @@
   "description": "testing express",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test.js",
+    "checkVersion": "mocha --version"
   },
   "author": "Trav Holton",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.6.1"
+    "express": "^4.6.1",
+    "nano": "^5.10.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
