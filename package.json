@@ -4,7 +4,7 @@
   "description": "testing express",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/test.js",
+    "test": "mocha test/test.js",
     "checkVersion": "mocha --version",
     "server": "server.js"
   },

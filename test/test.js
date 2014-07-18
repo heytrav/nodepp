@@ -1,4 +1,4 @@
-var up = require('../'),
+var up = require('../lib/server.js'),
     expect = require('chai').expect;
 
 describe('my file', function() {
