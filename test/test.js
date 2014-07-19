@@ -1,13 +1,20 @@
 var chai = require('chai'),
-    spies = require('chai-spies');
+spies = require('chai-spies');
 
-var protocol = require('../lib/protocol.js');
+chai.use(spies);
 
-var up = require('../lib/server.js'),
-    expect = require('chai').expect;
+var expect = chai.expect,
+should = chai.should;
 
-describe('my file', function() {
-    it('should convert strings to upper case', function() {
-        expect(up('hello')).to.equal('HELLO');
-    });
+var commandState = require('../lib/command-state.js');
+
+describe('EPP state machine', function() {
+	var protocol, stateMachine;
+	beforeEach(function() {
+		stateMachine = commandState();
+	});
+	it('should start out offline', function() {
+		expect(stateMachine.state).to.equal('offline');
+	});
 });
+
