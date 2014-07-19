@@ -18,17 +18,30 @@ describe('EPP state machine', function() {
         expect(stateMachine.connected).to.equal(false);
 	});
 
-	it('should move into idle loop following successful login', function() {
-		stateMachine.login({
-			"login": "test-user",
-			"password": "123xyz"
-		},
-		function() {
-			return {
-				"status": "OK"
-			};
-		});
-        expect(stateMachine.state).to.equal('connected');
-	});
+    describe('EPP Logged in', function() {
+    
+        beforeEach(function(){
+            stateMachine.login({
+                "login": "test-user",
+                "password": "123xyz"
+            },
+            function() {
+                return {
+                    "status": "OK"
+                };
+            });
+        });
+        it('should move into idle loop following successful login', function() {
+            expect(stateMachine.connected).to.equal(true);
+            expect(stateMachine.state).to.equal('idle');
+
+        });
+        it('should be disconnected after logging out', function() {
+            stateMachine.logout(function() {
+                return {"status": "OK"};
+            });
+            expect(stateMachine.connected).to.equal(false);
+        });
+    });
 });
 
