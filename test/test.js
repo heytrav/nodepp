@@ -15,10 +15,10 @@ describe('EPP state machine', function() {
 	});
 	it('should start out offline', function() {
 		expect(stateMachine.state).to.equal('offline');
+        expect(stateMachine.connected).to.equal(false);
 	});
 
 	it('should move into idle loop following successful login', function() {
-
 		stateMachine.login({
 			"login": "test-user",
 			"password": "123xyz"
@@ -29,7 +29,6 @@ describe('EPP state machine', function() {
 			};
 		});
         expect(stateMachine.state).to.equal('connected');
-
 	});
 });
 
