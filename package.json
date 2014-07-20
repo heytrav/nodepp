@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha test/*.js",
     "checkVersion": "mocha --version",
-    "server": "server.js"
+    "server": "lib/server.js"
   },
   "author": "Trav Holton",
   "license": "ISC",

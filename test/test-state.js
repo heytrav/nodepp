@@ -8,7 +8,7 @@ should = chai.should;
 
 var commandState = require('../lib/command-state.js');
 
-describe('EPP state machine', function() {
+describe('Communication protocol state machine', function() {
 	var protocol, stateMachine;
 	beforeEach(function() {
 		stateMachine = commandState();
@@ -18,7 +18,7 @@ describe('EPP state machine', function() {
 		expect(stateMachine.connected).to.equal(false);
 	});
 
-	describe('EPP Logged in', function() {
+	describe('registry account logged in', function() {
 
 		beforeEach(function() {
 			stateMachine.command('login', {
