@@ -18,7 +18,7 @@ describe('EPP serialisation', function () {
     });
 
     it('should generate an xml body', function() {
-        var xml = epp.login({"login": "user1", "password": "abc123"});
+        var xml = epp.login({"login": "user1", "password": "abc123"}, 'test-1234');
         console.log("Got xml: ", xml);
         expect(xml).to.match(/<login>/);
     });
@@ -30,7 +30,7 @@ describe('EPP serialisation', function () {
     });
 
     it('should generate a logout command', function() {
-        var xml = epp.logout();
+        var xml = epp.logout('test-1235');
         console.log("Got logout: ", xml);
         expect(xml).to.match(/<logout\/>/);
     });
