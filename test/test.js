@@ -47,7 +47,7 @@ describe('EPP state machine', function() {
 			expect(stateMachine.connected).to.equal(false);
 		});
         it('should execute a specific command and then return to an idle state', function() {
-            stateMachine.command('check_domain', {"domain": "test-domain.com"}, function(){
+            stateMachine.command('checkDomain', {"domain": "test-domain.com"}, function(){
                 return {"status": "OK"};
             });
             expect(stateMachine.state).to.equal('idle');
