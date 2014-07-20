@@ -11,7 +11,7 @@ var commandState = require('../lib/command-state.js');
 describe('Communication protocol state machine', function() {
 	var protocol, stateMachine;
 	beforeEach(function() {
-		stateMachine = commandState();
+		stateMachine = commandState('nzrs');
 	});
 	it('should start out offline', function() {
 		expect(stateMachine.state).to.equal('offline');
