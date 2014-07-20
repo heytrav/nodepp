@@ -28,4 +28,10 @@ describe('EPP serialisation', function () {
         console.log("Got hello: ", xml);
         expect(xml).to.match(/<hello\/>/);
     });
+
+    it('should generate a logout command', function() {
+        var xml = epp.logout();
+        console.log("Got logout: ", xml);
+        expect(xml).to.match(/<logout\/>/);
+    });
 });
