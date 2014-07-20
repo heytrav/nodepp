@@ -16,4 +16,16 @@ describe('EPP serialisation', function () {
         var config = epp.config;
         expect(config.namespaces.epp.ns).to.be.equal('urn:ietf:params:xml:ns:epp-1.0');
     });
+
+    it('should generate an xml body', function() {
+        var xml = epp.login({"login": "user1", "password": "abc123"});
+        console.log("Got xml: ", xml);
+        expect(xml).to.match(/<login>/);
+    });
+
+    it('should generate a hello command', function() {
+        var xml = epp.hello();
+        console.log("Got hello: ", xml);
+        expect(xml).to.match(/<hello\/>/);
+    });
 });
