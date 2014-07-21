@@ -14,7 +14,7 @@ describe('EPP serialisation', function () {
     it('should be an epp object with nzrs config', function() {
         expect(epp).to.be.an.instanceof(Object);
         var config = epp.config;
-        expect(config.namespaces.epp.ns).to.be.equal('urn:ietf:params:xml:ns:epp-1.0');
+        expect(config.namespaces.epp.xmlns).to.be.equal('urn:ietf:params:xml:ns:epp-1.0');
     });
 
     it('should generate an xml body', function() {
