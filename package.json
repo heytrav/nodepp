@@ -12,12 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.6.1",
-    "nano": "^5.10.0"
+    "nano": "^5.10.0",
+    "network-byte-order": "^0.2.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
     "chai-spies": "^0.5.1",
     "jack": "0.0.2",
-    "mocha": "^1.20.1"
+    "mocha": "^1.20.1",
+    "resumer": "0.0.0"
   }
 }
