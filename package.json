@@ -11,6 +11,7 @@
   "author": "Trav Holton",
   "license": "ISC",
   "dependencies": {
+    "daemon": "^1.1.0",
     "express": "^4.6.1",
     "nano": "^5.10.0",
     "network-byte-order": "^0.2.0",
