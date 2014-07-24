@@ -1,6 +1,4 @@
-var chai = require('chai'),
-    sinon = require('sinon');
-
+var chai = require('chai');
 
 var expect = chai.expect,
 should = chai.should;
