@@ -4,16 +4,16 @@ var expect = chai.expect,
     should = chai.should;
 
 var EPP = require('../lib/epp.js');
+var config = require('../lib/epp-config.json').nzrs;
 
 describe('EPP serialisation', function () {
     var epp;
     beforeEach(function () {
-        epp = new EPP('nzrs');
+        epp = new EPP('nzrs', config);
     });
 
     it('should be an epp object with nzrs config', function() {
         expect(epp).to.be.an.instanceof(Object);
-        var config = epp.config;
         expect(config.namespaces.epp.xmlns).to.be.equal('urn:ietf:params:xml:ns:epp-1.0');
     });
 

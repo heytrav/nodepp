@@ -7,11 +7,16 @@ var expect = chai.expect,
 should = chai.should;
 
 var commandState = require('../lib/command-state.js');
+var config = require('../lib/epp-config.json').nzrs;
 
 describe('Communication protocol state machine', function() {
 	var protocol, stateMachine;
 	beforeEach(function() {
-		stateMachine = commandState('nzrs');
+		stateMachine = commandState('nzrs', config);
+        var connection = stateMachine.connection;
+        connection.send = function(xml, callback) {
+            callback('<test></test>');
+        };
 	});
 	it('should start out offline', function() {
 		expect(stateMachine.state).to.equal('offline');
