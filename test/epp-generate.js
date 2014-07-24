@@ -8,7 +8,7 @@ var mainConfig = require('../lib/epp-config.json');
 
 describe('EPP serialisation', function() {
     var epp;
-    describe('NZRS specific', function() {
+    describe('general commands', function() {
         var config;
         beforeEach(function() {
             config = mainConfig.nzrs;
@@ -43,8 +43,45 @@ describe('EPP serialisation', function() {
         });
 
         it('should generate a checkDomain command', function() {
-            var xml = epp.checkDomain( {"domain": "test-domain.com"}, 'test-12345');
+            var xml = epp.checkDomain({
+                "domain": "test-domain.com"
+            },
+            'test-12345');
             expect(xml).to.match(/<check>(?:(?!<domain:name>).)*<domain:name>test-domain.com/);
+        });
+
+        it('should generate a createContact command', function() {
+            var contactData = {
+
+                "id": "auto",
+                "voice": "+19405551234",
+                "fax": "",
+                "email": "john.doe@null.com",
+                "authInfo": {
+                    "pw": "xyz123"
+                },
+                "disclose": {
+                    "flag": 0,
+                    "disclosing": ["voice", "email"]
+                },
+                "postalInfo": [{
+                    "name": "John Doe",
+                    "org": "Example Ltd",
+                    "type": "int",
+                    "addr": [{
+                        "street": ["742 Evergreen Terrace", "Apt b"],
+                        "city": "Springfield",
+                        "sp": "OR",
+                        "pc": "97801",
+                        "cc": "US"
+                    }]
+                }]
+            };
+            var xml = epp.createContact(contactData, 'test-12345');
+            console.log("Got xml: ", xml);
+            expect(xml).to.match(/<contact:name>John Doe<\/contact:name>/);
+            expect(xml).to.match(/<contact:addr>(?:(?!<contact:city>).)*<contact:city>Springfield/);
+            expect(xml).to.match(/<contact:disclose(?:(?!<contact:email>).)*<contact:email\/>/);
         });
 
     });
