@@ -44,7 +44,7 @@ describe('EPP serialisation', function() {
 
         it('should generate a checkDomain command', function() {
             var xml = epp.checkDomain( {"domain": "test-domain.com"}, 'test-12345');
-            expect(xml).to.match(/<check>(?:(?!<\/check>).)*<\/check>/);
+            expect(xml).to.match(/<check>(?:(?!<domain:name>).)*<domain:name>test-domain.com/);
         });
 
     });
