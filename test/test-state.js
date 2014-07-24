@@ -1,7 +1,6 @@
 var chai = require('chai'),
-spies = require('chai-spies');
+    sinon = require('sinon');
 
-chai.use(spies);
 
 var expect = chai.expect,
 should = chai.should;
@@ -61,6 +60,7 @@ describe('Communication protocol state machine', function() {
                 };
             });
             expect(stateMachine.state).to.equal('idle');
+
         });
     });
 });
