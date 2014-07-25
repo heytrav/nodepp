@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+    <command>
+        <create>
+            <contact:create xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
+                <contact:id>auto</contact:id>
+                <contact:postalInfo type="int">
+                    <contact:name>John Doe</contact:name>
+                    <contact:org>Example Ltd</contact:org>
+                    <contact:addr>
+                        <contact:street>742 Evergreen Terrace</contact:street>
+                        <contact:street>Apt b</contact:street>
+                        <contact:city>Springfield</contact:city>
+                        <contact:sp>OR</contact:sp>
+                        <contact:pc>97801</contact:pc>
+                        <contact:cc>US</contact:cc>
+                    </contact:addr>
+                </contact:postalInfo>
+                <contact:voice>+1.9405551234</contact:voice>
+                <contact:fax> </contact:fax>
+                <contact:email>john.doe@null.com</contact:email>
+                <contact:authInfo>
+                    <contact:pw>xyz123</contact:pw>
+                </contact:authInfo>
+                <contact:disclose flag="0">
+                    <contact:voice/>
+                    <contact:email/>
+                </contact:disclose>
+            </contact:create>
+        </create>
+        <clTRID>test-12345</clTRID>
+    </command>
+</epp>

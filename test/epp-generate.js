@@ -54,8 +54,8 @@ describe('EPP serialisation', function() {
             var contactData = {
 
                 "id": "auto",
-                "voice": "+19405551234",
-                "fax": "",
+                "voice": "+1.9405551234",
+                "fax": "+1.9405551233",
                 "email": "john.doe@null.com",
                 "authInfo": {
                     "pw": "xyz123"
@@ -79,6 +79,7 @@ describe('EPP serialisation', function() {
             };
             var xml = epp.createContact(contactData, 'test-12345');
             console.log("Got xml: ", xml);
+            expect(xml).to.match(/xmlns:contact=\"urn:ietf:params:xml:ns:contact-1.0\"/);
             expect(xml).to.match(/<contact:name>John Doe<\/contact:name>/);
             expect(xml).to.match(/<contact:addr>(?:(?!<contact:city>).)*<contact:city>Springfield/);
             expect(xml).to.match(/<contact:disclose(?:(?!<contact:email>).)*<contact:email\/>/);
