@@ -16,6 +16,7 @@
     "express": "^4.6.1",
     "nano": "^5.10.0",
     "network-byte-order": "^0.2.0",
+    "ssl-root-cas": "^1.1.6",
     "xml2json": "^0.4.0"
   },
   "devDependencies": {
