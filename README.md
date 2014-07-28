@@ -21,13 +21,12 @@ Start the server in the background: ```npm start &```.
 
 At this point the service should be running on localhost port 3000 and have
 logged into Hexonet's test API. You can now make EPP requests by posting JSON
-datastructures to ```http://localhost:3000/command/hexonet/<command>```.
+datastructures to ```http://localhost:3000/command/hexonet/<command>```.  Note
+that this is to an OTE account (```travis1```) and may not reflect live data.
 
 I recommend using the program **Postman** which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
 scripting language of your choice. I put an example of this down below.
-
-At the time of this writing, the following commands have been implemented:
 
 ## Not running the service
 
@@ -35,6 +34,10 @@ At the time of this writing, the following commands have been implemented:
 
 Sorry, need to generate a ```.pid``` file. Put this in the *get around to
 later* list.
+
+## Commands
+
+At the time of this writing, the following commands have been implemented:
 
 
 ### checkDomain
@@ -45,6 +48,16 @@ later* list.
 ```{"domain": ["test-domain.com", "test-domain2.com", "test-domain3.com"]}```
 
 ### checkContact
+
+```{"id": "P-12345xyz"}```
+
+
+### infoContact
+
+```{"id": "P-12345xyz"}```
+
+
+
 ### createContact
 
 
@@ -70,7 +83,6 @@ later* list.
                 }]
             }
 
-### infoContact
 ### infoDomain
 
 
