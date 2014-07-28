@@ -7,12 +7,18 @@ An EPP implementation in node.js
 An EPP implementation in node.js.
 
 
-##Install & Setup
+##Install
 
 
 1. Clone the repository and ```cd``` into it.
 2. Run ```npm install```. This should install all the dependencies.
-3. Start the server in the background: ```npm start &```.
+3. Run tests with ```npm test```.
+
+
+
+##Running the service
+
+Start the server in the background: ```npm start &```.
 
 At this point the service should be running on localhost port 3000 and have
 logged into Hexonet's test API. You can now make EPP requests by posting JSON
