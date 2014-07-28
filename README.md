@@ -24,9 +24,9 @@ At this point the service should be running on localhost port 3000 and have
 logged into Hexonet's test API. You can now make EPP requests by posting JSON
 datastructures to ```http://localhost:3000/command/hexonet/<command>```.
 
-I recommend using the program *Postman* which can be installed in
+I recommend using the program **Postman** which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
-scripting language of your choice.
+scripting language of your choice. I put an example of this down below.
 
 At the time of this writing, the following commands have been implemented:
 
@@ -71,12 +71,13 @@ Example usage:
 
 Post the following to http://localhost:3000/command/hexonet/checkDomain
 
-   ```curl -H "Content-Type: application/json" -d '{"domain": "just-testing.com"}' http://localhost:3000/api/login```
+   ```time curl -H "Content-Type: application/json" -d '{"domain": "just-testing.com"}' http://localhost:3000/command/hexonet/checkDomain```
+
+_Note_ I just put ```time``` in there to show what the execution time is.
+**YMMV**.
 
 
-
-You should get the following response (or something similar depending how far
-along I am with handling the response):
+You should get the following response (or something similar):
 
 ```{"epp":
     {"xmlns":"urn:ietf:params:xml:ns:epp-1.0"," xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance","xsi:schemaLocation":"urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd",
@@ -84,7 +85,7 @@ along I am with handling the response):
         "result":{
             "code":1000,"msg":"Command completed successfully"},
             "resData":{
-                "domain:chkData": {" xmlns:domain":"urn:ietf:params:xml:ns:domain-1.0","xsi:schemaLocation":"urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd",
+                "domain:chkData": {"xmlns:domain":"urn:ietf:params:xml:ns:domain-1.0","xsi:schemaLocation":"urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd",
                 "domain:cd":{
                     "domain:name":{
                         "avail":0,"$t":"catalyst.com"
