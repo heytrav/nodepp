@@ -67,7 +67,7 @@ At the time of this writing, the following commands have been implemented:
 ### infoDomain
 
 
-Example usage:
+## Example usage:
 
 Post the following to http://localhost:3000/command/hexonet/checkDomain
 
