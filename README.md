@@ -41,7 +41,7 @@ At the time of this writing, the following commands have been implemented:
 ### createContact
 
 
-```{
+            {
                 "id": "auto",
                 "voice": "+1.9405551234",
                 "fax": "+1.9405551233",
@@ -61,7 +61,7 @@ At the time of this writing, the following commands have been implemented:
                         "cc": "US"
                     }]
                 }]
-            }```
+            }
 
 ### infoContact
 ### infoDomain
@@ -79,7 +79,7 @@ _Note_ I just put ```time``` in there to show what the execution time is.
 
 You should get the following response (or something similar):
 
-```{"epp":
+    {"epp":
     {"xmlns":"urn:ietf:params:xml:ns:epp-1.0"," xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance","xsi:schemaLocation":"urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd",
     "response":{
         "result":{
@@ -100,7 +100,7 @@ You should get the following response (or something similar):
             }
         }
         }
-    }```
+      }
 
 I plan to get rid of some of the EPP cruft surrounding in there in the future.
 
