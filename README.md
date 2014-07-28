@@ -29,7 +29,7 @@ scripting language of your choice. I put an example of this down below.
 
 At the time of this writing, the following commands have been implemented:
 
-### Not running the service
+## Not running the service
 
     kill -INT `ps waux | grep server.j | grep -v grep | awk '{print $2}'`
 
