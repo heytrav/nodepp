@@ -29,7 +29,7 @@ Post** the following to http://aldo.domarino.com:3000/command/hexonet/checkDomai
 You should get the following response (or something similar depending how far
 along I am with handling the response):
 
-        {"epp":{"xmlns":"urn:ietf:params:xml:ns:epp-1.0"," xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance","xsi:schemaLocation":"urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd","response":{"result":{"code":1000,"msg":"Command completed successfully"},"resData":{"domain:chkData":{" xmlns:domain":"urn:ietf:params:xml:ns:domain-1.0","xsi:schemaLocation":"urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd","domain:cd":{"domain:name":{"avail":0,"$t":"catalyst.com"},"domain:reason":"Domain exists"}}},"trID":{"clTRID":"test-check-1234","svTRID":"RO-5734-1406529047908280"}}}}
+    {"epp":{"xmlns":"urn:ietf:params:xml:ns:epp-1.0"," xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance","xsi:schemaLocation":"urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd","response":{"result":{"code":1000,"msg":"Command completed successfully"},"resData":{"domain:chkData":{" xmlns:domain":"urn:ietf:params:xml:ns:domain-1.0","xsi:schemaLocation":"urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd","domain:cd":{"domain:name":{"avail":0,"$t":"catalyst.com"},"domain:reason":"Domain exists"}}},"trID":{"clTRID":"test-check-1234","svTRID":"RO-5734-1406529047908280"}}}}
 
 
 
