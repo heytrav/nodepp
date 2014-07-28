@@ -71,7 +71,7 @@ Example usage:
 
 Post the following to http://localhost:3000/command/hexonet/checkDomain
 
-```{"domain": "just-testing.com"}```
+   ```curl -H "Content-Type: application/json" -d '{"domain": "just-testing.com"}' http://localhost:3000/api/login```
 
 
 
@@ -82,7 +82,8 @@ along I am with handling the response):
     {"xmlns":"urn:ietf:params:xml:ns:epp-1.0"," xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance","xsi:schemaLocation":"urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd",
     "response":{
         "result":{
-            "code":1000,"msg":"Command completed successfully"},            "resData":{
+            "code":1000,"msg":"Command completed successfully"},
+            "resData":{
                 "domain:chkData": {" xmlns:domain":"urn:ietf:params:xml:ns:domain-1.0","xsi:schemaLocation":"urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd",
                 "domain:cd":{
                     "domain:name":{
@@ -90,14 +91,17 @@ along I am with handling the response):
                         },
                     "domain:reason":"Domain exists"
                     }
-                    }
-                    },
-                "trID":{
-                    "clTRID":"test-check-1234",
-                    "svTRID":"RO-5734-1406529047908280"
-                    }
-                    }
-        }}```
+                }
+            },
+        "trID":{
+            "clTRID":"test-check-1234",
+            "svTRID":"RO-5734-1406529047908280"
+            }
+        }
+        }
+    }```
+
+I plan to get rid of some of the EPP cruft surrounding in there in the future.
 
 
 
