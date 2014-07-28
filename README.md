@@ -73,8 +73,7 @@ Post the following to http://localhost:3000/command/hexonet/checkDomain
 
     prompt$ time curl -H "Content-Type: application/json" -d '{"domain": "just-testing.com"}' http://localhost:3000/command/hexonet/checkDomain
 
-_Note_ I just put ```time``` in there to show what the execution time is.
-**YMMV**.
+_Note_ I just put ```time``` in there to show what the execution time is.  Currently for me from home it's taking about 0.491 sec for this request *YMMV*. This would probably be a little quicker in a country with modern internet.
 
 
 You should get the following response (or something similar):
@@ -102,7 +101,7 @@ You should get the following response (or something similar):
         }
       }
 
-I plan to get rid of some of the EPP cruft surrounding in there in the future.
+I plan to get rid of some of the EPP cruft in the near future.
 
 
 
