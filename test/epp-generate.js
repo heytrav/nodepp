@@ -24,20 +24,20 @@ describe('EPP serialisation', function() {
                 pw: 'teStPass',
                 roid: 'P-12345'
             };
-            var processedData = epp.processAuthCode(authData, 'domain');
+            var processedData = epp.processAuthInfo(authData, 'domain');
             var xml = epp.callConvert(processedData, 'test');
             //console.log(xml);
             expect(xml).to.match(/<domain:pw roid="P-12345">teStPass<\/domain:pw>/);
             var authNoRoidData = {
                 pw: 'teStPass'
             };
-            var processedNoRoid = epp.processAuthCode(authNoRoidData, 'contact');
+            var processedNoRoid = epp.processAuthInfo(authNoRoidData, 'contact');
             xml = epp.callConvert(processedNoRoid, 'test');
             expect(xml).to.match(/<contact:pw>teStPass<\/contact:pw>/);
 
-            var plainAuthCode = 'teStPass';
-            var processedPlainAuthCode = epp.processAuthCode(plainAuthCode, 'contact');
-            xml = epp.callConvert(processedPlainAuthCode, 'test');
+            var plainAuthInfo = 'teStPass';
+            var processedPlainAuthInfo = epp.processAuthInfo(plainAuthInfo, 'contact');
+            xml = epp.callConvert(processedPlainAuthInfo, 'test');
             expect(xml).to.match(/<contact:pw>teStPass<\/contact:pw>/);
 
         });
