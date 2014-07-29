@@ -85,6 +85,44 @@ describe('EPP serialisation', function() {
             expect(xml).to.match(/<contact:disclose(?:(?!<contact:email>).)*<contact:email\/>/);
         });
 
+        it('should generate an "update contact" command', function() {
+            var updateData = {
+                id: "p-12345",
+                add: ['clientDeleteProhibited'],
+                rem: ['clientTransferProhibited'],
+                chg: {
+                    "postalInfo": [{
+                        "name": "John Doe",
+                        "org": "Example Ltd",
+                        "type": "loc",
+                        "addr": [{
+                            "street": ["742 Evergreen Terrace", "Apt b"],
+                            "city": "Eugene",
+                            "sp": "OR",
+                            "pc": "97801",
+                            "cc": "US"
+                        }]
+                    }],
+                    "voice": "+1.9405551234",
+                    "fax": "+1.9405551233",
+                    "email": "john.doe@null.com",
+                    "authInfo": {
+                        "pw": "xyz123"
+                    },
+                    "disclose": {
+                        "flag": 0,
+                        "disclosing": ["voice", "email"]
+                    }
+                }
+            };
+            var xml = epp.updateContact(updateData, 'test-1234');
+            console.log("Got xml: ", xml);
+            expect(xml).to.match(/<contact:status\ss=\"clientDeleteProhibited\"/);
+            expect(xml).to.match(/<contact:status\ss=\"clientTransferProhibited\"/);
+            expect(xml).to.match(/<contact:chg>(?:(?!<\/contact:chg>).)*<\/contact:chg>/);
+            
+        });
+
     });
 
 });
