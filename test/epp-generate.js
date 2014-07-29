@@ -120,7 +120,28 @@ describe('EPP serialisation', function() {
             expect(xml).to.match(/<contact:status\ss=\"clientDeleteProhibited\"/);
             expect(xml).to.match(/<contact:status\ss=\"clientTransferProhibited\"/);
             expect(xml).to.match(/<contact:chg>(?:(?!<\/contact:chg>).)*<\/contact:chg>/);
-            
+        });
+
+        it('should generate a create domain command', function() {
+            var createDomain = {
+                "name": "test-domain.com",
+                "period": {"unit": "y", "value": 2},
+                "ns": [
+                    {"hostObj": "ns1.example.net"}, 
+                    {"hostObj": "ns2.example.net"}
+                ],
+                "registrant": "P-12345",
+                "contact": [
+                    {"admin": "P-12345"},
+                    {"tech": "P-12346"},
+                ],
+                "authInfo":{
+                    "pw": "Axri3kjp"
+                }
+            };
+            var xml = epp.createDomain(createDomain, 'test-14989');
+            console.log(xml);
+            expect(xml).to.match(/<domain:name>test-domain\.com<\/domain:name>/);
         });
 
     });
