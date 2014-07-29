@@ -34,6 +34,12 @@ describe('EPP serialisation', function() {
             var processedNoRoid = epp.processAuthCode(authNoRoidData, 'contact');
             xml = epp.callConvert(processedNoRoid, 'test');
             expect(xml).to.match(/<contact:pw>teStPass<\/contact:pw>/);
+
+            var plainAuthCode = 'teStPass';
+            var processedPlainAuthCode = epp.processAuthCode(plainAuthCode, 'contact');
+            xml = epp.callConvert(processedPlainAuthCode, 'test');
+            expect(xml).to.match(/<contact:pw>teStPass<\/contact:pw>/);
+
         });
         it('should process different types of period data', function() {
             var periodData = 3;
