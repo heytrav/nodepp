@@ -19,26 +19,62 @@ describe('EPP serialisation', function() {
             expect(epp).to.be.an.instanceof(Object);
             expect(config.namespaces.epp.xmlns).to.be.equal('urn:ietf:params:xml:ns:epp-1.0');
         });
+        it('should render an "authInfo" section', function() {
+            var authData = {
+                pw: 'teStPass',
+                roid: 'P-12345'
+            };
+            var processedData = epp.processAuthCode(authData, 'domain');
+            var xml = epp.callConvert(processedData, 'test');
+            //console.log(xml);
+            expect(xml).to.match(/<domain:pw roid="P-12345">teStPass<\/domain:pw>/);
+            var authNoRoidData = {
+                pw: 'teStPass'
+            };
+            var processedNoRoid = epp.processAuthCode(authNoRoidData, 'contact');
+            xml = epp.callConvert(processedNoRoid, 'test');
+            expect(xml).to.match(/<contact:pw>teStPass<\/contact:pw>/);
+        });
+        it('should process different types of period data', function() {
+            var periodData = 3;
+            var processedData = epp.processDomainPeriod(periodData);
+            expect(processedData._attr.unit).to.equal("y");
+            expect(processedData._value).to.equal(periodData);
 
+            var twelveMonthPeriod = {
+                "unit": "m",
+                "value": 12
+            };
+            var processedTwelveMonth = epp.processDomainPeriod(twelveMonthPeriod);
+            expect(processedTwelveMonth._attr.unit).to.equal("m");
+            expect(processedTwelveMonth._value).to.equal(twelveMonthPeriod.value);
+
+            var unspecifiedUnit = {
+                "value": 2
+            };
+            var processUnspecUnit = epp.processDomainPeriod(unspecifiedUnit);
+            expect(processUnspecUnit._attr.unit).to.equal('y');
+
+        });
         it('should generate an xml body', function() {
             var xml = epp.login({
                 "login": "user1",
                 "password": "abc123"
             },
             'test-1234');
-            console.log("Got xml: ", xml);
+            //console.log("Got xml: ", xml);
             expect(xml).to.match(/<login>/);
         });
 
         it('should generate a hello command', function() {
             var xml = epp.hello();
-            console.log("Got hello: ", xml);
+            //console.log("Got hello: ", xml);
             expect(xml).to.match(/<hello\/>/);
         });
 
         it('should generate a logout command', function() {
             var xml = epp.logout('test-1235');
-            console.log("Got logout: ", xml);
+            //console.log("Got logout: ", xml);
             expect(xml).to.match(/<logout\/>/);
         });
 
@@ -78,7 +114,7 @@ describe('EPP serialisation', function() {
                 }]
             };
             var xml = epp.createContact(contactData, 'test-12345');
-            console.log("Got xml: ", xml);
+            //console.log("Got xml: ", xml);
             expect(xml).to.match(/xmlns:contact=\"urn:ietf:params:xml:ns:contact-1.0\"/);
             expect(xml).to.match(/<contact:name>John Doe<\/contact:name>/);
             expect(xml).to.match(/<contact:addr>(?:(?!<contact:city>).)*<contact:city>Springfield/);
@@ -116,7 +152,7 @@ describe('EPP serialisation', function() {
                 }
             };
             var xml = epp.updateContact(updateData, 'test-1234');
-            console.log("Got xml: ", xml);
+            //console.log("Got xml: ", xml);
             expect(xml).to.match(/<contact:status\ss=\"clientDeleteProhibited\"/);
             expect(xml).to.match(/<contact:status\ss=\"clientTransferProhibited\"/);
             expect(xml).to.match(/<contact:chg>(?:(?!<\/contact:chg>).)*<\/contact:chg>/);
@@ -148,7 +184,7 @@ describe('EPP serialisation', function() {
                 }
             };
             var xml = epp.createDomain(createDomain, 'test-14989');
-            console.log(xml);
+            //console.log(xml);
             expect(xml).to.match(/<domain:name>test-domain\.com<\/domain:name>/);
             expect(xml).to.match(/<domain:registrant>P-12345<\/domain:registrant/);
         });
