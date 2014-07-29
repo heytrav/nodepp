@@ -125,23 +125,32 @@ describe('EPP serialisation', function() {
         it('should generate a create domain command', function() {
             var createDomain = {
                 "name": "test-domain.com",
-                "period": {"unit": "y", "value": 2},
-                "ns": [
-                    {"hostObj": "ns1.example.net"}, 
-                    {"hostObj": "ns2.example.net"}
-                ],
+                "period": {
+                    "unit": "y",
+                    "value": 2
+                },
+                "ns": [{
+                    "hostObj": "ns1.example.net"
+                },
+                {
+                    "hostObj": "ns2.example.net"
+                }],
                 "registrant": "P-12345",
-                "contact": [
-                    {"admin": "P-12345"},
-                    {"tech": "P-12346"},
+                "contact": [{
+                    "admin": "P-12345"
+                },
+                {
+                    "tech": "P-12346"
+                },
                 ],
-                "authInfo":{
+                "authInfo": {
                     "pw": "Axri3kjp"
                 }
             };
             var xml = epp.createDomain(createDomain, 'test-14989');
             console.log(xml);
             expect(xml).to.match(/<domain:name>test-domain\.com<\/domain:name>/);
+            expect(xml).to.match(/<domain:registrant>P-12345<\/domain:registrant/);
         });
 
     });
