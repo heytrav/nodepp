@@ -62,6 +62,46 @@ describe('EPP serialisation', function() {
             expect(processUnspecUnit._attr.unit).to.equal('y');
 
         });
+        it('should preprocess nameserver information', function() {
+            var nameservers1 = ["ns1.test.com", "ns2.test.com", "ns3.test.com"];
+            var nameservers2 = [{
+                "host": "ns2.test.com"
+            },
+            {
+                "host": "ns3.test.com",
+                "addr": "255.255.255.255"
+            },
+            {
+                "host": "ns4.test.com",
+                "addr": ["255.255.255.255", {
+                    "ip": "254.254.254.254"
+                },
+                {
+                    "ip": "::F5::E2",
+                    "type": "v6"
+                }]
+            }];
+            var processedNameservers1 = epp.processDomainNS(nameservers1);
+            expect(processedNameservers1).to.deep.equal({
+                "domain:hostObj": nameservers1
+            });
+            var processedNameservers2 = epp.processDomainNS(nameservers2);
+            expect(processedNameservers2["domain:hostAttr"][2]["domain:hostName"]).to.equal('ns4.test.com');
+            expect(processedNameservers2["domain:hostAttr"][2]["domain:hostAddr"][2]._value).to.equal('::F5::E2');
+
+        });
+        it('should throw an error if a nameserver obj has no host', function() {
+            var nameservers2 = [{
+                "addr": "255.255.255.255"
+            },
+            ];
+            var processNameserverTest = function() {
+                var processedNameservers2 = epp.processDomainNS(nameservers2);
+            };
+            expect(processNameserverTest).to.
+            throw ("Host required in nameserver object!");
+
+        });
         it('should generate an xml body', function() {
             var xml = epp.login({
                 "login": "user1",
@@ -171,12 +211,7 @@ describe('EPP serialisation', function() {
                     "unit": "y",
                     "value": 2
                 },
-                "ns": [{
-                    "hostObj": "ns1.example.net"
-                },
-                {
-                    "hostObj": "ns2.example.net"
-                }],
+                "ns": ["ns1.example.net", "ns2.example.net"],
                 "registrant": "P-12345",
                 "contact": [{
                     "admin": "P-12345"
@@ -256,25 +291,46 @@ describe('EPP serialisation', function() {
             var updateDomain1 = {
                 "name": "test-domain.com",
                 "add": {
-                    "ns": [{"hostObj": "ns3.test.com"}, {"hostObj": "ns4.whatever.com"}],
-                    "contact": [{"admin": "P-9876"}, {"billing": "PX143"}],
-                    "status": ["clientUpdateProhibited", {"s": "clientHold", "lang": "en", "value": "Payment Overdue"}]
+                    "ns": ["ns3.test.com", "ns4.whatever.com"],
+                    "contact": [{
+                        "admin": "P-9876"
+                    },
+                    {
+                        "billing": "PX143"
+                    }],
+                    "status": ["clientUpdateProhibited", {
+                        "s": "clientHold",
+                        "lang": "en",
+                        "value": "Payment Overdue"
+                    }]
                 },
                 "rem": {
-                    "ns": [{"hostObj": "ns1.test.com"}],
-                    "contact": [{"billing": "PX147"}],
-                    "status": ["clientTransferProhibited", {"s": "clientWhatever", "lang": "en", "value": "Payment Overdue"}]
+                    "ns": [{
+                        "host": "ns1.test-domain.com",
+                        "addr": {
+                            "type": "v4",
+                            "ip": "192.68.2.132"
+                        }
+                    }],
+                    "contact": [{
+                        "billing": "PX147"
+                    }],
+                    "status": ["clientTransferProhibited", {
+                        "s": "clientWhatever",
+                        "lang": "en",
+                        "value": "Payment Overdue"
+                    }]
                 },
                 "chg": {
                     "registrant": "P-49023",
-                    "authInfo":{
+                    "authInfo": {
                         "pw": "TestPass2"
                     }
                 }
             };
             var xml = epp.updateDomain(updateDomain1, 'test-12346');
             expect(xml).to.match(/<domain:add>(?:(?!<\/domain:add).)*ns4.whatever.com/);
-            expect(xml).to.match(/<domain:rem>(?:(?!<\/domain:rem).)*ns1.test.com/);
+            expect(xml).to.match(/<domain:rem>(?:(?!<\/domain:rem).)*ns1.test-domain.com/);
             expect(xml).to.match(/<domain:chg>(?:(?!<\/domain:registrant>).)*P-49023/);
 
         });
