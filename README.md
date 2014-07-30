@@ -212,12 +212,14 @@ or
         pw: "te2tP422t"
     }
 
-In some cases you may need to supply a ```roid``` in addition to the ```authInfo```. This supposed to be used for matching a registrant id.
+In some cases you may need to supply a ```roid``` in addition to the
+```authInfo```. I think this is supposed to contain a registrant id.
 
-   authInfo: {
-        pw: "te2tP422t",
-        roid: "P-1234"
-   }
+    authInfo: {
+            pw: "te2tP422t",
+            roid: "P-1234"
+    }
+
 
 ### period
 
