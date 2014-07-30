@@ -225,9 +225,12 @@ In some cases you may need to supply a ```roid``` in addition to the
 
 The ```period``` argument can be specified as follows:
 
-    period: 1 #  1 year registration
+1 year registration
+    period: 1
+
+24 month registration
     period: {
-        unit: "m",  # 24 month registration
+        unit: "m",
         value: 24
     }
 
