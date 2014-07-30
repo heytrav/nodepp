@@ -4,7 +4,7 @@ An EPP implementation in node.js
 
 ##Description
 
-A _service_ for communicating to EPP registries(ars).
+A _service_ for communicating with EPP registries(ars).
 
 ### What it is
 
@@ -98,8 +98,8 @@ At the time of this writing, the following commands have been implemented:
                 }]
             }
 
-Some registries set the ```id``` by default. In such cases it's common to put
-```auto``` in this here. The value for ```type``` may also vary for different
+Some registries set the ```id``` by default. In such cases it's common to use
+```auto```. The value for ```type``` may also vary for different
 registries. Some require ```loc``` and some require ```int```. EPP allows for
 up to 2 entries in this field, however I've never seen a registry that accepts
 more than 1.
