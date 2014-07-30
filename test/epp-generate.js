@@ -195,6 +195,64 @@ describe('EPP serialisation', function() {
             expect(xml).to.match(/<domain:registrant>P-12345<\/domain:registrant/);
         });
 
+        it('should generate a transfer domain command', function() {
+            var transferDomain = {
+                "name": "test-domain.com",
+                "op": "request",
+                "period": 1,
+                "authInfo": {
+                    "roid": "P-12345",
+                    "pw": "2fooBAR"
+                }
+            };
+            var xml = epp.transferDomain(transferDomain, 'test-1234');
+            expect(xml).to.match(/<transfer op="request"/);
+
+            var transferReject = {
+                "name": "test-domain.com",
+                "op": "reject",
+                "authInfo": {
+                    "roid": "P-12345",
+                    "pw": "2fooBAR"
+                }
+            };
+            xml = epp.transferDomain(transferReject, 'test-1234');
+            expect(xml).to.match(/<transfer op="reject"/);
+        });
+
+        it('should throw exception if op incorrect', function() {
+            var transferDomain = {
+                "name": "test-domain.com",
+                "op": "yipee",
+                "period": 1,
+                "authInfo": {
+                    "roid": "P-12345",
+                    "pw": "2fooBAR"
+                }
+            };
+            var throwsError = function() {
+                epp.transferDomain(transferDomain, 'test-1234');
+            };
+            expect(throwsError).to.
+            throw ('Transfer domain op must be one of the following: [approve, cancel, query, reject, request].');
+        });
+
+        it('should throw exception if no authInfo pw supplied', function() {
+            var transferDomain = {
+                "name": "test-domain.com",
+                "op": "request",
+                "period": 1,
+                "authInfo": {
+                    "roid": "P-12345",
+                }
+            };
+            var throwsError = function() {
+                epp.transferDomain(transferDomain, 'test-1234');
+            };
+            expect(throwsError).to.
+            throw ('pw is required!');
+        });
+
     });
 
 });
