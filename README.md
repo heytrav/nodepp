@@ -233,8 +233,8 @@ The ```period``` argument can be specified as follows:
 
 ```
 period: {
-unit: "m",
-        value: 24
+    unit: "m",
+    value: 24
 }
 ```
 
