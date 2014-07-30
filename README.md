@@ -131,6 +131,21 @@ more than 1.
                 }
             };
 
+### transferDomain
+
+            {
+                "name": "test-domain.com",
+                "op": "request",
+                "period": 1,
+                "authInfo": {
+                    "roid": "P-12345", // optional
+                    "pw": "2fooBAR"
+                }
+            };
+
+Valid values for *op* are _approve_, _cancel_, _query_, _reject_, and
+_request_.
+
 ### updateDomain
 
             {
@@ -216,7 +231,9 @@ or
     }
 
 In some cases you may need to supply a ```roid``` in addition to the
-```authInfo```. I think this is supposed to contain a registrant id.
+```authInfo```.  This is used to identify the registrant or contact object if
+and only if the given authInfo is associated with a registrant or contact
+object, and not the domain object itself.
 
     authInfo: {
             pw: "te2tP422t",
@@ -226,7 +243,8 @@ In some cases you may need to supply a ```roid``` in addition to the
 
 ### period
 
-The ```period``` argument can be specified as follows:
+
+The ```period``` argument in *createDomain* and  *transferDomain* can be specified as follows:
 
 1 year registration
 
