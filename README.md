@@ -4,7 +4,29 @@ An EPP implementation in node.js
 
 ##Description
 
+A _service_ for communicating to EPP registries(ars).
 
+### What it is
+
+Just something to handle the communication with registries over EPP. It
+takes datastructures in JSON, converts them to XML, sends them to the
+registry, and then does the whole thing in reverse with the response. You
+should get back something in JSON format.
+
+### What it isn't
+
+It doesn't know anything about business logic; neither ours, nor the
+registries'. Inevitably we want to be able to use this code with more than one
+registry and tailoring to each one of them is impractical.  Where possible,
+I've tried to do some validation with respect to the EPP documentation.
+
+Some of the required datastructures might seem a bit weird. EPP has a fairly
+complex grammar that is _probably_ intended to make granular control of
+domain related entities easier. There are no flat datastructures and some
+things must be specified explicitly that would be assumed in systems like
+the Hexonet API. For example, to remove nameservers from a domain, it is
+necessary to remove them explicitly. Simply updating domain with _the new
+nameservers_ will not work. The same goes for contact objects.
 
 ##Install
 
@@ -30,7 +52,7 @@ scripting language of your choice. I put an example of this down below.
 
 ## Not running the service
 
-    kill -INT `ps waux | grep server.j | grep -v grep | awk '{print $2}'`
+    kill -INT `ps waux | grep server.js | grep -v grep | awk '{print $2}'`
 
 Sorry, need to generate a ```.pid``` file. Put this in the *get around to
 later* list.
@@ -39,13 +61,6 @@ later* list.
 
 At the time of this writing, the following commands have been implemented:
 
-
-### checkDomain
-
-
-```{"domain": "something.com"}```
-
-```{"domain": ["test-domain.com", "test-domain2.com", "test-domain3.com"]}```
 
 ### checkContact
 
@@ -62,7 +77,7 @@ At the time of this writing, the following commands have been implemented:
 
 
             {
-                "id": "auto",
+                "id": "my-id-1234",
                 "voice": "+1.9405551234",
                 "fax": "+1.9405551233",
                 "email": "john.doe@null.com",
@@ -83,7 +98,138 @@ At the time of this writing, the following commands have been implemented:
                 }]
             }
 
+Some registries set the ```id``` by default. In such cases it's common to put
+```auto``` in this here. The value for ```type``` may also vary for different
+registries. Some require ```loc``` and some require ```int```. EPP allows for
+up to 2 entries in this field, however I've never seen a registry that accepts
+more than 1.
+
 ### infoDomain
+
+```{"domain": "something.com"}```
+
+### checkDomain
+
+
+```{"domain": "something.com"}```
+
+```{"domain": ["test-domain.com", "test-domain2.com", "test-domain3.com"]}```
+
+### createDomain
+
+             {
+                "name": "test-domain.com",
+                "period": {
+                    "unit": "y",
+                    "value": 2
+                },
+                "ns": ["ns1.example.net", "ns2.example.net"],
+                "registrant": "P-12345",
+                "contact": [{ "admin": "P-12345" }, { "tech": "P-12346" }, ],
+                "authInfo": {
+                    "pw": "Axri3kjp"
+                }
+            };
+
+### updateDomain
+
+            {
+                "name": "test-domain.com",
+                "add": {
+                    "ns": ["ns3.test.com", "ns4.whatever.com"],
+                    "contact": [{
+                        "admin": "P-9876"
+                    },
+                    {
+                        "billing": "PX143"
+                    }],
+                    "status": ["clientUpdateProhibited", {
+                        "s": "clientHold",
+                        "lang": "en",
+                        "value": "Payment Overdue"
+                    }]
+                },
+                "rem": {
+                    "ns": [{
+                        "host": "ns1.test-domain.com",
+                        "addr": {
+                            "type": "v4",
+                            "ip": "192.68.2.132"
+                        }
+                    }],
+                    "contact": [{
+                        "billing": "PX147"
+                    }],
+                    "status": ["clientTransferProhibited", {
+                        "s": "clientWhatever",
+                        "lang": "en",
+                        "value": "Payment Overdue"
+                    }]
+                },
+                "chg": {
+                    "registrant": "P-49023",
+                    "authInfo": {
+                        "pw": "TestPass2"
+                    }
+                }
+            }
+
+This is a very complicated example. At least 1 of ```add```, ```rem```, or ```chg``` is required.
+
+
+
+## General stuff
+
+### Host objects
+
+In *createDomain* and *updateDomain* I've tried to account for 2 different
+types of host objects. In the simplest version you can just pass an array of
+strings:
+
+    ["ns1.host.com", "ns2.host.co.nz"]
+
+In cases where IP addresses are required, the following variants can be used:
+
+    [{host: "ns1.host.com", addr: "62.47.23.1"}]
+    [{host: "ns2.host.com", addr:[ "62.47.23.1", {ip: "53.23.1.3"}    ]}]
+    [{host: "ns3.host.com", addr:[ {ip: "::F3:E2:23:::", type: "v6"}, {ip:"47.23.43.1", type: "v4"} ]}]
+
+It's up to you to know which cases glue records are required. This
+implementation has no way to know that.
+
+### authInfo
+
+*createContact*, *createDomain*, *transferDomain* and a few others accept an
+```authInfo``` parameter.
+
+Following are equivalent:
+
+    authInfo: "te2tP422t"
+
+or
+
+    authInfo: {
+        pw: "te2tP422t"
+    }
+
+In some cases you may need to supply a ```roid``` in addition to the ```authInfo```. This supposed to be used for matching a registrant id.
+
+   authInfo: {
+        pw: "te2tP422t",
+        roid: "P-1234"
+   }
+
+### period
+
+The ```period``` argument can be specified as follows:
+
+    period: 1 #  1 year registration
+    period: {
+        unit: "m",  # 24 month registration
+        value: 24
+    }
+
+The default unit is _y_ for year and default period is 1.
 
 
 ## Example usage:
