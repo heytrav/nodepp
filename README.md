@@ -194,6 +194,9 @@ In cases where IP addresses are required, the following variants can be used:
     [{host: "ns2.host.com", addr:[ "62.47.23.1", {ip: "53.23.1.3"}    ]}]
     [{host: "ns3.host.com", addr:[ {ip: "::F3:E2:23:::", type: "v6"}, {ip:"47.23.43.1", type: "v4"} ]}]
 
+```type``` is *v4* by default. You'll have to specify *v6* explicitly for IPv6
+addresses.
+
 It's up to you to know which cases glue records are required. This
 implementation has no way to know that.
 
