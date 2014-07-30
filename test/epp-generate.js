@@ -252,6 +252,32 @@ describe('EPP serialisation', function() {
             expect(throwsError).to.
             throw ('pw is required!');
         });
+        it('should render update domain', function() {
+            var updateDomain1 = {
+                "name": "test-domain.com",
+                "add": {
+                    "ns": [{"hostObj": "ns3.test.com"}, {"hostObj": "ns4.whatever.com"}],
+                    "contact": [{"admin": "P-9876"}, {"billing": "PX143"}],
+                    "status": ["clientUpdateProhibited", {"s": "clientHold", "lang": "en", "value": "Payment Overdue"}]
+                },
+                "rem": {
+                    "ns": [{"hostObj": "ns1.test.com"}],
+                    "contact": [{"billing": "PX147"}],
+                    "status": ["clientTransferProhibited", {"s": "clientWhatever", "lang": "en", "value": "Payment Overdue"}]
+                },
+                "chg": {
+                    "registrant": "P-49023",
+                    "authInfo":{
+                        "pw": "TestPass2"
+                    }
+                }
+            };
+            var xml = epp.updateDomain(updateDomain1, 'test-12346');
+            expect(xml).to.match(/<domain:add>(?:(?!<\/domain:add).)*ns4.whatever.com/);
+            expect(xml).to.match(/<domain:rem>(?:(?!<\/domain:rem).)*ns1.test.com/);
+            expect(xml).to.match(/<domain:chg>(?:(?!<\/domain:registrant>).)*P-49023/);
+
+        });
 
     });
 
