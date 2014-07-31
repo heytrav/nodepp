@@ -22,7 +22,7 @@ I've tried to do some validation with respect to the EPP documentation.
 
 Some of the required datastructures might seem a bit weird. EPP has a fairly
 complex grammar that is _probably_ intended to make granular control of
-domain related entities easier. There are no flat datastructures and some
+domain related entities possible. There are no flat datastructures and some
 things must be specified explicitly that would be assumed in systems like
 the Hexonet API. For example, to remove nameservers from a domain, it is
 necessary to remove them explicitly. Simply updating domain with _the new
@@ -109,7 +109,7 @@ more than 1.
 
 ```{"domain": "something.com"}```
 
-It is possible to check more than one domain at a time. 
+It is possible to check more than one domain at a time.
 
 ```{"domain": ["test-domain.com", "test-domain2.com", "test-domain3.com"]}```
 
