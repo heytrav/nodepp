@@ -109,6 +109,8 @@ more than 1.
 
 ```{"domain": "something.com"}```
 
+It is possible to check more than one domain at a time. 
+
 ```{"domain": ["test-domain.com", "test-domain2.com", "test-domain3.com"]}```
 
 ### infoDomain
