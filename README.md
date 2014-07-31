@@ -104,16 +104,20 @@ registries. Some require ```loc``` and some require ```int```. EPP allows for
 up to 2 entries in this field, however I've never seen a registry that accepts
 more than 1.
 
-### infoDomain
-
-```{"domain": "something.com"}```
-
 ### checkDomain
 
 
 ```{"domain": "something.com"}```
 
 ```{"domain": ["test-domain.com", "test-domain2.com", "test-domain3.com"]}```
+
+### infoDomain
+
+```{"domain": "something.com"}```
+
+In case you are wondering if you can send multiple domains like in
+_checkDomain_, the answer is no. That's not possible in EPP. The result that
+you will get back in one _infoDomain_ will be complicated enough.
 
 ### createDomain
 
@@ -129,7 +133,7 @@ more than 1.
                 "authInfo": {
                     "pw": "Axri3kjp"
                 }
-            };
+            }
 
 ### transferDomain
 
@@ -141,9 +145,9 @@ more than 1.
                     "roid": "P-12345", // optional
                     "pw": "2fooBAR"
                 }
-            };
+            }
 
-Valid values for *op* are _approve_, _cancel_, _query_, _reject_, and
+Valid values for ```op``` are _approve_, _cancel_, _query_, _reject_, and
 _request_.
 
 ### updateDomain
@@ -189,7 +193,7 @@ _request_.
                 }
             }
 
-This is a very complicated example. At least 1 of ```add```, ```rem```, or ```chg``` is required.
+This is a very complicated example but at least shows what is possible in an _updateDomain_. At least 1 of ```add```, ```rem```, or ```chg``` is required. In the ```chg``` field, if provided, must contain either a ```registrant``` and/or an ```authInfo```. ```add``` and ```rem``` elements, if provided, must contain any one or more ```ns```, ```contact```, or ```status``` fields.
 
 
 
@@ -197,7 +201,7 @@ This is a very complicated example. At least 1 of ```add```, ```rem```, or ```ch
 
 ### Host objects
 
-In *createDomain* and *updateDomain* I've tried to account for 2 different
+In _createDomain_ and _updateDomain_ I've tried to account for 2 different
 types of host objects. In the simplest version you can just pass an array of
 strings:
 
@@ -217,7 +221,7 @@ implementation has no way to know that.
 
 ### authInfo
 
-*createContact*, *createDomain*, *transferDomain* and a few others accept an
+_createContact_, _createDomain_, _transferDomain_ and a few others accept an
 ```authInfo``` parameter.
 
 Following are equivalent:
@@ -244,7 +248,7 @@ object, and not the domain object itself.
 ### period
 
 
-The ```period``` argument in *createDomain* and  *transferDomain* can be specified as follows:
+The ```period``` argument in _createDomain_ and  _transferDomain_ can be specified as follows:
 
 1 year registration
 
