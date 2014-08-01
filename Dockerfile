@@ -7,7 +7,7 @@ MAINTAINER Travis Holton <travis@ideegeo.com>
 WORKDIR /usr/local/d8o/nodepp
 RUN echo 'deb http://archive.ubuntu.com/ubuntu/ trusty main universe' > /etc/apt/sources.list.d/nodepp.list
 
-RUN add-apt-repository ppa:chris-lea/node.js 
+RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
 RUN apt-get install nodejs
 RUN mkdir -p /usr/local/d8o/etc/ssl/certs
