@@ -13,7 +13,6 @@ RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
 RUN apt-get install -y nodejs
 
-# clean up
 RUN apt-get clean
 
 CMD ["./docker_start.sh"]
