@@ -18,5 +18,7 @@ RUN mkdir -p /usr/local/d8o/etc/ssl/certs
 ADD package.json /tmp/package.json
 RUN cd /tmp && npm install
 RUN cp -a /tmp/node_modules /usr/local/d8o/nodepp/node_modules
+ADD iwantmyname.com.key /usr/local/d8o/etc/ssl/certs/iwantmyname.com.key
+ADD A000A000000000000052.pem /usr/local/d8o/etc/ssl/certs/A000A000000000000052.pem
 
 CMD ["./docker_start.sh"]
