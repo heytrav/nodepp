@@ -20,11 +20,13 @@ shift $(($OPTIND-1))
 # set some defaults
 ${ENVIRONMENT:=devel}
 ${PORT:=3000}
+${REGISTRY:=hexonet-test1}
 
 
 docker run -t -i -d \
   -v /usr/local/d8o/nodepp:/usr/local/d8o/nodepp \
   -p ${PORT}:${PORT} \
   -e EPP_ENVIRONMENT=$ENVIRONMENT \
+  -e EPP_REGISTRIES=$REGISTRY \
   -v /usr/local/d8o/etc/ssl/certs:/usr/local/d8o/etc/ssl/certs \
   docker.domarino.com/nodepp ./docker_start.sh
