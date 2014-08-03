@@ -123,19 +123,19 @@ you will get back in one _infoDomain_ will be complicated enough.
 
 ### createDomain
 
-             {
-                "name": "test-domain.com",
-                "period": {
-                    "unit": "y",
-                    "value": 2
-                },
-                "ns": ["ns1.example.net", "ns2.example.net"],
-                "registrant": "P-12345",
-                "contact": [{ "admin": "P-12345" }, { "tech": "P-12346" }, ],
-                "authInfo": {
-                    "pw": "Axri3kjp"
-                }
+        {
+            "name": "iwmn-test-101-domain.com",
+            "period": {
+                "unit": "y",
+                "value": 1
+            },
+            "ns":["ns1.hexonet.net","ns2.hexonet.net"],
+                "registrant": "my-id-1234",
+            "contact": [{ "admin": "my-id-1235" }, { "tech": "my-id-1236" }, {"billing": "my-id-1236"} ],
+            "authInfo": {
+                "pw": "Axri3k.XXjp"
             }
+        }
 
 ### transferDomain
 
