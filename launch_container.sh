@@ -31,7 +31,7 @@ case "${ACTION}" in
     shell )
         echo "docker run -t -i -v /usr/local/d8o/nodepp:/usr/local/d8o/nodepp  -v /usr/local/d8o/etc/ssl/certs:/usr/local/d8o/etc/ssl/certs docker.domarino.com/nodepp /bin/bash"
         ;;
-    run ) 
+    run )
         echo "docker run -t -i -d -v /usr/local/d8o/nodepp:/usr/local/d8o/nodepp -p ${PORT}:${PORT} -e EPP_ENVIRONMENT=${ENVIRONMENT} -e EPP_REGISTRIES=${REGISTRY} -v /usr/local/d8o/etc/ssl/certs:/usr/local/d8o/etc/ssl/certs docker.domarino.com/nodepp ./docker_start.sh"
         ;;
 esac
