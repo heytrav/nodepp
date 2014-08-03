@@ -4,12 +4,12 @@ var expect = chai.expect,
 should = chai.should;
 
 var commandState = require('../lib/command-state.js');
-var config = require('../lib/epp-config.json').nzrs;
+var config = require('../lib/epp-config-devel.json')['nzrs-test1'];
 
 describe('Communication protocol state machine', function() {
     var protocol, stateMachine;
     beforeEach(function() {
-        stateMachine = commandState('nzrs', config);
+        stateMachine = commandState('nzrs-test1', config);
         var connection = stateMachine.connection;
         connection.send = function(xml, callback) {
             callback('<test></test>');

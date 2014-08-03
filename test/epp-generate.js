@@ -4,15 +4,15 @@ var expect = chai.expect,
 should = chai.should;
 
 var EPP = require('../lib/epp.js');
-var mainConfig = require('../lib/epp-config.json');
+var mainConfig = require('../lib/epp-config-devel.json');
 
 describe('EPP serialisation', function() {
     var epp;
     describe('general commands', function() {
         var config;
         beforeEach(function() {
-            config = mainConfig.nzrs;
-            epp = new EPP('nzrs', config);
+            config = mainConfig['nzrs-test1'];
+            epp = new EPP('nzrs-test1', config);
         });
 
         it('should be an epp object with nzrs config', function() {
