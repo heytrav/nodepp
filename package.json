@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha test/*.js",
     "checkVersion": "mocha --version",
-    "start": "node lib/nodepp.js"
+    "start": "node lib/server.js"
   },
   "author": "Trav Holton",
   "license": "ISC",

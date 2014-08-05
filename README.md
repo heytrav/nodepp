@@ -39,11 +39,26 @@ nameservers_ will not work. The same goes for contact objects.
 
 ##Running the service
 
-Start the server in the background: ```npm start &```.
 
-At this point the service should be running on localhost port 3000 and have
+You can start the process trivially with : ```npm start &```. However this
+isn't really useful because it's possible to tell the server to log into
+specific registries using CLI parameters. 
+
+On ```aldo.domarino.com``` I run it as follows:
+
+    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js -r hexonet-test1 -r nzrs-test1 -r nzrs-test2
+
+This tells it to open connections to the hexonet test api using an OTE login,
+as well as the two OTE accounts provided to us by NZRS for testing.  If you
+want to try this locally in your VM, leave off the two nzrs registries. NZRS
+only allows us to interact with them from whitelisted servers so either we
+need to have a tunnel set up, or we can only use EPP from one of our
+production servers.
+
+At this point the service should be running on some host (depending where you
+started it) port 3000 and have
 logged into Hexonet's test API. You can now make EPP requests by posting JSON
-datastructures to ```http://localhost:3000/command/hexonet/<command>```.  Note
+datastructures to ```http://<host>:3000/command/hexonet/<command>```.  Note
 that this is to an OTE account (```travis1```) and may not reflect live data.
 
 I recommend using the program **Postman** which can be installed in
