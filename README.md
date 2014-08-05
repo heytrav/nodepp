@@ -42,8 +42,9 @@ nameservers_ will not work. The same goes for contact objects.
    will come up with something a little more scalable. At any rate, you can 
    decrypt them as follows:
 
-    gpg -d A000A000000000000052.pem.asc > A000A000000000000052.pem
-    gpg -d iwantmyname.com.key.org.asc > iwantmyname.com.key
+
+        gpg -d A000A000000000000052.pem.asc > A000A000000000000052.pem
+        gpg -d iwantmyname.com.key.org.asc > iwantmyname.com.key
 
 
 
