@@ -34,6 +34,17 @@ nameservers_ will not work. The same goes for contact objects.
 1. Clone the repository and ```cd``` into it.
 2. Run ```npm install```. This should install all the dependencies.
 3. Run tests with ```npm test```.
+4. If you plan to run anything with NZRS, you'll need the key and signed
+   certificate that we got back from them. Since I wasn't really sure about
+   storing signed certificates and key files in the repository where
+   someone (who isn't us) may eventually be able to find them, I encrypted
+   them using gpg -a -c. This is just a temporary solution and I hope that we
+   will come up with something a little more scalable. At any rate, you can 
+   decrypt them as follows:
+
+    gpg -d A000A000000000000052.pem.asc > A000A000000000000052.pem
+    gpg -d iwantmyname.com.key.org.asc > iwantmyname.com.key
+
 
 
 
