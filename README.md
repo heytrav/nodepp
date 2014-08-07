@@ -78,7 +78,8 @@ This will start a single epp client that is logged into Hexonet's test API.
 
 On ```aldo.domarino.com``` I run it as follows:
 
-    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js -r hexonet-test1 -r nzrs-test1 -r nzrs-test2
+    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js \
+        -r hexonet-test1 -r nzrs-test1 -r nzrs-test2
 
 Run as a daemon in the background. 
 This tells it to open connections to the Hexonet test api using an OTE login,
