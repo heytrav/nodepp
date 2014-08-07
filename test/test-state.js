@@ -17,7 +17,6 @@ describe('Communication protocol state machine', function() {
     });
     it('should start out offline', function() {
         expect(stateMachine.state).to.equal('offline');
-        //expect(stateMachine.connected).to.equal(false);
     });
 
     describe('registry account logged in', function() {
@@ -27,6 +26,7 @@ describe('Communication protocol state machine', function() {
                 "login": "test-user",
                 "password": "123xyz"
             },
+            'test-login-1234',
             function() {
                 return {
                     "status": "OK"
@@ -39,7 +39,7 @@ describe('Communication protocol state machine', function() {
 
         });
         it('should be disconnected after logging out', function() {
-            stateMachine.command('logout', {},
+            stateMachine.command('logout',  {}, 'test-logout-1234',
 
             function() {
                 return {
@@ -51,7 +51,7 @@ describe('Communication protocol state machine', function() {
         it('should execute a specific command and then return to an idle state', function() {
             stateMachine.command('checkDomain', {
                 "domain": "test-domain.com"
-            },
+            },'test-checkDomain-1234',
             function() {
                 return {
                     "status": "OK"
