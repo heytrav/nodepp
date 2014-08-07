@@ -134,7 +134,7 @@ more than 1.
 ### checkDomain
 
 
-```{"domain": "something.com", "transactionId": "iwmn-test-1234"}```
+```{"domain": "something.com"}```
 
 It is possible to check more than one domain at a time.
 
@@ -142,7 +142,7 @@ It is possible to check more than one domain at a time.
 
 ### infoDomain
 
-```{"domain": "something.com", "transactionId": "iwmn-test-1234"}```
+```{"domain": "something.com"}```
 
 In case you are wondering if you can send multiple domains like in
 _checkDomain_, the answer is no. That's not possible in EPP. The result that
@@ -161,7 +161,7 @@ you will get back in one _infoDomain_ will be complicated enough.
             "contact": [{ "admin": "my-id-1235" }, { "tech": "my-id-1236" }, {"billing": "my-id-1236"} ],
             "authInfo": {
                 "pw": "Axri3k.XXjp"
-            }, "transactionId": "iwmn-test-1234"
+            }
         }
 
 ### transferDomain
@@ -173,7 +173,7 @@ you will get back in one _infoDomain_ will be complicated enough.
                 "authInfo": {
                     "roid": "P-12345", // optional
                     "pw": "2fooBAR"
-                }, "transactionId": "iwmn-test-1234"
+                }
             }
 
 Valid values for ```op``` are _approve_, _cancel_, _query_, _reject_, and
@@ -219,7 +219,7 @@ _request_.
                     "authInfo": {
                         "pw": "TestPass2"
                     }
-                }, "transactionId": "iwmn-test-1234"
+                }
             }
 
 This is a very complicated example but at least shows what is possible in an _updateDomain_. At least 1 of ```add```, ```rem```, or ```chg``` is required. The ```chg``` field, if provided, must contain either a ```registrant``` and/or an ```authInfo```. ```add``` and ```rem``` elements, if provided, must contain any one or more ```ns```, ```contact```, or ```status``` fields.
@@ -294,6 +294,10 @@ period: {
 
 The default unit is _y_ for year and default period is 1.
 
+### transactionId
+
+A ```transactionId``` is optional. It can be added at the top level of the JSON data
+structure. By default it will be set to ```iwmn-<epoch timestamp>```.
 
 ## Example usage:
 
