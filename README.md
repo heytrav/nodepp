@@ -46,21 +46,42 @@ nameservers_ will not work. The same goes for contact objects.
         gpg -d A000A000000000000052.pem.asc > A000A000000000000052.pem
         gpg -d iwantmyname.com.key.org.asc > iwantmyname.com.key
 
+5.  ```source nodepp.rc``` to include ```./node_modules/.bin``` in the
+    ```$PATH```. This is only really necessary if you plan on running it as a
+    daemon.
 
+## Configure
+
+Set up config. The configuration contains some essential data
+organised by registry account. Note that we can have multiple registry
+accounts at any given registry. Generally there will be only one
+account for production, however there could be any number of *test*
+accounts. Using them is equivalent to logging in to a registry as a
+completely different registrar. This is primarily useful for simulating
+incoming/outgoing contact/domain/host transfers. To setup up the config:
+
+    ln -s lib/epp-config-devel.json lib/epp-config.json 
+
+This sets up the development accounts. To setup the production account
+(which you should only ever do during deployment to a production platform,
+shame on you), replace ```devel``` with ```production```.
 
 
 ##Running the service
 
+You can start the process trivially using:
 
-You can start the process trivially with : ```npm start &```. However this
-isn't really useful because it's possible to tell the server to log into
-specific registries using CLI parameters. 
+    node lib/server.js -r hexonet-test1
+
+This will start a single epp client that is logged into Hexonet's test API. 
+
 
 On ```aldo.domarino.com``` I run it as follows:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js -r hexonet-test1 -r nzrs-test1 -r nzrs-test2
 
-This tells it to open connections to the hexonet test api using an OTE login,
+Run as a daemon in the background. 
+This tells it to open connections to the Hexonet test api using an OTE login,
 as well as the two OTE accounts provided to us by NZRS for testing.  If you
 want to try this locally in your VM, leave off the two nzrs registries. NZRS
 only allows us to interact with them from whitelisted servers so either we
@@ -79,7 +100,21 @@ scripting language of your choice. I put an example of this down below.
 
 ## Not running the service
 
+Kill the daemon process with:
+
+    foreverd stop lib/server.js
+
+When running locally, ```Ctrl-C``` will do.
+
+The following command is also useful.
+
+
     kill -INT `ps waux | grep server.js | grep -v grep | awk '{print $2}'`
+
+This nodepp client to send a ```logout``` command to the registries and
+then shutdown. You can use this to kill local processes as well as tell the
+daemon to ```logout/login``` once in a while.
+
 
 Sorry, need to generate a ```.pid``` file. Put this in the *get around to
 later* list.
