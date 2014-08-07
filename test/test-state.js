@@ -26,8 +26,7 @@ describe('Communication protocol state machine', function() {
                 "login": "test-user",
                 "password": "123xyz"
             },
-            'test-login-1234',
-            function() {
+            'test-login-1234', function() {
                 return {
                     "status": "OK"
                 };
@@ -38,8 +37,22 @@ describe('Communication protocol state machine', function() {
             expect(stateMachine.state).to.equal('idle');
 
         });
+        it('should throw an error if transactionId not present', function() {
+
+            var testCrash = function() {
+                stateMachine.command('logout', {},
+                function() {
+                    return {
+                        "status": "OK"
+                    };
+                });
+            };
+            expect(testCrash).to.
+            throw ('No transactionId provided');
+        });
         it('should be disconnected after logging out', function() {
-            stateMachine.command('logout',  {}, 'test-logout-1234',
+            stateMachine.command('logout', {},
+            'test-logout-1234',
 
             function() {
                 return {
@@ -51,8 +64,8 @@ describe('Communication protocol state machine', function() {
         it('should execute a specific command and then return to an idle state', function() {
             stateMachine.command('checkDomain', {
                 "domain": "test-domain.com"
-            },'test-checkDomain-1234',
-            function() {
+            },
+            'test-checkDomain-1234', function() {
                 return {
                     "status": "OK"
                 };
