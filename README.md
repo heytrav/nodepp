@@ -111,9 +111,12 @@ The following command is also useful.
 
     kill -INT `ps waux | grep server.js | grep -v grep | awk '{print $2}'`
 
-This nodepp client to send a ```logout``` command to the registries and
-then shutdown. You can use this to kill local processes as well as tell the
-daemon to ```logout/login``` once in a while.
+This triggers the nodepp client to send a ```logout``` command to the registries and
+then shutdown. You can use this to kill local processes instead of
+```Ctrl-C```. With the daemon, this has the net effect of causing it to
+```logout``` and then ```login``` again since ```foreverd```  will
+automatically restart the process. This might be handy if some registries have
+connection time limits.
 
 
 Sorry, need to generate a ```.pid``` file. Put this in the *get around to
