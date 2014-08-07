@@ -50,16 +50,20 @@ describe('Communication protocol state machine', function() {
             expect(testCrash).to.
             throw ('No transactionId provided');
         });
+        it('should throw an error if callback not provided', function() {
+            var testCrash = function () {
+                stateMachine.command('dosesntMatter', {}, 'test-happiness');
+            };
+            expect(testCrash).to.throw('Return callback must be a function.');
+        });
         it('should be disconnected after logging out', function() {
             stateMachine.command('logout', {},
             'test-logout-1234',
-
             function() {
                 return {
                     "status": "OK"
                 };
             });
-
         });
         it('should execute a specific command and then return to an idle state', function() {
             stateMachine.command('checkDomain', {
