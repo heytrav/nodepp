@@ -198,7 +198,7 @@ describe('EPP serialisation', function() {
             };
             var xml = epp.deleteContact(deleteContact, 'test-1234');
             expect(xml).to.match(/<contact:id>(?:(?!<\/contact:id).)*p-13243<\/contact:id/);
-            
+
         });
 
         it('should generate an "update contact" command', function() {
@@ -270,9 +270,8 @@ describe('EPP serialisation', function() {
             };
             var xml = epp.deleteDomain(deleteDomain, 'test-1234');
             expect(xml).to.match(/<domain:name>(?:(?!<\/domain:name).)*my-delete-domain.com<\/domain:name/);
-            
-        });
 
+        });
 
         it('should generate a transfer domain command', function() {
             var transferDomain = {
@@ -382,7 +381,13 @@ describe('EPP serialisation', function() {
         it('should create a createHost command', function() {
             var createHost = {
                 "name": "ns1.host.com",
-                "addr": ["23.84.43.123", {"ip": "22.4.22.5"}, {"ip": "::F3:34::BA:", "type":"v6"}]
+                "addr": ["23.84.43.123", {
+                    "ip": "22.4.22.5"
+                },
+                {
+                    "ip": "::F3:34::BA:",
+                    "type": "v6"
+                }]
             };
             var xml = epp.createHost(createHost, 'test-1234');
             expect(xml).to.match(/<host:name>(?:(?!<\/host:name).)*ns1.host.com/);
@@ -394,12 +399,17 @@ describe('EPP serialisation', function() {
                 "chg": {
                     "name": "ns2.host.com",
                 },
-                "add":{
-                    "addr": {"ip": "::F3:34::BA:", "type":"v6"},
+                "add": {
+                    "addr": {
+                        "ip": "::F3:34::BA:",
+                        "type": "v6"
+                    },
                     "status": ["clientUpdateProhibited"]
                 },
                 "rem": {
-                    "addr":["23.84.43.123",{"ip": "22.4.22.5"} ],
+                    "addr": ["23.84.43.123", {
+                        "ip": "22.4.22.5"
+                    }],
                     "status": ["clientTransferProhibited", "sneezeAchoo"]
                 }
             };
