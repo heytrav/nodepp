@@ -62,6 +62,19 @@ describe('EPP serialisation', function() {
             expect(processUnspecUnit._attr.unit).to.equal('y');
 
         });
+        it('should generate host:addr objects for createHost', function() {
+            var nameserver_addr1 = "255.255.255.255";
+            var nameserver_addr2 = ["255.255.255.255", {
+                    "ip": "254.254.254.254"
+                },
+                {
+                    "ip": "::F5::E2",
+                    "type": "v6"
+                }];
+            var processedIps1 = epp.processIPAddrObjects(nameserver_addr1);
+            expect(processedIps1).to.deep.equal([{"_attr":{"ip": "v4"},"_value": nameserver_addr1}]);
+            
+        });
         it('should preprocess nameserver information', function() {
             var nameservers1 = ["ns1.test.com", "ns2.test.com", "ns3.test.com"];
             var nameservers2 = [{
