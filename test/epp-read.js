@@ -1,4 +1,4 @@
-var epp_connection = require('../lib/connection.js')(); // don't care about config atm
+var ProtocolConnection = require('../lib/connection.js'); // don't care about config atm
 var fs = require('fs');
 var Stream = require('stream').Readable;
 var chai = require('chai');
@@ -12,7 +12,8 @@ describe('EPP socket connection handling', function() {
 
     describe('writing EPP data to server', function() {
         it('should result in a string with xml length + 4', function() {
-            preparedXML = epp_connection.prepareXML(rawXML);
+            var protocolConnection = new ProtocolConnection();
+            preparedXML = protocolConnection.prepareXML(rawXML);
             var length = preparedXML.length;
             expect(length).to.equal(rawXML.length + 4);
         });
@@ -25,12 +26,12 @@ describe('EPP socket connection handling', function() {
     //var bufferStream;
     //beforeEach(function() {
     //bufferStream  = fs.createReadStream('./test/epp-hello.xml');
-    //epp_connection.setStream(bufferStream);
+    //ProtocolConnection.setStream(bufferStream);
     //});
     //it('should chop big endian bits off front of string', function() {
-    //bufferStream.on('readable', epp_connection.receive);
+    //bufferStream.on('readable', ProtocolConnection.receive);
     //bufferStream.emit('data', preparedXML);
-    ////var choppedXML = epp_connection.receive();
+    ////var choppedXML = ProtocolConnection.receive();
     ////expect(choppedXML.length).to.be.equal(rawXML.length);
     //});
     //});
