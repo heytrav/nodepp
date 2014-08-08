@@ -343,7 +343,7 @@ structure. By default it will be set to ```iwmn-<epoch timestamp>```.
 Post the following to http://localhost:3000/command/hexonet/checkDomain
 
     prompt$ time curl -H "Content-Type: application/json" \
-        -d '{"domain": "just-testing.com"}'  \
+        -d '{"domain": "test-domain.com"}'  \
                 http://localhost:3000/command/hexonet/checkDomain
 
 _Note_ I just put ```time``` in there to show what the execution time is.
