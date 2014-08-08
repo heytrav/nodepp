@@ -192,6 +192,15 @@ describe('EPP serialisation', function() {
             expect(xml).to.match(/<contact:disclose(?:(?!<contact:email>).)*<contact:email\/>/);
         });
 
+        it('should generate a "deleteContact" command', function() {
+            var deleteContact = {
+                "id": "p-13243"
+            };
+            var xml = epp.deleteContact(deleteContact, 'test-1234');
+            expect(xml).to.match(/<contact:id>(?:(?!<\/contact:id).)*p-13243<\/contact:id/);
+            
+        });
+
         it('should generate an "update contact" command', function() {
             var updateData = {
                 id: "p-12345",
@@ -254,6 +263,16 @@ describe('EPP serialisation', function() {
             expect(xml).to.match(/<domain:name>test-domain\.com<\/domain:name>/);
             expect(xml).to.match(/<domain:registrant>P-12345<\/domain:registrant/);
         });
+
+        it('should generate a "deleteDomain" command', function() {
+            var deleteDomain = {
+                "name": "my-delete-domain.com"
+            };
+            var xml = epp.deleteDomain(deleteDomain, 'test-1234');
+            expect(xml).to.match(/<domain:name>(?:(?!<\/domain:name).)*my-delete-domain.com<\/domain:name/);
+            
+        });
+
 
         it('should generate a transfer domain command', function() {
             var transferDomain = {
