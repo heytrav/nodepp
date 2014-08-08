@@ -11,11 +11,11 @@ describe('EPP serialisation', function() {
     describe('general commands', function() {
         var config;
         beforeEach(function() {
-            config = mainConfig['nzrs-test1'];
-            epp = new EPP('nzrs-test1', config);
+            config = mainConfig['hexonet-test1'];
+            epp = new EPP('hexonet-test1', config);
         });
 
-        it('should be an epp object with nzrs config', function() {
+        it('should be an epp object with hexonet config', function() {
             expect(epp).to.be.an.instanceof(Object);
             expect(config.namespaces.epp.xmlns).to.be.equal('urn:ietf:params:xml:ns:epp-1.0');
         });
@@ -360,6 +360,13 @@ describe('EPP serialisation', function() {
 
         });
 
+        it('should create a createHost command', function() {
+            var createHost = {
+                "name": "ns1.host.com",
+                "addr": ["23.84.43.123", {"ip": "22.4.22.5"}, {"ip": "::F3:34::BA:", "type":"v6"}]
+            };
+            var xml = epp.createHost(createHost, 'test-1234');
+        });
     });
 
 });
