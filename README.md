@@ -39,7 +39,7 @@ nameservers_ will not work. The same goes for contact objects.
    storing signed certificates and key files in the repository where
    someone (who isn't us) may eventually be able to find them, I encrypted
    them using gpg -a -c. This is just a temporary solution and I hope that we
-   will come up with something a little more scalable. At any rate, you can 
+   will come up with something a little more scalable. At any rate, you can
    decrypt them as follows:
 
 
@@ -60,7 +60,7 @@ accounts. Using them is equivalent to logging in to a registry as a
 completely different registrar. This is primarily useful for simulating
 incoming/outgoing contact/domain/host transfers. To setup up the config:
 
-    ln -s lib/epp-config-devel.json lib/epp-config.json 
+    ln -s lib/epp-config-devel.json lib/epp-config.json
 
 This sets up the development accounts. To setup the production account
 (which you should only ever do during deployment to a production platform,
@@ -73,7 +73,7 @@ You can start the process trivially using:
 
     node lib/server.js -r hexonet-test1
 
-This will start a single epp client that is logged into Hexonet's test API. 
+This will start a single epp client that is logged into Hexonet's test API.
 
 
 On ```aldo.domarino.com``` I run it as follows:
@@ -81,7 +81,7 @@ On ```aldo.domarino.com``` I run it as follows:
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js \
         -r hexonet-test1 -r nzrs-test1 -r nzrs-test2
 
-Run as a daemon in the background. 
+Run as a daemon in the background.
 This tells it to open connections to the Hexonet test api using an OTE login,
 as well as the two OTE accounts provided to us by NZRS for testing.  If you
 want to try this locally in your VM, leave off the two nzrs registries. NZRS
@@ -342,7 +342,9 @@ structure. By default it will be set to ```iwmn-<epoch timestamp>```.
 
 Post the following to http://localhost:3000/command/hexonet/checkDomain
 
-    prompt$ time curl -H "Content-Type: application/json" -d '{"domain": "just-testing.com"}' http://localhost:3000/command/hexonet/checkDomain
+    prompt$ time curl -H "Content-Type: application/json" \
+        -d '{"domain": "just-testing.com"}'  \
+                http://localhost:3000/command/hexonet/checkDomain
 
 _Note_ I just put ```time``` in there to show what the execution time is.
 *YMMV*
@@ -350,16 +352,17 @@ _Note_ I just put ```time``` in there to show what the execution time is.
 
 You should get the following response (or something similar):
 
-    {"epp":
-    {"xmlns":"urn:ietf:params:xml:ns:epp-1.0"," xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance","xsi:schemaLocation":"urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd",
     "response":{
         "result":{
             "code":1000,"msg":"Command completed successfully"},
             "resData":{
-                "domain:chkData": {"xmlns:domain":"urn:ietf:params:xml:ns:domain-1.0","xsi:schemaLocation":"urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd",
+                "domain:chkData": {
+                    "xmlns:domain":"urn:ietf:params:xml:ns:domain-1.0",
+                    "xsi:schemaLocation":"urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd",
                 "domain:cd":{
                     "domain:name":{
-                        "avail":0,"$t":"catalyst.com"
+                        "avail":0,
+                        "$t":"test-domain.com"
                         },
                     "domain:reason":"Domain exists"
                     }
@@ -370,13 +373,5 @@ You should get the following response (or something similar):
             "svTRID":"RO-5734-1406529047908280"
             }
         }
-        }
-      }
 
 I plan to get rid of some of the EPP cruft in the near future.
-
-
-
-
-
-
