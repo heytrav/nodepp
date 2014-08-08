@@ -3,7 +3,7 @@ var chai = require('chai');
 var expect = chai.expect,
 should = chai.should;
 
-var ProtocolState = require('../lib/command-state.js');
+var ProtocolState = require('../lib/protocol-state.js');
 var config = require('../lib/epp-config-devel.json')['nzrs-test1'];
 
 describe('Communication protocol state machine', function() {
