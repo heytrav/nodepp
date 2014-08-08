@@ -73,6 +73,8 @@ describe('EPP serialisation', function() {
                 }];
             var processedIps1 = epp.processIPAddrObjects(nameserver_addr1);
             expect(processedIps1).to.deep.equal([{"_attr":{"ip": "v4"},"_value": nameserver_addr1}]);
+            var processedIps2 = epp.processIPAddrObjects(nameserver_addr2);
+            expect(processedIps2[2]).to.deep.equal( {"_attr": {"ip": "v6"}, "_value": "::F5::E2"});
             
         });
         it('should preprocess nameserver information', function() {
