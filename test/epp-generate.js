@@ -366,6 +366,26 @@ describe('EPP serialisation', function() {
                 "addr": ["23.84.43.123", {"ip": "22.4.22.5"}, {"ip": "::F3:34::BA:", "type":"v6"}]
             };
             var xml = epp.createHost(createHost, 'test-1234');
+            expect(xml).to.match(/<host:name>(?:(?!<\/host:name).)*ns1.host.com/);
+        });
+
+        it('should create an updateHost command', function() {
+            var updateHost = {
+                "name": "ns1.host.com",
+                "chg": {
+                    "name": "ns2.host.com",
+                },
+                "add":{
+                    "addr": {"ip": "::F3:34::BA:", "type":"v6"},
+                    "status": ["clientUpdateProhibited"]
+                },
+                "rem": {
+                    "addr":["23.84.43.123",{"ip": "22.4.22.5"} ],
+                    "status": ["clientTransferProhibited", "sneezeAchoo"]
+                }
+            };
+            var xml = epp.updateHost(updateHost, 'test-1234');
+            expect(xml).to.match(/<host:rem>(?:(?!<\/host:rem).)*clientTransferProhibited/);
         });
     });
 
