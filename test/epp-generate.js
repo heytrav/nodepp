@@ -62,20 +62,30 @@ describe('EPP serialisation', function() {
             expect(processUnspecUnit._attr.unit).to.equal('y');
 
         });
-        it('should generate host:addr objects for createHost', function() {
+        it('should process arrays of IPs for domain:hostAddr and host:addr objects', function() {
             var nameserver_addr1 = "255.255.255.255";
             var nameserver_addr2 = ["255.255.255.255", {
-                    "ip": "254.254.254.254"
-                },
-                {
-                    "ip": "::F5::E2",
-                    "type": "v6"
-                }];
+                "ip": "254.254.254.254"
+            },
+            {
+                "ip": "::F5::E2",
+                "type": "v6"
+            }];
             var processedIps1 = epp.processIPAddrObjects(nameserver_addr1);
-            expect(processedIps1).to.deep.equal([{"_attr":{"ip": "v4"},"_value": nameserver_addr1}]);
+            expect(processedIps1).to.deep.equal([{
+                "_attr": {
+                    "ip": "v4"
+                },
+                "_value": nameserver_addr1
+            }]);
             var processedIps2 = epp.processIPAddrObjects(nameserver_addr2);
-            expect(processedIps2[2]).to.deep.equal( {"_attr": {"ip": "v6"}, "_value": "::F5::E2"});
-            
+            expect(processedIps2[2]).to.deep.equal({
+                "_attr": {
+                    "ip": "v6"
+                },
+                "_value": "::F5::E2"
+            });
+
         });
         it('should preprocess nameserver information', function() {
             var nameservers1 = ["ns1.test.com", "ns2.test.com", "ns3.test.com"];
