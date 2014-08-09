@@ -427,9 +427,6 @@ describe('EPP serialisation', function() {
             expect(epp).to.respondTo('createDomainSecDnsExtension');
         });
 
-        //it('should be decorated with a Hexonet extension method', function() {
-        //expect(epp).to.respondTo('createDomainExtension');
-        //});
         it('should convert createDomain secDNS data into structure with xmlns', function() {
 
             var secDnsData = {
