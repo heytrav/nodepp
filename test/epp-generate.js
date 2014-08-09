@@ -429,7 +429,7 @@ describe('EPP serialisation', function() {
         });
 
         //it('should be decorated with a Hexonet extension method', function() {
-            //expect(epp).to.respondTo('createDomainExtension');
+        //expect(epp).to.respondTo('createDomainExtension');
         //});
         it('should convert createDomain secDNS data into structure with xmlns', function() {
 
@@ -454,9 +454,57 @@ describe('EPP serialisation', function() {
             var processedWithKeyData = epp.createDomainSecDnsExtension(secDnsData);
             expect(processedWithKeyData).to.have.deep.property("secDNS:create.secDNS:dsData.secDNS:keyData.secDNS:pubKey", "AQPJ////4Q==");
 
+            var secDnsKeyData = {
+                "keyData": {
+                    "flags": 257,
+                    "protocol": 3,
+                    "alg": 1,
+                    "pubKey": "AQPJ////4Q=="
+                }
+            };
+            var processedKeyData = epp.createDomainSecDnsExtension(secDnsKeyData);
+            expect(processedKeyData).to.have.deep.property("secDNS:create.secDNS:keyData.secDNS:pubKey", "AQPJ////4Q==");
+
         });
+        it('should generate an epp structure with extension', function() {
 
+            var createDomain = {
+                "name": "test-domain.com",
+                "period": {
+                    "unit": "y",
+                    "value": 2
+                },
+                "ns": ["ns1.example.net", "ns2.example.net"],
+                "registrant": "P-12345",
+                "contact": [{
+                    "admin": "P-12345"
+                },
+                {
+                    "tech": "P-12346"
+                },
+                ],
+                "authInfo": {
+                    "pw": "Axri3kjp"
+                },
+                "extension": {
+                    "maxSigLife": 604800,
+                    "dsData": {
+                        "keyTag": 12345,
+                        "alg": 3,
+                        "digestType": 1,
+                        "digest": "49FD46E6C4B45C55D4AC",
+                        "keyData": {
+                            "flags": 257,
+                            "protocol": 3,
+                            "alg": 1,
+                            "pubKey": "AQPJ////4Q=="
+                        }
+                    }
+                }
+            };
+            var xml = epp.createDomain(createDomain, 'test-1234');
+            console.log(xml);
+        });
     });
-
 });
 
