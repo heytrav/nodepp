@@ -467,46 +467,6 @@ describe('EPP serialisation', function() {
             expect(processedKeyData).to.have.deep.property("secDNS:create.secDNS:keyData.secDNS:pubKey", "AQPJ////4Q==");
 
         });
-        it('should generate an epp structure with extension', function() {
-
-            var createDomain = {
-                "name": "test-domain.com",
-                "period": {
-                    "unit": "y",
-                    "value": 2
-                },
-                "ns": ["ns1.example.net", "ns2.example.net"],
-                "registrant": "P-12345",
-                "contact": [{
-                    "admin": "P-12345"
-                },
-                {
-                    "tech": "P-12346"
-                },
-                ],
-                "authInfo": {
-                    "pw": "Axri3kjp"
-                },
-                "extension": {
-                    "DNSSEC":{
-                        "maxSigLife": 604800,
-                        "dsData": {
-                            "keyTag": 12345,
-                            "alg": 3,
-                            "digestType": 1,
-                            "digest": "49FD46E6C4B45C55D4AC",
-                            "keyData": {
-                                "flags": 257,
-                                "protocol": 3,
-                                "alg": 1,
-                                "pubKey": "AQPJ////4Q=="
-                            }
-                        }
-                    }                }
-            };
-            var xml = epp.createDomain(createDomain, 'test-1234');
-            console.log(xml);
-        });
     });
     describe('Hexonet extension', function(){
         var hexonetEpp, config;
@@ -517,6 +477,16 @@ describe('EPP serialisation', function() {
         });
         it('should be decorated with the secDNS extension methods', function() {
             expect(hexonetEpp).to.respondTo('createDomainExtension');
+        });
+        it('should process Hexonet "keyvalue" extension', function() {
+            var keyValueData = {
+                "X-ASIA-CED-ACCEPT-TRUSTEE-TAC": "1",
+                "OWNERCONTACT1": "P-TAF28517",
+                "OWNERCONTACT2": "P-TAF28559"
+            };
+            var processedExtension = hexonetEpp.createDomainExtension(keyValueData);
+            expect(processedExtension).to.have.deep.property("keyvalue:extension.keyvalue:kv[1]._attr.value", "P-TAF28517");
+            expect(processedExtension).to.have.deep.property("keyvalue:extension.keyvalue:kv[2]._attr.key", "OWNERCONTACT2");
         });
     });
 });
