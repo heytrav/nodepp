@@ -353,7 +353,11 @@ adding ```DNSSEC``` data to a *createDomain*:
             },
             "ns":["ns1.hexonet.net","ns2.hexonet.net"],
                 "registrant": "my-id-1234",
-            "contact": [{ "admin": "my-id-1235" }, { "tech": "my-id-1236" }, {"billing": "my-id-1236"} ],
+            "contact": [
+                { "admin": "my-id-1235" },
+                { "tech": "my-id-1236" },
+                {"billing": "my-id-1236"}
+            ],
             "authInfo": {
                 "pw": "Axri3k.XXjp"
             },
