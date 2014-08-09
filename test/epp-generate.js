@@ -3,18 +3,20 @@ var chai = require('chai');
 var expect = chai.expect,
 should = chai.should;
 
-var EPP = require('../lib/epp.js');
+var EppFactory = require('../lib/epp-factory.js');
 var mainConfig = require('../lib/epp-config-devel.json');
 
 describe('EPP serialisation', function() {
-    var epp;
-    describe('general commands', function() {
-        var config;
-        beforeEach(function() {
-            config = mainConfig['hexonet-test1'];
-            epp = new EPP('hexonet-test1', config);
-        });
+    var epp, config;
+    beforeEach(function() {
+        config = mainConfig['hexonet-test1'];
+    });
 
+    describe('general commands', function() {
+        beforeEach(function(){
+            var factory = new EppFactory();
+            epp = factory.generate('hexonet-test1', config);
+        });
         it('should be an epp object with hexonet config', function() {
             expect(epp).to.be.an.instanceof(Object);
             expect(config.namespaces.epp.xmlns).to.be.equal('urn:ietf:params:xml:ns:epp-1.0');
@@ -416,6 +418,21 @@ describe('EPP serialisation', function() {
             var xml = epp.updateHost(updateHost, 'test-1234');
             expect(xml).to.match(/<host:rem>(?:(?!<\/host:rem).)*clientTransferProhibited/);
         });
+    });
+
+    describe('extension handling', function() {
+        beforeEach(function(){
+            var factory = new EppFactory();
+            epp = factory.generate('hexonet-test1', config);
+        });
+        it('should be decorated with the secDNS extension methods', function() {
+            expect(epp).to.respondTo('createDomainSecDnsExtension');
+        });
+
+        it('should be decorated with a Hexonet extension method', function() {
+            expect(epp).to.respondTo('createDomainExtension');
+        });
+
     });
 
 });
