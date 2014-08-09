@@ -8,13 +8,11 @@ var mainConfig = require('../lib/epp-config-devel.json');
 
 describe('EPP serialisation', function() {
     var epp, config;
-    beforeEach(function() {
-        config = mainConfig['hexonet-test1'];
-    });
 
     describe('general commands', function() {
-        beforeEach(function(){
+        beforeEach(function() {
             var factory = new EppFactory();
+            config = mainConfig['hexonet-test1'];
             epp = factory.generate('hexonet-test1', config);
         });
         it('should be an epp object with hexonet config', function() {
@@ -421,16 +419,41 @@ describe('EPP serialisation', function() {
     });
 
     describe('extension handling', function() {
-        beforeEach(function(){
+        beforeEach(function() {
             var factory = new EppFactory();
-            epp = factory.generate('hexonet-test1', config);
+            config = mainConfig['nzrs-test1'];
+            epp = factory.generate('nzrs-test1', config);
         });
         it('should be decorated with the secDNS extension methods', function() {
             expect(epp).to.respondTo('createDomainSecDnsExtension');
         });
 
-        it('should be decorated with a Hexonet extension method', function() {
-            expect(epp).to.respondTo('createDomainExtension');
+        //it('should be decorated with a Hexonet extension method', function() {
+            //expect(epp).to.respondTo('createDomainExtension');
+        //});
+        it('should convert createDomain secDNS data into structure with xmlns', function() {
+
+            var secDnsData = {
+                "maxSigLife": 604800,
+                "dsData": {
+                    "keyTag": 12345,
+                    "alg": 3,
+                    "digestType": 1,
+                    "digest": "49FD46E6C4B45C55D4AC"
+                }
+            };
+            var processedDSData = epp.createDomainSecDnsExtension(secDnsData);
+            expect(processedDSData).to.have.deep.property("secDNS:create.secDNS:dsData.secDNS:digest", "49FD46E6C4B45C55D4AC");
+
+            secDnsData.dsData.keyData = {
+                "flags": 257,
+                "protocol": 3,
+                "alg": 1,
+                "pubKey": "AQPJ////4Q=="
+            };
+            var processedWithKeyData = epp.createDomainSecDnsExtension(secDnsData);
+            expect(processedWithKeyData).to.have.deep.property("secDNS:create.secDNS:dsData.secDNS:keyData.secDNS:pubKey", "AQPJ////4Q==");
+
         });
 
     });
