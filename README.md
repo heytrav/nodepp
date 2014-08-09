@@ -203,6 +203,7 @@ you will get back in one _infoDomain_ will be complicated enough.
             }
         }
 
+
 ### transferDomain
 
             {
@@ -337,6 +338,49 @@ The default unit is _y_ for year and default period is 1.
 
 A ```transactionId``` is optional. It can be added at the top level of the JSON data
 structure. By default it will be set to ```iwmn-<epoch timestamp>```.
+
+### Extensions
+
+You can optionally add an ```extension``` property to some commands. This
+varies from registry to registry like everything else.  A good example is when
+adding ```DNSSEC``` data to a *createDomain*:
+
+        {
+            "name": "iwmn-test-101-domain.com",
+            "period": {
+                "unit": "y",
+                "value": 1
+            },
+            "ns":["ns1.hexonet.net","ns2.hexonet.net"],
+                "registrant": "my-id-1234",
+            "contact": [{ "admin": "my-id-1235" }, { "tech": "my-id-1236" }, {"billing": "my-id-1236"} ],
+            "authInfo": {
+                "pw": "Axri3k.XXjp"
+            },
+            "extension": {
+                "DNSSEC": {
+                    "maxSigLife": 604800,
+                    "dsData": {
+                        "keyTag": 12345,
+                        "alg": 3,
+                        "digestType": 1,
+                        "digest": "49FD46E6C4B45C55D4AC",
+                        "keyData": {
+                            "flags": 257,
+                            "protocol": 3,
+                            "alg": 1,
+                            "pubKey": "AQPJ////4Q=="
+                        }
+                    }
+                }
+            }
+        }
+
+As stated earlier, this implementation doesn't know anything about _business
+logic_ for any of the registries. The data given is just converted to XML and
+sent on its way. Actually determining what goes into the extension data needs
+to be done at a higher level. In the case of DNSSEC that would mean that
+signing, algorithm and key info needs to come from the caller.
 
 ## Example usage:
 
