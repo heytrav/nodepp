@@ -425,6 +425,7 @@ describe('EPP serialisation', function() {
         });
         it('should be decorated with the secDNS extension methods', function() {
             expect(epp).to.respondTo('createDomainSecDnsExtension');
+            expect(epp).to.respondTo('updateDomainSecDnsExtension');
         });
 
         it('should convert createDomain secDNS data into structure with xmlns', function() {
@@ -461,6 +462,10 @@ describe('EPP serialisation', function() {
             var processedKeyData = epp.createDomainSecDnsExtension(secDnsKeyData);
             expect(processedKeyData).to.have.deep.property("secDNS:create.secDNS:keyData.secDNS:pubKey", "AQPJ////4Q==");
 
+        });
+
+        it('should handle DNSSEC update data structures', function() {
+            
         });
     });
     describe('Hexonet extension', function(){
