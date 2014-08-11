@@ -465,10 +465,10 @@ describe('EPP serialisation', function() {
         });
 
         it('should handle DNSSEC update data structures', function() {
-            
+
         });
     });
-    describe('Hexonet extension', function(){
+    describe('Hexonet extension', function() {
         var hexonetEpp, config;
         beforeEach(function() {
             config = mainConfig['hexonet-test1'];
