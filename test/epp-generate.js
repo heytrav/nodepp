@@ -540,6 +540,74 @@ describe('EPP serialisation', function() {
             expect(testCrash2).to.throw("At least one 'chg', 'add', or 'rem' required in DNSSEC updates.");
 
         });
+        it('should generate an EPP update with secDNS', function() {
+            var updateDomain = {
+                "extension": {
+                    "DNSSEC": {
+                        "add": {
+                            "dsData": {
+                                "keyTag": 12345,
+                                "alg": 3,
+                                "digestType": 1,
+                                "digest": "49FD46E6C4B45C55D4AC"
+                            }
+                        },
+                        "rem": {
+                            "keyData": {
+                                "flags": 257,
+                                "protocol": 3,
+                                "alg": 1,
+                                "pubKey": "AQPJ////4Q=="
+                            }
+                        },
+                        "chg": {
+                            "maxSigLife": 604800
+                        }
+                    }
+                },
+                "name": "test-domain.com",
+                "add": {
+                    "ns": ["ns3.test.com", "ns4.whatever.com"],
+                    "contact": [{
+                        "admin": "P-9876"
+                    },
+                    {
+                        "billing": "PX143"
+                    }],
+                    "status": ["clientUpdateProhibited", {
+                        "s": "clientHold",
+                        "lang": "en",
+                        "value": "Payment Overdue"
+                    }]
+                },
+                "rem": {
+                    "ns": [{
+                        "host": "ns1.test-domain.com",
+                        "addr": {
+                            "type": "v4",
+                            "ip": "192.68.2.132"
+                        }
+                    }],
+                    "contact": [{
+                        "billing": "PX147"
+                    }],
+                    "status": ["clientTransferProhibited", {
+                        "s": "clientWhatever",
+                        "lang": "en",
+                        "value": "Payment Overdue"
+                    }]
+                },
+                "chg": {
+                    "registrant": "P-49023",
+                    "authInfo": {
+                        "pw": "TestPass2"
+                    }
+                }
+            };
+            var xml  = epp.updateDomain(updateDomain);
+            console.log(xml);
+            
+        });
     });
     describe('Hexonet extension', function() {
         var hexonetEpp, config;
