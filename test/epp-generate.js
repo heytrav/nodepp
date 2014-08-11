@@ -465,6 +465,66 @@ describe('EPP serialisation', function() {
         });
 
         it('should handle DNSSEC update data structures', function() {
+            var secDnsUpdate = {
+                "add": {
+                    "dsData": {
+                        "keyTag": 12345,
+                        "alg": 3,
+                        "digestType": 1,
+                        "digest": "49FD46E6C4B45C55D4AC"
+                    }
+                },
+                "rem": {
+                    "keyData": {
+                        "flags": 257,
+                        "protocol": 3,
+                        "alg": 1,
+                        "pubKey": "AQPJ////4Q=="
+                    }
+                },
+                "chg": {
+                    "maxSigLife": 604800
+                }
+            };
+            var processedUpdate = epp.updateDomainSecDnsExtension(secDnsUpdate);
+            expect(processedUpdate).to.have.deep.property("secDNS:update.secDNS:rem.secDNS:keyData.secDNS:pubKey", "AQPJ////4Q==");
+            expect(processedUpdate).to.have.deep.property("secDNS:update.secDNS:chg.secDNS:maxSigLife", 604800);
+        });
+        it('should ignore any other data when secDNS:rem contains "all".', function() {
+            var secDnsUpdate = {
+                "add": {
+                    "dsData": {
+                        "keyTag": 12345,
+                        "alg": 3,
+                        "digestType": 1,
+                        "digest": "49FD46E6C4B45C55D4AC"
+                    }
+                },
+                "rem": {
+                    "all": true,
+                    "keyData": {
+                        "flags": 257,
+                        "protocol": 3,
+                        "alg": 1,
+                        "pubKey": "AQPJ////4Q=="
+                    }
+                },
+                "chg": {
+                    "maxSigLife": 604800
+                }
+            };
+            var processedUpdate = epp.updateDomainSecDnsExtension(secDnsUpdate);
+            expect(processedUpdate).to.not.have.deep.property("secDNS:update.secDNS:rem.secDNS:keyData");
+            expect(processedUpdate).to.have.deep.property("secDNS:update.secDNS:rem.secDNS:all", "true");
+            var secDnsUpdate2 = {
+                "rem": {
+                    "all": 'goodtimes',
+                },
+            };
+            var testCrash   = function () {
+             epp.updateDomainSecDnsExtension(secDnsUpdate2);
+            };
+            expect(testCrash).to.throw("'all' must be a boolean or truthy number.");
 
         });
     });
