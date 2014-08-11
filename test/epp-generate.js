@@ -526,6 +526,19 @@ describe('EPP serialisation', function() {
             };
             expect(testCrash).to.throw("'all' must be a boolean or truthy number.");
 
+            var createSecDnsData = {
+                "keyData": {
+                    "flags": 257,
+                    "protocol": 3,
+                    "alg": 1,
+                    "pubKey": "AQPJ////4Q=="
+                }
+            };
+            var testCrash2 = function() {
+             epp.updateDomainSecDnsExtension(createSecDnsData);
+            };
+            expect(testCrash2).to.throw("At least one 'chg', 'add', or 'rem' required in DNSSEC updates.");
+
         });
     });
     describe('Hexonet extension', function() {
