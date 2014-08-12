@@ -54,17 +54,26 @@ nameservers_ will not work. The same goes for contact objects.
 
 Set up config. The configuration contains some essential data
 organised by registry account. Note that we can have multiple registry
-accounts at any given registry. Generally there will be only one
-account for production, however there could be any number of *test*
-accounts. Using them is equivalent to logging in to a registry as a
-completely different registrar. This is primarily useful for simulating
-incoming/outgoing contact/domain/host transfers. To setup up the config:
+accounts at any given registry. I'm calling these accounts or *accreditations*
+for lack of a better term.
+
+Generally there will be only one accounts for production, however there
+could be any number of *test* accounts. Using them is equivalent to logging in
+to a registry as a completely different registrar. This is primarily useful
+for simulating incoming/outgoing contact/domain/host transfers. To setup up
+the config:
 
     ln -s lib/epp-config-devel.json lib/epp-config.json
 
-This sets up the development accounts. To setup the production account
-(which you should only ever do during deployment to a production platform,
-shame on you), replace ```devel``` with ```production```.
+This sets up the development accounts. To setup the production account (which
+you should only ever do during deployment to a production platform), replace
+```devel``` with ```production```.
+
+If you are running this in a docker container, setting the environment
+variable ```IWMN_ENV=<environment>``` when launching the containers will
+automatically bootstrap everything with whatever is in ```<environment>```. So
+if you set it to ```production```, it will automatically link
+```lib/epp-config-production.json```. This defaults to ```devel```.
 
 
 ##Running the service
@@ -81,19 +90,19 @@ On ```aldo.domarino.com``` I run it as follows:
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js \
         -r hexonet-test1 -r nzrs-test1 -r nzrs-test2
 
-Run as a daemon in the background.
-This tells it to open connections to the Hexonet test api using an OTE login,
-as well as the two OTE accounts provided to us by NZRS for testing.  If you
-want to try this locally in your VM, leave off the two nzrs registries. NZRS
-only allows us to interact with them from whitelisted servers so either we
-need to have a tunnel set up, or we can only use EPP from one of our
-production servers.
+This runs it as  daemon in the background.  This tells it to open connections
+to the Hexonet test api (```hexonet-test1```) using an OTE login, as well as
+the two OTE accounts, ```nzrs-test1``` and ```nzrs-test2``` provided to us by
+NZRS for testing.  If you want to try this locally in your VM, leave off the
+two nzrs registries. NZRS only allows us to interact with them from
+whitelisted servers so either we need to have a tunnel set up, or we can only
+use EPP from one of our production servers.
 
 At this point the service should be running on some host (depending where you
-started it) port 3000 and have
-logged into Hexonet's test API. You can now make EPP requests by posting JSON
-datastructures to ```http://<host>:3000/command/hexonet/<command>```.  Note
-that this is to an OTE account (```travis1```) and may not reflect live data.
+started it) port 3000 and have logged into Hexonet's test API. You can now
+make EPP requests by posting JSON datastructures to
+```http://<host>:3000/command/<accreditation>/<command>```.  Note that this is
+to an OTE account (```travis1```) and may not reflect live data.
 
 I recommend using the program **Postman** which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
