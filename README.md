@@ -386,6 +386,114 @@ sent on its way. Actually determining what goes into the extension data needs
 to be done at a higher level. In the case of DNSSEC that would mean that
 signing, algorithm and key info needs to come from the caller.
 
+### DNSSEC
+
+I've implemented ```DNSSEC``` EPP generation for create and update. I don't
+know if we'll ever need this. NZRS has it in their extension list, but I
+didn't see any examples of it anywhere. Hexonet only references it with their
+KV interface.
+
+Following are some variations that you can send (I'm leaving out the standard
+part of the EPP request):
+
+#### createDomain
+
+Create a domain with the ```dsData``` interface:
+
+                "extension": {
+                    "DNSSEC": {
+                        "maxSigLife": 604800,
+                        "dsData": {
+                            "keyTag": 12345,
+                            "alg": 3,
+                            "digestType": 1,
+                            "digest": "49FD46E6C4B45C55D4AC"
+                        }
+                    }
+                }
+
+with the ```keyData``` interface:
+
+                "extension": {
+                    "DNSSEC": {
+                        "keyData":{
+                            "flags": 257,
+                            "protocol": 3,
+                            "alg": 1,
+                            "pubKey": "AQPJ////4Q=="
+                        }
+                    }
+                }
+
+with the ```keyData``` in the ```dsData``` element:
+
+                "extension": {
+                    "DNSSEC": {
+                        "maxSigLife": 604800,
+                        "dsData": {
+                            "keyTag": 12345,
+                            "alg": 3,
+                            "digestType": 1,
+                            "digest": "49FD46E6C4B45C55D4AC",
+                            "keyData":{
+                                "flags": 257,
+                                "protocol": 3,
+                                "alg": 1,
+                                "pubKey": "AQPJ////4Q=="
+                            }
+                        }
+                    }
+                }
+
+#### updateDomain
+
+
+Add a ```dsData``` key and remove a ```keyData``` key and change the
+```maxSigLife``` of the key
+
+				"extension": {
+					"DNSSEC": {
+						"add": {
+							"dsData": {
+								"keyTag": 12345,
+								"alg": 3,
+								"digestType": 1,
+								"digest": "49FD46E6C4B45C55D4AC"
+							}
+						},
+						"rem": {
+							"keyData": {
+								"flags": 257,
+								"protocol": 3,
+								"alg": 1,
+								"pubKey": "AQPJ////4Q=="
+							}
+						},
+						"chg": {
+							"maxSigLife": 604800
+						}
+					}
+				}
+
+Remove all existing key info and replace it with something new:
+
+				"extension": {
+					"DNSSEC": {
+						"rem": {
+							"all": true
+						},
+						"add": {
+							"dsData": {
+								"keyTag": 12345,
+								"alg": 3,
+								"digestType": 1,
+								"digest": "49FD46E6C4B45C55D4AC"
+							}
+						}
+					}
+				}
+
+
 ## Example usage:
 
 Post the following to http://localhost:3000/command/hexonet/checkDomain
