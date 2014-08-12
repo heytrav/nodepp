@@ -607,7 +607,9 @@ describe('EPP serialisation', function() {
 				}
 			};
 			var xml = epp.updateDomain(updateDomain);
-			console.log(xml);
+            // Verify that some of the secDNS stuff is in there.
+            expect(xml).to.match(/<extension>(?:(?!<\/extension).)*secDNS:add/);
+			//console.log(xml);
 
 		});
 	});
