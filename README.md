@@ -13,19 +13,23 @@ takes datastructures in JSON, converts them to XML, sends them to the
 registry, and then does the whole thing in reverse with the response. You
 should get back something in JSON format.
 
+You also do not have to login. The app logs into the registry when it is
+started. 
+
 ### What it isn't
 
 It doesn't know anything about business logic--neither ours, nor the
-registries'. It just knows how to communicate with registries over EPP.
+registries'. It just knows how to communicate over EPP.
 
-The point of abstracting just the EPP stuff out is to *separate our concerns*
-and avoid the trap of having super-mega modules that do "all the things" (i.e.
-our core logic plus all communication and database stuff). That's bad design
-and it means that we will have to reimplement everything everytime we try to
-integrate a new registry or communication protocol. Keeping the communication
-layer and our business logic separate and *agnostic* means that we can more
-easily switch to the next *standard* protocol in the future and not need to
-completely rewrite the code.
+The objective of abstracting just the EPP stuff out is to *separate our
+concerns* and avoid having super-mega modules that _do all the things_ (i.e.
+core logic, communication, database , etc.). That kind of thing
+is known _tight coupling_ and results in code that needs to be
+completely rewritten every time one part of the stack changes.
+
+Keeping the communication layer and our business logic separate from
+each other means that we can more easily switch to the next *standard*
+protocol in the future and not need to completely rewrite the code.
 
 
 ##Install
@@ -139,12 +143,21 @@ At the time of this writing, the following commands have been implemented:
 
 ### checkContact
 
-```{"id": "P-12345xyz"}```
+        {"id": "P-12345xyz"}
+
+or
+
+        {"contact": "P-12345xyz"}
 
 
 ### infoContact
 
-```{"id": "P-12345xyz"}```
+        {"id": "P-12345xyz"}
+
+or
+
+
+        {"contact": "P-12345xyz"}
 
 
 
@@ -181,16 +194,25 @@ more than 1.
 
 ### checkDomain
 
+The following are equivalent:
 
-```{"domain": "something.com"}```
+        {"domain": "something.com"}
+
+or
+
+        {"name": "something.com"}
 
 It is possible to check more than one domain at a time.
 
-```{"domain": ["test-domain.com", "test-domain2.com", "test-domain3.com"]}```
+
+        {"domain": ["test-domain.com", "test-domain2.com", "test-domain3.com"]}
+
 
 ### infoDomain
 
-```{"domain": "something.com"}```
+
+        {"domain": "something.com"}
+
 
 In case you are wondering if you can send multiple domains like in
 _checkDomain_, the answer is no. That's not possible in EPP. The result that
