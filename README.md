@@ -271,7 +271,11 @@ _request_.
                 }
             }
 
-This is a very complicated example but at least shows what is possible in an _updateDomain_. At least 1 of ```add```, ```rem```, or ```chg``` is required. The ```chg``` field, if provided, must contain either a ```registrant``` and/or an ```authInfo```. ```add``` and ```rem``` elements, if provided, must contain any one or more ```ns```, ```contact```, or ```status``` fields.
+This is a very complicated example but at least shows what is possible in an
+_updateDomain_. At least 1 of ```add```, ```rem```, or ```chg``` is required.
+The ```chg``` field, if provided, must contain either a ```registrant```
+and/or an ```authInfo```. ```add``` and ```rem``` elements, if provided, must
+contain any one or more ```ns```, ```contact```, or ```status``` fields.
 
 
 
