@@ -8,25 +8,25 @@ A _service_ for communicating with EPP registries(ars).
 
 ### What it is
 
-Just something to handle the communication with registries over EPP. It
+A RESTful web-service that abstracts communication with registries over EPP. It
 takes datastructures in JSON, converts them to XML, sends them to the
 registry, and then does the whole thing in reverse with the response. You
 should get back something in JSON format.
 
 ### What it isn't
 
-It doesn't know anything about business logic; neither ours, nor the
-registries'. Inevitably we want to be able to use this code with more than one
-registry and tailoring to each one of them is impractical.  Where possible,
-I've tried to do some validation with respect to the EPP documentation.
+It doesn't know anything about business logic--neither ours, nor the
+registries'. It just knows how to communicate with registries over EPP.
 
-Some of the required datastructures might seem a bit weird. EPP has a fairly
-complex grammar that is _probably_ intended to make granular control of
-domain related entities possible. There are no flat datastructures and some
-things must be specified explicitly that would be assumed in systems like
-the Hexonet API. For example, to remove nameservers from a domain, it is
-necessary to remove them explicitly. Simply updating domain with _the new
-nameservers_ will not work. The same goes for contact objects.
+The point of abstracting just the EPP stuff out is to *separate our concerns*
+and avoid the trap of having super-mega modules that do "all the things" (i.e.
+our core logic plus all communication and database stuff). That's bad design
+and it means that we will have to reimplement everything everytime we try to
+integrate a new registry or communication protocol. Keeping the communication
+layer and our business logic separate and *agnostic* means that we can more
+easily switch to the next *standard* protocol in the future and not need to
+completely rewrite the code.
+
 
 ##Install
 
@@ -276,6 +276,15 @@ This is a very complicated example but at least shows what is possible in an _up
 
 
 ## General stuff
+
+
+Some of the required datastructures might seem a bit weird. EPP has a fairly
+complex grammar that is _probably_ intended to make granular control of
+domain related entities possible. There are no flat datastructures and some
+things must be specified explicitly that would be assumed in systems like
+the Hexonet API. For example, to remove nameservers from a domain, it is
+necessary to remove them explicitly. Simply updating domain with _the new
+nameservers_ will not work. The same goes for contact objects.
 
 ### Host objects
 
