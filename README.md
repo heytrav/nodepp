@@ -283,6 +283,7 @@ _request_. There uses are:
       2. _cancel_ to cancel a transfer.
       3. _query_ to find out if a transfer is pending (although we should get
          info via polling)
+
     * Domain holder side
       1. _approve_ to approve a transfer request from another registrar.
       2. _reject_ to reject a transfer request from another registrar.
