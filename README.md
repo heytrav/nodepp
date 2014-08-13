@@ -192,8 +192,33 @@ or
 Some registries set the ```id``` by default. In such cases it's common to use
 ```auto```. The value for ```type``` may also vary for different
 registries. Some require ```loc``` and some require ```int```. EPP allows for
-up to 2 entries in this field, however I've never seen a registry that accepts
-more than 1.
+up to 2 _postaInfo_ entries, however I've never seen a registry that accepts
+more than 1. For that reason, you can just specify it as a single object:
+
+                "postalInfo": {
+                    "name": "John Doe",
+                    "org": "Example Ltd",
+                    "type": "int",
+                    "addr": [{
+                        "street": ["742 Evergreen Terrace", "Apt b"],
+                        "city": "Springfield",
+                        "sp": "OR",
+                        "pc": "97801",
+                        "cc": "US"
+                    }]
+                }
+
+It will be passed to the registry in the appropriate format. The same applies
+to the _addr_ field (in _postalInfo_), which can also be specified as an Array
+or single object.
+
+                    "addr": {
+                        "street": ["742 Evergreen Terrace", "Apt b"],
+                        "city": "Springfield",
+                        "sp": "OR",
+                        "pc": "97801",
+                        "cc": "US"
+                    }
 
 ### checkDomain
 
