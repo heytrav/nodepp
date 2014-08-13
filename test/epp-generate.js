@@ -189,7 +189,61 @@ describe('EPP serialisation', function() {
 			expect(xml).to.match(/<contact:name>John Doe<\/contact:name>/);
 			expect(xml).to.match(/<contact:addr>(?:(?!<contact:city>).)*<contact:city>Springfield/);
 			expect(xml).to.match(/<contact:disclose(?:(?!<contact:email>).)*<contact:email\/>/);
+        
 		});
+        it('should process different types of postalInfo data', function() {
+            var postalInfo1  = [{
+					"name": "John Doe",
+					"org": "Example Ltd",
+					"type": "int",
+					"addr": [{
+						"street": ["742 Evergreen Terrace", "Apt b"],
+						"city": "Springfield",
+						"sp": "OR",
+						"pc": "97801",
+						"cc": "US"
+					}]
+				}];
+            var processedPostal1 = epp.processPostalInfo(postalInfo1);
+            expect(processedPostal1).to.have.deep.property("[0].contact:name" , "John Doe");
+
+            var postalInfo2  = {
+					"name": "John Doe",
+					"org": "Example Ltd",
+					"type": "int",
+					"addr": [{
+						"street": ["742 Evergreen Terrace", "Apt b"],
+						"city": "Springfield",
+						"sp": "OR",
+						"pc": "97801",
+						"cc": "US"
+					}]
+				};
+            var processedPostal2 = epp.processPostalInfo(postalInfo2);
+            expect(processedPostal2).to.have.deep.property("[0].contact:name" , "John Doe");
+
+        });
+        it('should handle different types of contact:addr data', function() {
+            var addr1 = [{
+                "street": ["742 Evergreen Terrace", "Apt b"],
+                "city": "Springfield",
+                "sp": "OR",
+                "pc": "97801",
+                "cc": "US"
+            }];
+            var processedAddr1 = epp.processPostalAddresses(addr1);
+            expect(processedAddr1).to.have.deep.property("[0].contact:sp", "OR");
+            var addr2 = {
+                "street": ["742 Evergreen Terrace", "Apt b"],
+                "city": "Springfield",
+                "sp": "OR",
+                "pc": "97801",
+                "cc": "US"
+            };
+            var processedAddr2 = epp.processPostalAddresses(addr2);
+            expect(processedAddr2).to.have.deep.property("[0].contact:sp", "OR");
+            
+        });
 
 		it('should generate a "deleteContact" command', function() {
 			var deleteContact = {
