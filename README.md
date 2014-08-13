@@ -276,7 +276,16 @@ you will get back in one _infoDomain_ will be complicated enough.
             }
 
 Valid values for ```op``` are _approve_, _cancel_, _query_, _reject_, and
-_request_.
+_request_. There uses are:
+
+   * Requesting side
+      1. _request_ to request a transfer.
+      2. _cancel_ to cancel a transfer.
+      3. _query_ to find out if a transfer is pending (although we should get
+         info via polling)
+    * Domain holder side
+      1. _approve_ to approve a transfer request from another registrar.
+      2. _reject_ to reject a transfer request from another registrar.
 
 ### updateDomain
 
