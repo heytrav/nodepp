@@ -13,7 +13,7 @@ describe('EPP socket connection handling', function() {
     describe('writing EPP data to server', function() {
         it('should result in a string with xml length + 4', function() {
             var protocolConnection = new ProtocolConnection();
-            preparedXML = protocolConnection.prepareXML(rawXML);
+            preparedXML = protocolConnection.processBigEndian(rawXML);
             var length = preparedXML.length;
             expect(length).to.equal(rawXML.length + 4);
         });

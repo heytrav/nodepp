@@ -4,14 +4,17 @@ var expect = chai.expect,
 should = chai.should;
 
 var EppFactory = require('../lib/epp-factory.js');
-var mainConfig = require('../lib/epp-config-devel.json');
+nconf = require('nconf');
+nconf.env().file({
+    "file": "./lib/epp-config.json"
+});
 
 describe('EPP serialisation', function() {
 
 	describe('general commands', function() {
 		var epp, config;
 		beforeEach(function() {
-			config = mainConfig['hexonet-test1'];
+			config = nconf.get('registries')['hexonet-test1'];
 			epp = EppFactory.generate('hexonet-test1', config);
 		});
 		it('should be an epp object with hexonet config', function() {
@@ -474,7 +477,7 @@ describe('EPP serialisation', function() {
 	describe('extension handling', function() {
 		var epp, config;
 		beforeEach(function() {
-			config = mainConfig['nzrs-test1'];
+			config = nconf.get('registries')['nzrs-test1'];
 			epp = EppFactory.generate('nzrs-test1', config);
 		});
 		it('should be decorated with the secDNS extension methods', function() {
@@ -670,7 +673,7 @@ describe('EPP serialisation', function() {
 	describe('Hexonet extension', function() {
 		var hexonetEpp, config;
 		beforeEach(function() {
-			config = mainConfig['hexonet-test1'];
+			config = nconf.get('registries')['hexonet-test1'];
 			hexonetEpp = EppFactory.generate('hexonet-test1', config);
 		});
 		it('should be decorated with the secDNS extension methods', function() {

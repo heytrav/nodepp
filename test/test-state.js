@@ -1,10 +1,14 @@
 var chai = require('chai');
+nconf = require('nconf');
+nconf.env().file({
+    "file": "./lib/epp-config.json"
+});
 
 var expect = chai.expect,
 should = chai.should;
 
 var ProtocolState = require('../lib/protocol-state.js');
-var config = require('../lib/epp-config-devel.json')['nzrs-test1'];
+var config = nconf.get('registries')['nzrs-test1'];
 
 describe('Communication protocol state machine', function() {
     var protocol, stateMachine;
