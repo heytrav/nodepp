@@ -1,7 +1,7 @@
 var chai = require('chai');
 nconf = require('nconf');
 nconf.env().file({
-    "file": "./lib/epp-config.json"
+    "file": "./config/epp-config.json"
 });
 
 var expect = chai.expect,

@@ -70,7 +70,7 @@ to a registry as a completely different registrar. This is primarily useful
 for simulating incoming/outgoing contact/domain/host transfers. To setup up
 the config:
 
-    ln -s lib/epp-config-devel.json lib/epp-config.json
+    ln -s config/epp-config-devel.json config/epp-config.json
 
 This sets up the development accounts. To setup the production account (which
 you should only ever do during deployment to a production platform), replace
@@ -80,7 +80,7 @@ If you are running this in a docker container, setting the environment
 variable ```IWMN_ENV=<environment>``` when launching the containers will
 automatically bootstrap everything with whatever is in ```<environment>```. So
 if you set it to ```production```, it will automatically link
-```lib/epp-config-production.json```. This defaults to ```devel```.
+```config/epp-config-production.json```. This defaults to ```devel```.
 
 
 ##Running the service

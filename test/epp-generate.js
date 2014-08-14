@@ -6,7 +6,7 @@ should = chai.should;
 var EppFactory = require('../lib/epp-factory.js');
 nconf = require('nconf');
 nconf.env().file({
-    "file": "./lib/epp-config.json"
+    "file": "./config/epp-config.json"
 });
 
 describe('EPP serialisation', function() {
