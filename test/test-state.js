@@ -8,12 +8,12 @@ var expect = chai.expect,
 should = chai.should;
 
 var ProtocolState = require('../lib/protocol-state.js');
-var config = nconf.get('registries')['nzrs-test1'];
+var config = nconf.get('registries')['hexonet-test1'];
 
 describe('Communication protocol state machine', function() {
     var protocol, stateMachine;
     beforeEach(function() {
-        stateMachine = new ProtocolState('nzrs-test1', config);
+        stateMachine = new ProtocolState('hexonet-test1', config);
         var connection = stateMachine.connection;
         connection.send = function(xml, callback) {
             callback('<test></test>');
