@@ -14,7 +14,7 @@ registry, and then does the whole thing in reverse with the response. You
 should get back something in JSON format.
 
 You also do not have to login. The app logs into the registry when it is
-started. 
+started.
 
 ### What it isn't
 
@@ -22,7 +22,7 @@ It doesn't know anything about business logic--neither ours, nor the
 registries'. It just knows how to communicate over EPP.  If you think that's
 silly, then have a look at all of the EPP RFCs (5730 onward) and you can see
 how stupidly complex it is. Just be happy that you don't have to worry about
-munging data into fugly XML structures.
+munging data into ugly XML.
 
 The objective of abstracting just the EPP stuff out is to *separate our
 concerns* and avoid having super-mega modules that _do all the things_ (i.e.
