@@ -6,14 +6,11 @@ nconf.env().file({
 });
 var rabbitmqConfig = nconf.get('rabbitmq');
 var chai = require('chai');
-//var chaiAsPromised = require('chai-as-promised');
-//chai.use(chaiAsPromised);
 var expect = chai.expect,
 should = chai.should;
 
 describe('EPP worker process control', function() {
     var amqpConnection, exchange, eppQueue, backendQueue;
-    var registries = ["hexonet-test1"];
     before(function(done) {
         amqpConnection = amqp.createConnection(rabbitmqConfig.connection);
         amqpConnection.on('ready', function() {
@@ -26,6 +23,12 @@ describe('EPP worker process control', function() {
     before(function(done) {
         eppQueue = amqpConnection.queue('eppQueue', function(queue) {
             eppQueue.bind(exchange, 'test-epp');
+            done();
+        });
+    });
+    before(function(done){
+        backendQueue = amqpConnection.queue('eppResponse', function(queue) {
+            backendQueue.bind(exchange, 'test-epp2');
             done();
         });
     });
@@ -44,8 +47,21 @@ describe('EPP worker process control', function() {
                 "name": "test-domain.com"
             }
         });
-
     });
 
+    it('should pass a message to another consumer', function(done) {
+        backendQueue.subscribe(function(msg) {
+            try {
+                console.log("Got msg: ",msg);
+                done();
+            }
+            catch (e) {
+                done(e);
+            }
+        });
+        exchange.publish('test-epp2', {
+            "testResponse":"successful"
+        });
+    });
 });
 
