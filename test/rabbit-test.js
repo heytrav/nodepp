@@ -141,7 +141,7 @@ describe('RabbitMQ operation', function() {
                 }
             });
 
-            // send two commands to server
+            // send several commands to server
 
             for (var i in domains) {
                 var domain = domains[i];
