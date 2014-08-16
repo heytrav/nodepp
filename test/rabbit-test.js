@@ -102,6 +102,7 @@ describe('RabbitMQ operation', function() {
         });
         it('should create an rpc queue', function(done) {
             serverQueue.subscribe( function(msg, headers, deliveryInfo, msgObject) {
+                expect(msg).to.have.deep.property('data.name', 'test-me.com');
                 exchange.publish(deliveryInfo.replyTo, {"response": "successful"}, {"correlationId": deliveryInfo.correlationId});
             });
             var corrId = uuid.v4();
