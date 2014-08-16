@@ -103,25 +103,40 @@ describe('RabbitMQ operation', function() {
                 done();
             });
         });
-        it('should create an rpc queue', function(done) {
-            serverQueue.subscribe(function(msg, headers, deliveryInfo, msgObject) {
-                expect(msg).to.have.deep.property('data.name', 'test-me.com');
-                exchange.publish(deliveryInfo.replyTo, {
-                    "response": "successful"
-                },
-                {
-                    "correlationId": deliveryInfo.correlationId
-                });
+        it('should create an rpc queue and bounce multiple message back from server', function(done) {
+            var counter = 0;
+            var corrIds = [uuid.v4(), uuid.v4()];
+            var domains = ["test-me.com", "test-me-2.com"];
+
+            serverQueue.subscribe({
+                "ack": true
+            },
+            function(msg, headers, deliveryInfo, msgObject) {
+                console.log("server got message: ", msg);
+                try {
+                    expect(msg).to.have.deep.property('data.name', domains[counter]);
+                    exchange.publish(deliveryInfo.replyTo, {
+                        "response": "successful"
+                    },
+                    {
+                        "correlationId": deliveryInfo.correlationId
+                    });
+                    msgObject.acknowledge(false);
+                } catch(e) {
+                    console.error(e);
+                }
             });
-            var corrId = uuid.v4();
             clientQueue.subscribe(function(msg, headers, deliveryInfo, msgObject) {
                 try {
-                    if (deliveryInfo.correlationId && deliveryInfo.correlationId == corrId) {
+                    console.log("Client received: ", msg);
+                    if (deliveryInfo.correlationId && deliveryInfo.correlationId == corrIds[counter]) {
                         expect(msg).to.have.deep.property('response', 'successful');
-                        done();
+                        if (counter == 1) {
+                            done();
+                        }
+                        counter = counter + 1;
                     }
                 } catch(e) {
-                    /* handle error */
                     done(e);
                 }
             });
@@ -134,7 +149,17 @@ describe('RabbitMQ operation', function() {
             },
             {
                 "replyTo": "clientQueue",
-                "correlationId": corrId
+                "correlationId": corrIds[0]
+            });
+            exchange.publish('serverQueue', {
+                "command": "infoDomain",
+                "data": {
+                    "name": "test-me-2.com"
+                }
+            },
+            {
+                "replyTo": "clientQueue",
+                "correlationId": corrIds[1]
             });
 
         });
