@@ -31,11 +31,21 @@ describe('RabbitMQ operation', function() {
             done();
         });
     });
-    it('should pass a message from a producer to a consumer', function(done) {
-        eppQueue.subscribe(function(msg) {
+    it('should ', function(done) {
+        var counter = 1;
+        eppQueue.subscribe({"ack": true}, function(msg, headers, deliveryInfo, messageObject) {
             try {
                 expect(msg.command).to.equal('checkDomain');
-                done();
+                if (counter == 1) 
+                    expect(msg.data).to.have.deep.property('name', 'test-1-domain.com');
+                 else  
+                    expect(msg.data).to.have.deep.property('name', 'test-2-domain.com');
+                
+                messageObject.acknowledge(true);
+                if (counter == 2) {
+                    done();
+                }
+                counter = counter + 1;
             } catch(e) {
                 done(e);
             }
@@ -43,13 +53,19 @@ describe('RabbitMQ operation', function() {
         exchange.publish('test-epp', {
             "command": "checkDomain",
             "data": {
-                "name": "test-domain.com"
+                "name": "test-1-domain.com"
+            }
+        });
+        exchange.publish('test-epp', {
+            "command": "checkDomain",
+            "data": {
+                "name": "test-2-domain.com"
             }
         });
     });
 
     it('should pass a message to another consumer', function(done) {
-        backendQueue.subscribe(function(msg) {
+        backendQueue.subscribe({"ack": true},function(msg) {
             try {
                 expect(msg.testResponse).to.equal('successful');
                 done();
