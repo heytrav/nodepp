@@ -1,4 +1,3 @@
-cp = require('child_process');
 amqp = require('amqp');
 nconf = require('nconf');
 nconf.env().file({
@@ -62,6 +61,11 @@ describe('RabbitMQ operation', function() {
         exchange.publish('test-epp2', {
             "testResponse":"successful"
         });
+    });
+
+    after(function() {
+        amqpConnection.disconnect();
+
     });
 });
 
