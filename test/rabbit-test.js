@@ -105,8 +105,8 @@ describe('RabbitMQ operation', function() {
         });
         it('should create an rpc queue and bounce multiple message back from server', function(done) {
             var counter = 0;
-            var corrIds = [uuid.v4(), uuid.v4()];
-            var domains = ["test-me.com", "test-me-2.com"];
+            var corrIds = [uuid.v4(), uuid.v4(), uuid.v4()];
+            var domains = ["test-me.com", "test-me-2.com", "test-me-3.com"];
 
             serverQueue.subscribe({
                 "ack": true
@@ -131,7 +131,7 @@ describe('RabbitMQ operation', function() {
                     console.log("Client received: ", msg);
                     if (deliveryInfo.correlationId && deliveryInfo.correlationId == corrIds[counter]) {
                         expect(msg).to.have.deep.property('response', 'successful');
-                        if (counter == 1) {
+                        if (counter == 2) {
                             done();
                         }
                         counter = counter + 1;
@@ -141,26 +141,22 @@ describe('RabbitMQ operation', function() {
                 }
             });
 
-            exchange.publish('serverQueue', {
-                "command": "infoDomain",
-                "data": {
-                    "name": "test-me.com"
-                }
-            },
-            {
-                "replyTo": "clientQueue",
-                "correlationId": corrIds[0]
-            });
-            exchange.publish('serverQueue', {
-                "command": "infoDomain",
-                "data": {
-                    "name": "test-me-2.com"
-                }
-            },
-            {
-                "replyTo": "clientQueue",
-                "correlationId": corrIds[1]
-            });
+            // send two commands to server
+
+            for (var i in domains) {
+                var domain = domains[i];
+                var corrId = corrIds[i];
+                exchange.publish('serverQueue', {
+                    "command": "infoDomain",
+                    "data": {
+                        "name": domain
+                    }
+                },
+                {
+                    "replyTo": "clientQueue",
+                    "correlationId": corrId
+                });
+            }
 
         });
     });
