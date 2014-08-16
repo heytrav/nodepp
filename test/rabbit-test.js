@@ -9,7 +9,7 @@ var chai = require('chai');
 var expect = chai.expect,
 should = chai.should;
 
-describe('EPP worker process control', function() {
+describe('RabbitMQ operation', function() {
     var amqpConnection, exchange, eppQueue, backendQueue;
     before(function(done) {
         amqpConnection = amqp.createConnection(rabbitmqConfig.connection);
@@ -52,7 +52,7 @@ describe('EPP worker process control', function() {
     it('should pass a message to another consumer', function(done) {
         backendQueue.subscribe(function(msg) {
             try {
-                console.log("Got msg: ",msg);
+                expect(msg.testResponse).to.equal('successful');
                 done();
             }
             catch (e) {
