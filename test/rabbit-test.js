@@ -163,7 +163,6 @@ describe('RabbitMQ operation', function() {
 
     after(function() {
         amqpConnection.disconnect();
-
     });
 });
 
