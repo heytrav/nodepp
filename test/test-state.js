@@ -36,9 +36,9 @@ describe('Communication protocol state machine', function() {
         fos.end();
     });
 
-    describe('simulate login', function() {
+    describe('simulate login/logout', function() {
 
-        it('should go into idle state once logged in', function(done) {
+        it('should have loggedIn flag set to true once logged in', function(done) {
             stateMachine.login({
                 "login": "test-user",
                 "password": "1234xyz"
@@ -51,6 +51,18 @@ describe('Communication protocol state machine', function() {
                     done();
 
                 } catch(e) {
+                    done(e);
+                }
+            });
+            var xmlSuccess = fs.readFileSync('./test/epp-success.xml');
+            stateMachine.connection.clientResponse(xmlSuccess);
+        });
+        it('should have loggedIn flag set to false once logged out', function(done) {
+            stateMachine.logout('test-logout-1234').then(function(data) {
+                try {
+                    expect(stateMachine.loggedIn).to.equal(false);
+                    done();
+                } catch (e) {
                     done(e);
                 }
             });
