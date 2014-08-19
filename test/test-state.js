@@ -18,7 +18,6 @@ describe('Communication protocol state machine', function() {
         var stateMachine, fos;
         before(function() {
             var filename = ["/tmp/test-epp-protocol", moment().unix(), "state.log"].join('-');
-            console.log("Opening file stream to file: ", filename);
             fos = fs.createWriteStream(filename, {
                 "flags": "w",
                 mode: 0666
