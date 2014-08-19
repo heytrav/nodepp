@@ -26,12 +26,12 @@ describe('Communication protocol state machine', function() {
         });
 
         after(function() {
-            console.info("Closing file handle");
+            //console.info("Closing file handle");
             // Close the writable stream after each test
             fos.end();
         });
         before(function() {
-            console.log("initialising state machine");
+            //console.log("initialising state machine");
             stateMachine = new ProtocolState('hexonet-test1', config);
             var connection = stateMachine.connection;
 
@@ -71,49 +71,45 @@ describe('Communication protocol state machine', function() {
             var xmlSuccess = fs.readFileSync('./test/epp-success.xml');
             stateMachine.connection.clientResponse(xmlSuccess);
         });
-        //it('should move into idle loop following successful login', function() {
-        ////expect(stateMachine.connected).to.equal(true);
-        //expect(stateMachine.state).to.equal('idle');
-        //});
-        //it('should throw an error if transactionId not present', function() {
-        //var testCrash = function() {
-        //stateMachine.command('logout', {},
-        //function() {
-        //return {
-        //"status": "OK"
-        //};
-        //});
-        //};
-        //expect(testCrash).to.
-        //throw ('No transactionId provided');
-        //});
-        //it('should throw an error if callback not provided', function() {
-        //var testCrash = function () {
-        //stateMachine.command('dosesntMatter', {}, 'test-happiness');
-        //};
-        //expect(testCrash).to.throw('Return callback must be a function.');
-        //});
-        //it('should be disconnected after logging out', function() {
-        //stateMachine.command('logout', {},
-        //'test-logout-1234',
-        //function() {
-        //return {
-        //"status": "OK"
-        //};
-        //});
-        //});
-        //it('should execute a specific command and then return to an idle state', function() {
-        //stateMachine.command('checkDomain', {
-        //"domain": "test-domain.com"
-        //},
-        //'test-checkDomain-1234', function() {
-        //return {
-        //"status": "OK"
-        //};
-        //});
-        //expect(stateMachine.state).to.equal('idle');
-        //});
-        after(function() {});
+    });
+
+    describe('login error state', function() {
+        var stateMachine, fos;
+        before(function() {
+            var filename = ["/tmp/test-epp-protocol", moment().unix(), "state.log"].join('-');
+            fos = fs.createWriteStream(filename, {
+                "flags": "w",
+                mode: 0666
+            });
+        });
+
+        after(function() {
+            // Close the writable stream after each test
+            fos.end();
+        });
+        before(function() {
+            stateMachine = new ProtocolState('hexonet-test1', config);
+            var connection = stateMachine.connection;
+
+            // Use a file stream instead of trying to talk to the actual registry,
+            // we're only testing the "state" control here.
+            connection.setStream(fos);
+        });
+        it('should not have loggedIn true if log in failed', function(done) {
+            stateMachine.login({
+                "login": "test-user",
+                "password": "abc123"
+            },
+            'test-fail-login').then(function(data) {
+                done(new Error("Should not execute!"));
+            },
+            function(error) {
+                expect(stateMachine.loggedIn).to.equal(false);
+                done();
+            });
+            var xmlSuccess = fs.readFileSync('./test/epp-fail.xml');
+            stateMachine.connection.clientResponse(xmlSuccess);
+        });
     });
 });
 

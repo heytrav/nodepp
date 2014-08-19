@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+ <response>
+  <result code="2004">
+   <msg>Parameter value range error</msg>
+   <value xmlns:obj="urn:ietf:params:xml:ns:obj">
+    <obj:elem1>2525</obj:elem1>
+   </value>
+  </result>
+  <result code="2005">
+   <msg>Parameter value syntax error</msg>
+   <value xmlns:obj="urn:ietf:params:xml:ns:obj">
+    <obj:elem2>ex(ample</obj:elem2>
+   </value>
+   <extValue>
+    <value xmlns:obj="urn:ietf:params:xml:ns:obj">
+     <obj:elem3>abc.ex(ample</obj:elem3>
+    </value>
+    <reason>Invalid character found.</reason>
+   </extValue>
+  </result>
+  <trID>
+   <clTRID>ABC-12345</clTRID>
+   <svTRID>54321-XYZ</svTRID>
+  </trID>
+ </response>
+</epp>
