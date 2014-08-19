@@ -76,7 +76,7 @@ describe('Communication protocol state machine', function() {
     describe('login error state', function() {
         var stateMachine, fos;
         before(function() {
-            var filename = ["/tmp/test-epp-protocol", moment().unix(), "state.log"].join('-');
+            var filename = ["/tmp/test-epp-protocol", moment().unix(), "fail-login-state.log"].join('-');
             fos = fs.createWriteStream(filename, {
                 "flags": "w",
                 mode: 0666
@@ -111,5 +111,64 @@ describe('Communication protocol state machine', function() {
             stateMachine.connection.clientResponse(xmlSuccess);
         });
     });
+
+    describe('command execution', function() {
+        var stateMachine, fos, domain, transactionId;
+        before(function(done) {
+            this.timeout(4000);
+            stateMachine = new ProtocolState('hexonet-test1', config);
+            var connection = stateMachine.connection;
+            connection.initStream().then(
+            function(data) {
+                setTimeout(
+                function() {
+                    stateMachine.login({
+                        "login": config.login,
+                        "password": config.password
+                    },
+                    'iwmn-test-1234').then(function() {
+                        console.log("Logged in");
+                        done();
+                    },
+                    function(error) {
+                        console.error("Unable to log in: ", error);
+                    });
+                },
+                1000);
+            });
+        });
+        before(function() {
+            domain = ['iwmn', moment().unix(), 'check.com'].join('-');
+        });
+        beforeEach(function() {
+            transactionId = ['iwmn', moment().unix()].join('-');
+        });
+        it('should execute a command', function(done) {
+            stateMachine.command('checkDomain', {
+                "name": domain
+            },
+            transactionId).then(function(data) {
+                try {
+                    //console.log("Got data back: ",data);
+                    expect(data).to.have.deep.property('data.domain:chkData.domain:cd.domain:name.$t', domain);
+                    done();
+                } catch(e) {
+                    done(e);
+                }
+            },
+            function(error) {
+                console.error("Unable to process response: ", error);
+                done(error);
+            });
+        });
+
+        after(function(done) {
+            stateMachine.logout('iwmn-logout').then(function() {
+                done();
+            });
+        });
+
+    });
+
 });
 
