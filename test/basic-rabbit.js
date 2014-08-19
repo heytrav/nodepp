@@ -94,19 +94,8 @@ describe('RabbitMQ operation', function() {
         });
     });
     describe('RPC test', function() {
-        var serverQueue, clientQueue;
-        //before(function() {
-        //});
-        //before(function(done) {
-            //amqpConnection.queue('clientQueue', {
-                //"durable": false
-            //}).then(function(queue) {
-                //clientQueue = queue;
-                //clientQueue.bind(exchange, 'clientQueue');
-                //done();
-            //});
-        //});
-        it('should create an rpc queue and bounce multiple message back from server', function(done) {
+
+        it('should create a "promised-base" rpc server and bounce a few requests off it and back to client', function(done) {
             this.timeout(4000);
             var counter = 0;
             var corrIds = [uuid.v4(), uuid.v4(), uuid.v4()];
