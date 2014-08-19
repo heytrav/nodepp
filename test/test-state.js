@@ -16,20 +16,20 @@ describe('Communication protocol state machine', function() {
 
     describe('simulate login/logout', function() {
         var stateMachine, fos;
-    before(function() {
-        var filename = ["/tmp/test-epp-protocol", moment().unix(), "state.log"].join('-');
-        console.log("Opening file stream to file: ", filename);
-        fos = fs.createWriteStream(filename, {
-            "flags": "w",
-            mode: 0666
+        before(function() {
+            var filename = ["/tmp/test-epp-protocol", moment().unix(), "state.log"].join('-');
+            console.log("Opening file stream to file: ", filename);
+            fos = fs.createWriteStream(filename, {
+                "flags": "w",
+                mode: 0666
+            });
         });
-    });
 
-    after(function() {
-        console.info("Closing file handle");
-        // Close the writable stream after each test
-        fos.end();
-    });
+        after(function() {
+            console.info("Closing file handle");
+            // Close the writable stream after each test
+            fos.end();
+        });
         before(function() {
             console.log("initialising state machine");
             stateMachine = new ProtocolState('hexonet-test1', config);
