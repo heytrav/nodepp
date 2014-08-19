@@ -13,30 +13,32 @@ var ProtocolState = require('../lib/protocol-state.js');
 var config = nconf.get('registries')['hexonet-test1'];
 
 describe('Communication protocol state machine', function() {
-    var protocol, stateMachine, fos;
-    beforeEach(function() {
-        stateMachine = new ProtocolState('hexonet-test1', config);
-        var connection = stateMachine.connection;
 
-        // Use a file stream instead of trying to talk to the actual registry,
-        // we're only testing the "state" control here.
+    describe('simulate login/logout', function() {
+        var stateMachine, fos;
+    before(function() {
         var filename = ["/tmp/test-epp-protocol", moment().unix(), "state.log"].join('-');
+        console.log("Opening file stream to file: ", filename);
         fos = fs.createWriteStream(filename, {
             "flags": "w",
             mode: 0666
         });
-        connection.setStream(fos);
-    });
-    it('should start out offline', function() {
-        expect(stateMachine.state).to.equal('offline');
     });
 
-    afterEach(function() {
+    after(function() {
+        console.info("Closing file handle");
         // Close the writable stream after each test
         fos.end();
     });
+        before(function() {
+            console.log("initialising state machine");
+            stateMachine = new ProtocolState('hexonet-test1', config);
+            var connection = stateMachine.connection;
 
-    describe('simulate login/logout', function() {
+            // Use a file stream instead of trying to talk to the actual registry,
+            // we're only testing the "state" control here.
+            connection.setStream(fos);
+        });
 
         it('should have loggedIn flag set to true once logged in', function(done) {
             stateMachine.login({
@@ -62,7 +64,7 @@ describe('Communication protocol state machine', function() {
                 try {
                     expect(stateMachine.loggedIn).to.equal(false);
                     done();
-                } catch (e) {
+                } catch(e) {
                     done(e);
                 }
             });
@@ -111,6 +113,7 @@ describe('Communication protocol state machine', function() {
         //});
         //expect(stateMachine.state).to.equal('idle');
         //});
+        after(function() {});
     });
 });
 
