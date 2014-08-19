@@ -188,13 +188,36 @@ describe('Communication protocol state machine', function() {
                 }]
             };
             stateMachine.command('createContact', contactData, transactionId).then(function(data) {
-                console.log("Created contact: ", data);
+                //console.log("Created contact: ", data);
+                expect(data).to.have.deep.property('result.code', 1000);
                 done();
             },
             function(error) {
                 console.log("Got error: ", error);
                 done(error);
             });
+        });
+
+        it('should fail due to local validation', function() {
+            this.timeout(4000);
+            var contactId = ['iwmn', moment().unix()].join('-');
+
+            var contactData = {
+
+                "id": contactId,
+                "voice": "+1.9405551234",
+                "fax": "+1.9405551233",
+                "email": "john.doe@null.com",
+                "authInfo": {
+                    "pw": "xyz123"
+                },
+            // omit postal info data
+            };
+            var validationError = function () {
+                stateMachine.command('createContact', contactData, transactionId).then(function(data) { });
+            };
+            expect(validationError).to.throw('postalInfo required in contact data');
+        
         });
 
         after(function(done) {
