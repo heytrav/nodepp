@@ -172,10 +172,6 @@ describe('Communication protocol state machine', function() {
                 "authInfo": {
                     "pw": "xyz123"
                 },
-                //"disclose": {
-                    //"flag": 0,
-                    //"disclosing": ["voice", "email"]
-                //},
                 "postalInfo": [{
                     "name": "John Doe",
                     "org": "Example Ltd",
