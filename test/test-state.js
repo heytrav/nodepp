@@ -137,12 +137,12 @@ describe('Communication protocol state machine', function() {
             });
         });
         before(function() {
-            domain = ['iwmn', moment().unix(), 'check.com'].join('-');
+            domain = ['iwmn', moment().unix(), 'test.com'].join('-');
         });
         beforeEach(function() {
             transactionId = ['iwmn', moment().unix()].join('-');
         });
-        it('should execute a command', function(done) {
+        it('should execute a checkDomain for ' + domain, function(done) {
             stateMachine.command('checkDomain', {
                 "name": domain
             },
@@ -157,6 +157,44 @@ describe('Communication protocol state machine', function() {
             },
             function(error) {
                 console.error("Unable to process response: ", error);
+                done(error);
+            });
+        });
+        it('should create a contact', function(done) {
+            var contactId = ['iwmn', moment().unix()].join('-');
+
+            var contactData = {
+
+                "id": contactId,
+                "voice": "+1.9405551234",
+                "fax": "+1.9405551233",
+                "email": "john.doe@null.com",
+                "authInfo": {
+                    "pw": "xyz123"
+                },
+                //"disclose": {
+                    //"flag": 0,
+                    //"disclosing": ["voice", "email"]
+                //},
+                "postalInfo": [{
+                    "name": "John Doe",
+                    "org": "Example Ltd",
+                    "type": "int",
+                    "addr": [{
+                        "street": ["742 Evergreen Terrace", "Apt b"],
+                        "city": "Springfield",
+                        "sp": "OR",
+                        "pc": "97801",
+                        "cc": "US"
+                    }]
+                }]
+            };
+            stateMachine.command('createContact', contactData, transactionId).then(function(data) {
+                console.log("Created contact: ", data);
+                done();
+            },
+            function(error) {
+                console.log("Got error: ", error);
                 done(error);
             });
         });
