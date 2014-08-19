@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "amqp": "^0.2.0",
+    "amqp-as-promised": "^0.1.4",
     "body-parser": "^1.5.0",
     "commander": "^2.3.0",
     "daemon": "^1.1.0",
