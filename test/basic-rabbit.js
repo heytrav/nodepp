@@ -4,6 +4,7 @@ nconf.env().file({
     "file": "./config/epp-config.json"
 });
 var uuid = require('node-uuid');
+var Q = require('q');
 var rabbitmqConfig = nconf.get('rabbitmq');
 var chai = require('chai');
 var expect = chai.expect,
@@ -94,74 +95,47 @@ describe('RabbitMQ operation', function() {
     });
     describe('RPC test', function() {
         var serverQueue, clientQueue;
-        before(function(done) {
-            amqpConnection.queue('serverQueue', {
-                "durable": false
-            }).then(function(queue) {
-                serverQueue = queue;
-                serverQueue.bind(exchange, 'serverQueue');
-                done();
-            });
-        });
-        before(function(done) {
-            amqpConnection.queue('clientQueue', {
-                "durable": false
-            }).then(function(queue) {
-                clientQueue = queue;
-                clientQueue.bind(exchange, 'clientQueue');
-                done();
-            });
-        });
+        //before(function() {
+        //});
+        //before(function(done) {
+            //amqpConnection.queue('clientQueue', {
+                //"durable": false
+            //}).then(function(queue) {
+                //clientQueue = queue;
+                //clientQueue.bind(exchange, 'clientQueue');
+                //done();
+            //});
+        //});
         it('should create an rpc queue and bounce multiple message back from server', function(done) {
+            this.timeout(4000);
             var counter = 0;
             var corrIds = [uuid.v4(), uuid.v4(), uuid.v4()];
             var domains = ["test-me.com", "test-me-2.com", "test-me-3.com"];
 
-            serverQueue.subscribe({
-                "ack": true
-            },
-            function(msg, headers, deliveryInfo, msgObject) {
-                try {
-                    expect(msg).to.have.deep.property('data.name', domains[counter]);
-                    exchange.publish(deliveryInfo.replyTo, {
-                        "response": "successful"
-                    },
-                    {
-                        "correlationId": deliveryInfo.correlationId
-                    });
-                    msgObject.acknowledge(false);
-                } catch(e) {
-                    console.error(e);
-                }
-            });
-            clientQueue.subscribe(function(msg, headers, deliveryInfo, msgObject) {
-                try {
-                    if (deliveryInfo.correlationId && deliveryInfo.correlationId == corrIds[counter]) {
-                        expect(msg).to.have.deep.property('response', 'successful');
-                        if (counter == 2) {
-                            done();
-                        }
-                        counter = counter + 1;
-                    }
-                } catch(e) {
-                    done(e);
-                }
+            amqpConnection.serve('eppTest', 'serverQueue.hexonet', function(msg, headers, deliveryInfo) {
+                var deferred = Q.defer();
+                expect(msg).to.have.deep.property('data.name');
+                deferred.resolve({"response": "successful", "data": msg});
+                return deferred.promise;
             });
 
+            var handleResponse = function(response) {
+                if (counter == 2) {
+                    done();
+                }
+                counter = counter + 1;
+            };
             // send several commands to server
             for (var i in domains) {
                 var domain = domains[i];
                 var corrId = corrIds[i];
-                exchange.publish('serverQueue', {
+                var msg = {
                     "command": "infoDomain",
                     "data": {
                         "name": domain
                     }
-                },
-                {
-                    "replyTo": "clientQueue",
-                    "correlationId": corrId
-                });
+                };
+                amqpConnection.rpc('eppTest', 'serverQueue.hexonet', msg).then(handleResponse);
             }
 
         });
