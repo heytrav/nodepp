@@ -1,4 +1,4 @@
-amqp = require('amqp');
+var Amqp = require('amqp-as-promised');
 nconf = require('nconf');
 nconf.env().file({
     "file": "./config/epp-config.json"
@@ -12,24 +12,30 @@ should = chai.should;
 describe('RabbitMQ operation', function() {
     var amqpConnection, exchange;
     before(function(done) {
-        amqpConnection = amqp.createConnection(rabbitmqConfig.connection);
-        amqpConnection.on('ready', function() {
-            exchange = amqpConnection.exchange('eppTest');
-            exchange.on('open', function() {
-                done();
-            });
+        amqpConnection = new Amqp(rabbitmqConfig.connection);
+        amqpConnection.exchange('eppTest', {
+            "passive": false
+        }).then(function(ex) {
+            exchange = ex;
+            done();
         });
     });
     describe('test one-way queues', function() {
         var eppQueue, backendQueue;
         before(function(done) {
-            eppQueue = amqpConnection.queue('eppQueue', function(queue) {
+            amqpConnection.queue('eppQueue', {
+                "durable": false
+            }).then(function(queue) {
+                eppQueue = queue;
                 eppQueue.bind(exchange, 'test-epp');
                 done();
             });
         });
         before(function(done) {
-            backendQueue = amqpConnection.queue('eppResponse', function(queue) {
+            amqpConnection.queue('eppResponse', {
+                "durable": false
+            }).then(function(queue) {
+                backendQueue = queue;
                 backendQueue.bind(exchange, 'test-epp2');
                 done();
             });
@@ -89,16 +95,19 @@ describe('RabbitMQ operation', function() {
     describe('RPC test', function() {
         var serverQueue, clientQueue;
         before(function(done) {
-            serverQueue = amqpConnection.queue('serverQueue', function(queue) {
+            amqpConnection.queue('serverQueue', {
+                "durable": false
+            }).then(function(queue) {
+                serverQueue = queue;
                 serverQueue.bind(exchange, 'serverQueue');
                 done();
             });
         });
         before(function(done) {
-            clientQueue = amqpConnection.queue('clientQueue', {
-                "exclusive": true
-            },
-            function(queue) {
+            amqpConnection.queue('clientQueue', {
+                "durable": false
+            }).then(function(queue) {
+                clientQueue = queue;
                 clientQueue.bind(exchange, 'clientQueue');
                 done();
             });
@@ -112,7 +121,6 @@ describe('RabbitMQ operation', function() {
                 "ack": true
             },
             function(msg, headers, deliveryInfo, msgObject) {
-                console.log("server got message: ", msg);
                 try {
                     expect(msg).to.have.deep.property('data.name', domains[counter]);
                     exchange.publish(deliveryInfo.replyTo, {
@@ -128,7 +136,6 @@ describe('RabbitMQ operation', function() {
             });
             clientQueue.subscribe(function(msg, headers, deliveryInfo, msgObject) {
                 try {
-                    console.log("Client received: ", msg);
                     if (deliveryInfo.correlationId && deliveryInfo.correlationId == corrIds[counter]) {
                         expect(msg).to.have.deep.property('response', 'successful');
                         if (counter == 2) {
@@ -142,7 +149,6 @@ describe('RabbitMQ operation', function() {
             });
 
             // send several commands to server
-
             for (var i in domains) {
                 var domain = domains[i];
                 var corrId = corrIds[i];
@@ -159,10 +165,6 @@ describe('RabbitMQ operation', function() {
             }
 
         });
-    });
-
-    after(function() {
-        amqpConnection.disconnect();
     });
 });
 

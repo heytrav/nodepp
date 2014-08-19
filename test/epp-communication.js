@@ -143,6 +143,7 @@ describe('Communication protocol state machine', function() {
             transactionId = ['iwmn', moment().unix()].join('-');
         });
         it('should execute a checkDomain for ' + domain, function(done) {
+            this.timeout(4000);
             stateMachine.command('checkDomain', {
                 "name": domain
             },
@@ -161,6 +162,7 @@ describe('Communication protocol state machine', function() {
             });
         });
         it('should create a contact', function(done) {
+            this.timeout(4000);
             var contactId = ['iwmn', moment().unix()].join('-');
 
             var contactData = {
@@ -196,6 +198,7 @@ describe('Communication protocol state machine', function() {
         });
 
         after(function(done) {
+            this.timeout(4000);
             stateMachine.logout('iwmn-logout').then(function() {
                 done();
             });
