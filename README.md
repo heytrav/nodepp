@@ -8,7 +8,7 @@ A _service_ for communicating with EPP registries(ars).
 
 ### What it is
 
-A RESTful web-service that abstracts communication with registries over EPP. It
+A service for communication with registries over EPP. It
 takes datastructures in JSON, converts them to XML, sends them to the
 registry, and then does the whole thing in reverse with the response. You
 should get back something in JSON format.
@@ -83,7 +83,7 @@ if you set it to ```production```, it will automatically link
 ```config/epp-config-production.json```. This defaults to ```devel```.
 
 
-##Running the service
+##Running the web service
 
 You can start the process trivially using:
 
@@ -114,6 +114,13 @@ to an OTE account (```travis1```) and may not reflect live data.
 I recommend using the program **Postman** which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
 scripting language of your choice. I put an example of this down below.
+
+## RabbitMQ
+
+There is also a RabbitMQ interface:
+
+    node lib/rabbitpee.js -r hexonet-test1
+
 
 ## Not running the service
 
