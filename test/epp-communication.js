@@ -127,7 +127,7 @@ describe('Communication protocol state machine', function() {
                         "password": config.password
                     },
                     'iwmn-test-1234').then(function(data) {
-                        console.log("Logged in: ", data);
+                        //console.log("Logged in: ", data);
                         done();
                     },
                     function(error) {
