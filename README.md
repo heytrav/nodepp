@@ -121,6 +121,27 @@ There is also a RabbitMQ interface:
 
     node lib/rabbitpee.js -r hexonet-test1
 
+To run it as a daemon:
+
+    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/rabbitpee.js \
+        -r hexonet-test1 -r nzrs-test1 -r nzrs-test2
+
+*Note* that for all commands documented below, the datastructure that is sent
+via RabbitMQ needs to be modified as follows:
+
+     {
+        "command": "<command name>",
+        "data": <request data>
+     }
+
+Data returned by the service should be the same. 
+
+For demo purposes, I've written a small script ```lib/rabbitpoo.js``` to send
+a single rpc command to a *running* service.  It's hardcoded to send a command
+for the ```hexonet-test1``` test accreditation. You can copy/modify it
+accordingly to experiment with other registry accreditations as they
+become available.
+
 
 ## Not running the service
 

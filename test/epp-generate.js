@@ -472,6 +472,18 @@ describe('EPP serialisation', function() {
 			var xml = epp.updateHost(updateHost, 'test-1234');
 			expect(xml).to.match(/<host:rem>(?:(?!<\/host:rem).)*clientTransferProhibited/);
 		});
+        it('should create a poll request', function() {
+
+            var processedPoll = epp.poll({}, 'test-1234');
+            console.log("processedPoll: ", processedPoll);
+            expect(processedPoll).to.match(/<poll\s+op=\"req\"/);
+            var poll2 = {"msgID": 1234};
+            var processedPoll2 = epp.poll(poll2, 'test-12345');
+            console.log("processed Ack poll:", processedPoll2);
+            expect(processedPoll2).to.match(/<poll[^>]+op=\"ack\"/);
+            expect(processedPoll2).to.match(/msgID=\"1234\"/);
+            
+        });
 	});
 
 	describe('extension handling', function() {
