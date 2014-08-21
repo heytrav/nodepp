@@ -114,26 +114,28 @@ describe('Communication protocol state machine', function() {
     describe('command execution', function() {
         var stateMachine, fos, domain, transactionId;
         before(function(done) {
-            this.timeout(4000);
+            this.timeout(10000);
             stateMachine = new ProtocolState('hexonet-test1', config);
             var connection = stateMachine.connection;
             connection.initStream().then(
             function(data) {
                 setTimeout(
                 function() {
+                    
                     stateMachine.login({
                         "login": config.login,
                         "password": config.password
                     },
-                    'iwmn-test-1234').then(function() {
-                        console.log("Logged in");
+                    'iwmn-test-1234').then(function(data) {
+                        console.log("Logged in: ", data);
                         done();
                     },
                     function(error) {
+                        done(error);
                         console.error("Unable to log in: ", error);
                     });
                 },
-                1000);
+                2000);
             });
         });
         before(function() {
