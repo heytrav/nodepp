@@ -59,7 +59,7 @@ describe('Communication protocol state machine', function() {
             stateMachine.connection.clientResponse(xmlSuccess);
         });
         it('should have loggedIn flag set to false once logged out', function(done) {
-            stateMachine.logout('test-logout-1234').then(function(data) {
+            stateMachine.command('logout', {}, 'test-logout-1234').then(function(data) {
                 try {
                     expect(stateMachine.loggedIn).to.equal(false);
                     done();
@@ -224,7 +224,7 @@ describe('Communication protocol state machine', function() {
 
         after(function(done) {
             this.timeout(4000);
-            stateMachine.logout('iwmn-logout').then(function() {
+            stateMachine.command('logout', {}, 'iwmn-logout').then(function() {
                 done();
             });
         });

@@ -158,6 +158,36 @@ describe('EPP serialisation', function() {
             'test-12345');
             expect(xml).to.match(/<check>(?:(?!<domain:name>).)*<domain:name>test-domain.com/);
         });
+        it('should correct some alternative data syntax', function() {
+            var contactData = {
+                "id": "auto",
+                "telephone": "+1.9405551234",
+                "fax": "+1.9405551233",
+                "email": "john.doe@null.com",
+                "authInfo": {
+                    "pw": "xyz123"
+                },
+                "disclose": {
+                    "flag": 0,
+                    "disclosing": ["voice", "email"]
+                },
+                "postalInfo": [{
+                    "first_name": "John",
+                    "lastname": "Doe",
+                    "company": "Example Ltd",
+                    "type": "int",
+                    "addr": [{
+                        "street": ["742 Evergreen Terrace", "Apt b"],
+                        "city": "Springfield",
+                        "state": "OR",
+                        "postcode": "97801",
+                        "ccode": "US"
+                    }]
+                }]
+            };
+            var processed = epp.processContactData(contactData);
+            console.log("processed contact ", processed);
+        });
 
         it('should generate a createContact command', function() {
             var contactData = {
