@@ -248,6 +248,40 @@ or single object.
                         "cc": "US"
                     }
 
+### updateContact
+
+    
+            {
+                id: "p-12345",
+                add: ['clientDeleteProhibited'],
+                rem: ['clientTransferProhibited'],
+                chg: {
+                    "postalInfo": [{
+                        "name": "John Doe",
+                        "org": "Example Ltd",
+                        "type": "loc",
+                        "addr": [{
+                            "street": ["742 Evergreen Terrace", "Apt b"],
+                            "city": "Eugene",
+                            "sp": "OR",
+                            "pc": "97801",
+                            "cc": "US"
+                        }]
+                    }],
+                    "voice": "+1.9405551234",
+                    "fax": "+1.9405551233",
+                    "email": "john.doe@null.com",
+                    "authInfo": {
+                        "pw": "xyz123"
+                    },
+                    "disclose": {
+                        "flag": 0,
+                        "disclosing": ["voice", "email"]
+                    }
+                }
+            }
+
+
 ### checkDomain
 
 The following are equivalent:
