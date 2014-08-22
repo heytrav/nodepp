@@ -134,7 +134,7 @@ via RabbitMQ needs to be modified as follows:
         "data": <request data>
      }
 
-Data returned by the service should be the same. 
+Data returned by the service should be the same.
 
 For demo purposes, I've written a small script ```lib/rabbitpoo.js``` to send
 a single rpc command to a *running* service.  It's hardcoded to send a command
@@ -250,7 +250,7 @@ or single object.
 
 ### updateContact
 
-    
+
             {
                 id: "p-12345",
                 add: ['clientDeleteProhibited'],
