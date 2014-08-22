@@ -31,12 +31,18 @@ describe('Communication protocol state machine', function() {
         });
         before(function() {
             //console.log("initialising state machine");
-            stateMachine = new ProtocolState('hexonet-test1', config);
-            var connection = stateMachine.connection;
+            try {
 
-            // Use a file stream instead of trying to talk to the actual registry,
-            // we're only testing the "state" control here.
-            connection.setStream(fos);
+                stateMachine = new ProtocolState('hexonet-test1', config);
+                var connection = stateMachine.connection;
+
+                // Use a file stream instead of trying to talk to the actual registry,
+                // we're only testing the "state" control here.
+                connection.setStream(fos);
+            } catch(e) {
+                console.error(e);
+                /* handle error */
+            }
         });
 
         it('should have loggedIn flag set to true once logged in', function(done) {
@@ -233,6 +239,5 @@ describe('Communication protocol state machine', function() {
         });
 
     });
-
 });
 
