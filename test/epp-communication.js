@@ -59,7 +59,8 @@ describe('Communication protocol state machine', function() {
             stateMachine.connection.clientResponse(xmlSuccess);
         });
         it('should have loggedIn flag set to false once logged out', function(done) {
-            stateMachine.command('logout', {}, 'test-logout-1234').then(function(data) {
+            stateMachine.command('logout', {},
+            'test-logout-1234').then(function(data) {
                 try {
                     expect(stateMachine.loggedIn).to.equal(false);
                     done();
@@ -121,7 +122,7 @@ describe('Communication protocol state machine', function() {
             function(data) {
                 setTimeout(
                 function() {
-                    
+
                     stateMachine.login({
                         "login": config.login,
                         "password": config.password
@@ -213,18 +214,20 @@ describe('Communication protocol state machine', function() {
                 "authInfo": {
                     "pw": "xyz123"
                 },
-            // omit postal info data
+                // omit postal info data
             };
-            var validationError = function () {
-                stateMachine.command('createContact', contactData, transactionId).then(function(data) { });
+            var validationError = function() {
+                stateMachine.command('createContact', contactData, transactionId).then(function(data) {});
             };
-            expect(validationError).to.throw('postalInfo required in contact data');
-        
+            expect(validationError).to.
+            throw ('postalInfo required in contact data');
+
         });
 
         after(function(done) {
             this.timeout(4000);
-            stateMachine.command('logout', {}, 'iwmn-logout').then(function() {
+            stateMachine.command('logout', {},
+            'iwmn-logout').then(function() {
                 done();
             });
         });
