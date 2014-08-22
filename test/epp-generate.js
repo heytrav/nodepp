@@ -16,6 +16,9 @@ describe('EPP serialisation', function() {
         beforeEach(function() {
             config = nconf.get('registries')['hexonet-test1'];
             epp = EppFactory.generate('hexonet-test1', config);
+            if (!epp) {
+                throw new Error("Unable to initialise epp");
+            }
         });
         it('should be an epp object with hexonet config', function() {
             expect(epp).to.be.an.instanceof(Object);
@@ -186,6 +189,10 @@ describe('EPP serialisation', function() {
                 }]
             };
             var processed = epp.processContactData(contactData);
+            expect(processed).to.have.deep.property('contact:voice');
+            expect(processed).to.have.deep.property('contact:postalInfo[0].contact:name', 'John Doe');
+            expect(processed).to.have.deep.property('contact:postalInfo[0].contact:addr[0].contact:cc');
+            
             console.log("processed contact ", processed);
         });
 

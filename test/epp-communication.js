@@ -88,11 +88,6 @@ describe('Communication protocol state machine', function() {
                 mode: 0666
             });
         });
-
-        after(function() {
-            // Close the writable stream after each test
-            fos.end();
-        });
         before(function() {
             stateMachine = new ProtocolState('hexonet-test1', config);
             var connection = stateMachine.connection;
@@ -101,18 +96,24 @@ describe('Communication protocol state machine', function() {
             // we're only testing the "state" control here.
             connection.setStream(fos);
         });
+
+        after(function() {
+            // Close the writable stream after each test
+            fos.end();
+        });
         it('should not have loggedIn true if log in failed', function(done) {
             stateMachine.login({
                 "login": "test-user",
                 "password": "abc123"
             },
             'test-fail-login').then(function(data) {
-                done(new Error("Should not execute!"));
-            },
-            function(error) {
                 expect(stateMachine.loggedIn).to.equal(false);
                 done();
-            });
+            },
+            function(error) {
+                done(new Error("should not execute"));
+            }
+            );
             var xmlSuccess = fs.readFileSync('./test/epp-fail.xml');
             stateMachine.connection.clientResponse(xmlSuccess);
         });
