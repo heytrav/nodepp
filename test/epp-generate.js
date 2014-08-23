@@ -167,9 +167,7 @@ describe('EPP serialisation', function() {
                 "telephone": "+1.9405551234",
                 "fax": "+1.9405551233",
                 "email": "john.doe@null.com",
-                "authInfo": {
-                    "pw": "xyz123"
-                },
+                "authcode": "xyz123",
                 "disclose": {
                     "flag": 0,
                     "disclosing": ["voice", "email"]
@@ -192,6 +190,7 @@ describe('EPP serialisation', function() {
             expect(processed).to.have.deep.property('contact:voice');
             expect(processed).to.have.deep.property('contact:postalInfo[0].contact:name', 'John Doe');
             expect(processed).to.have.deep.property('contact:postalInfo[0].contact:addr[0].contact:cc');
+            expect(processed).to.have.deep.property('contact:authInfo.contact:pw');
             
             console.log("processed contact ", processed);
         });
