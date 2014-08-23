@@ -191,7 +191,7 @@ describe('EPP serialisation', function() {
             expect(processed).to.have.deep.property('contact:postalInfo[0].contact:name', 'John Doe');
             expect(processed).to.have.deep.property('contact:postalInfo[0].contact:addr[0].contact:cc');
             expect(processed).to.have.deep.property('contact:authInfo.contact:pw');
-            
+
             console.log("processed contact ", processed);
         });
 
