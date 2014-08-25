@@ -35,12 +35,12 @@ each other means that we can more easily switch to the next *standard*
 protocol in the future and not need to completely rewrite the code.
 
 
-##Install
+## Installation
 
 
-1. Clone the repository and ```cd``` into it.
-2. Run ```npm install```. This should install all the dependencies.
-3. Run tests with ```npm test```.
+1. git clone git@github.com:ideegeo/nodepp.git
+2. ```cd nodepp```
+3. ```npm install``` to install node dependencies.
 4. If you plan to run anything with NZRS, you'll need the key and signed
    certificate that we got back from them. Since I wasn't really sure about
    storing signed certificates and key files in the repository where
@@ -53,37 +53,29 @@ protocol in the future and not need to completely rewrite the code.
         gpg -d A000A000000000000052.pem.asc > A000A000000000000052.pem
         gpg -d iwantmyname.com.key.org.asc > iwantmyname.com.key
 
+
+
 5.  ```source nodepp.rc``` to include ```./node_modules/.bin``` in the
-    ```$PATH```. This is only really necessary if you plan on running it as a
-    daemon.
+    ```$PATH```. This is necessary for testing or if you plan on running it as
+    a daemon.
 
-## Configure
+## Configuration
 
-Set up config. The configuration contains some essential data
-organised by registry account. Note that we can have multiple registry
-accounts at any given registry. I'm calling these accounts or *accreditations*
-for lack of a better term.
+    ln -s `pwd`/config/epp-config-devel.json `pwd`/config/epp-config.json
 
-Generally there will be only one accounts for production, however there
-could be any number of *test* accounts. Using them is equivalent to logging in
-to a registry as a completely different registrar. This is primarily useful
-for simulating incoming/outgoing contact/domain/host transfers. To setup up
-the config:
+This sets up the application to connect to registry *online testing
+environments*.
 
-    ln -s config/epp-config-devel.json config/epp-config.json
-
-This sets up the development accounts. To setup the production account (which
-you should only ever do during deployment to a production platform), replace
-```devel``` with ```production```.
-
-If you are running this in a docker container, setting the environment
-variable ```IWMN_ENV=<environment>``` when launching the containers will
-automatically bootstrap everything with whatever is in ```<environment>```. So
-if you set it to ```production```, it will automatically link
-```config/epp-config-production.json```. This defaults to ```devel```.
+If you must change settings (i.e. to connect to a different registry
+environment or whatever), **please** create a different configuration file and
+link it to ```./config/epp-config.json```.
 
 
-##Running the web service
+## Testing
+
+        npm test
+
+## Running the web service
 
 You can start the process trivially using:
 
