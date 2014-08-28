@@ -10,7 +10,6 @@ nconf.env().file({
 });
 
 describe('EPP serialisation', function() {
-
     describe('general commands', function() {
         var epp, config;
         beforeEach(function() {
@@ -21,7 +20,6 @@ describe('EPP serialisation', function() {
             }
         });
         describe('helper functions', function() {
-
             it('should render an "authInfo" section', function() {
                 var authData = {
                     pw: 'teStPass',
@@ -512,7 +510,6 @@ describe('EPP serialisation', function() {
             });
         });
     });
-
     describe('extension handling', function() {
         var epp, config;
         beforeEach(function() {
@@ -649,6 +646,7 @@ describe('EPP serialisation', function() {
                 "authInfo": "p349jj39f"
             };
             var xmlAuthInfo = epp.infoDomain(infoDataAuthInfo);
+            console.log("infoDomain with Authinfo: ", xmlAuthInfo);
             expect(xmlAuthInfo).to.match(/<domain:pw>p349jj39f/);
         });
         it('should generate an EPP update with secDNS', function() {
