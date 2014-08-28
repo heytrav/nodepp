@@ -20,28 +20,6 @@ describe('EPP serialisation', function() {
             }
         });
         describe('helper functions', function() {
-            it('should render an "authInfo" section', function() {
-                var authData = {
-                    pw: 'teStPass',
-                    roid: 'P-12345'
-                };
-                var processedData = epp.processAuthInfo(authData, 'domain');
-                var xml = epp.callConvert(processedData, 'test');
-                //console.log(xml);
-                expect(xml).to.match(/<domain:pw roid="P-12345">teStPass<\/domain:pw>/);
-                var authNoRoidData = {
-                    pw: 'teStPass'
-                };
-                var processedNoRoid = epp.processAuthInfo(authNoRoidData, 'contact');
-                xml = epp.callConvert(processedNoRoid, 'test');
-                expect(xml).to.match(/<contact:pw>teStPass<\/contact:pw>/);
-
-                var plainAuthInfo = 'teStPass';
-                var processedPlainAuthInfo = epp.processAuthInfo(plainAuthInfo, 'contact');
-                xml = epp.callConvert(processedPlainAuthInfo, 'test');
-                expect(xml).to.match(/<contact:pw>teStPass<\/contact:pw>/);
-
-            });
             it('should process different types of period data', function() {
                 var periodData = 3;
                 var processedData = epp.processDomainPeriod(periodData);
@@ -229,7 +207,6 @@ describe('EPP serialisation', function() {
                 //console.log("Got xml: ", xml);
                 expect(xml).to.match(/<login>/);
             });
-
             it('should generate a hello command', function() {
                 var xml = epp.hello();
                 //console.log("Got hello: ", xml);
@@ -507,6 +484,48 @@ describe('EPP serialisation', function() {
                 console.log("processed Ack poll:", processedPoll2);
                 expect(processedPoll2).to.match(/<poll[^>]+op=\"ack\"/);
                 expect(processedPoll2).to.match(/msgID=\"1234\"/);
+            });
+
+            it('should render an "authInfo" section', function() {
+                var authData = {
+                    pw: 'teStPass',
+                    roid: 'P-12345'
+                };
+                var processedData = epp.processAuthInfo(authData, 'domain');
+                var xml = epp.callConvert(processedData, 'test');
+                //console.log(xml);
+                expect(xml).to.match(/<domain:pw roid="P-12345">teStPass<\/domain:pw>/);
+                var authNoRoidData = {
+                    pw: 'teStPass'
+                };
+                var processedNoRoid = epp.processAuthInfo(authNoRoidData, 'contact');
+                xml = epp.callConvert(processedNoRoid, 'test');
+                expect(xml).to.match(/<contact:pw>teStPass<\/contact:pw>/);
+
+                var plainAuthInfo = 'teStPass';
+                var processedPlainAuthInfo = epp.processAuthInfo(plainAuthInfo, 'contact');
+                xml = epp.callConvert(processedPlainAuthInfo, 'test');
+                expect(xml).to.match(/<contact:pw>teStPass<\/contact:pw>/);
+
+                var emptyString = '';
+                var processedEmpty = epp.processAuthInfo(emptyString, 'domain');
+                var xmlEmptyAuth = epp.callConvert(processedEmpty, 'test');
+                expect(xmlEmptyAuth).to.match(/<domain:pw><\/domain:pw>/);
+
+                var emptyPw = {
+                    pw: ''
+                };
+                var processEmptyPw = epp.processAuthInfo(emptyPw, 'domain');
+                var xmlEmptyPw = epp.callConvert(processEmptyPw, 'test');
+                expect(xmlEmptyPw).to.match(/<domain:pw><\/domain:pw>/);
+                 
+                var undefinedPw = {
+                    pw: undefined 
+                };
+                var processUndefinedPw = epp.processAuthInfo(undefinedPw, 'domain');
+                var xmlUndefPw = epp.callConvert(processUndefinedPw, 'test');
+                expect(xmlUndefPw).to.match(/<domain:pw><\/domain:pw>/);
+
             });
         });
     });
