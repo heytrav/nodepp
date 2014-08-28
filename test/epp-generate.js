@@ -518,9 +518,9 @@ describe('EPP serialisation', function() {
                 var processEmptyPw = epp.processAuthInfo(emptyPw, 'domain');
                 var xmlEmptyPw = epp.callConvert(processEmptyPw, 'test');
                 expect(xmlEmptyPw).to.match(/<domain:pw><\/domain:pw>/);
-                 
+
                 var undefinedPw = {
-                    pw: undefined 
+                    pw: undefined
                 };
                 var processUndefinedPw = epp.processAuthInfo(undefinedPw, 'domain');
                 var xmlUndefPw = epp.callConvert(processUndefinedPw, 'test');
