@@ -668,6 +668,16 @@ describe('EPP serialisation', function() {
             console.log("infoDomain with Authinfo: ", xmlAuthInfo);
             expect(xmlAuthInfo).to.match(/<domain:pw>p349jj39f/);
         });
+        it('should generate a renew domain command', function() {
+            var renewData = {
+                "curExpDate": "2000-04-03",
+                "domain": "example.com",
+                "period": 5
+            };
+            var xml = epp.renewDomain(renewData, 'ABC-12345');
+            expect(xml).to.match(/<domain:period unit=\"y\">5<\/domain:period>/);
+
+        });
         it('should generate an EPP update with secDNS', function() {
             var updateDomain = {
                 "extension": {
