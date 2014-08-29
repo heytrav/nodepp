@@ -252,7 +252,6 @@ describe('EPP serialisation', function() {
                     }]
                 };
                 var xml = epp.createContact(contactData, 'test-12345');
-                //console.log("Got xml: ", xml);
                 expect(xml).to.match(/xmlns:contact=\"urn:ietf:params:xml:ns:contact-1.0\"/);
                 expect(xml).to.match(/<contact:name>John Doe<\/contact:name>/);
                 expect(xml).to.match(/<contact:addr>(?:(?!<contact:city>).)*<contact:city>Springfield/);
