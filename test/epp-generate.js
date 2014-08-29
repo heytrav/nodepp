@@ -136,7 +136,7 @@ describe('EPP serialisation', function() {
                 expect(processed).to.have.deep.property('contact:postalInfo[0].contact:addr[0].contact:cc');
                 expect(processed).to.have.deep.property('contact:authInfo.contact:pw');
 
-                console.log("processed contact ", processed);
+                //console.log("processed contact ", processed);
             });
 
             it('should process different types of postalInfo data', function() {
@@ -475,13 +475,13 @@ describe('EPP serialisation', function() {
             it('should create a poll request', function() {
                 var processedPoll = epp.poll({},
                 'test-1234');
-                console.log("processedPoll: ", processedPoll);
+                //console.log("processedPoll: ", processedPoll);
                 expect(processedPoll).to.match(/<poll\s+op=\"req\"/);
                 var poll2 = {
                     "msgID": 1234
                 };
                 var processedPoll2 = epp.poll(poll2, 'test-12345');
-                console.log("processed Ack poll:", processedPoll2);
+                //console.log("processed Ack poll:", processedPoll2);
                 expect(processedPoll2).to.match(/<poll[^>]+op=\"ack\"/);
                 expect(processedPoll2).to.match(/msgID=\"1234\"/);
             });
@@ -665,7 +665,7 @@ describe('EPP serialisation', function() {
                 "authInfo": "p349jj39f"
             };
             var xmlAuthInfo = epp.infoDomain(infoDataAuthInfo);
-            console.log("infoDomain with Authinfo: ", xmlAuthInfo);
+            //console.log("infoDomain with Authinfo: ", xmlAuthInfo);
             expect(xmlAuthInfo).to.match(/<domain:pw>p349jj39f/);
         });
         it('should generate a renew domain command', function() {
