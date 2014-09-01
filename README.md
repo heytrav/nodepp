@@ -166,21 +166,29 @@ At the time of this writing, the following commands have been implemented:
 
 ### checkContact
 
-        {"id": "P-12345xyz"}
+```javascript
+{"id": "P-12345xyz"}
+```
 
 or
 
-        {"contact": "P-12345xyz"}
+```javascript
+{"contact": "P-12345xyz"}
+```
 
 
 ### infoContact
 
-        {"id": "P-12345xyz"}
+```javascript
+{"id": "P-12345xyz"}
+```
 
 or
 
 
-        {"contact": "P-12345xyz"}
+```javascript
+{"contact": "P-12345xyz"}
+```
 
 
 
@@ -217,30 +225,34 @@ registries. Some require ```loc``` and some require ```int```. EPP allows for
 up to 2 _postaInfo_ entries, however I've never seen a registry that accepts
 more than 1. For that reason, you can just specify it as a single object:
 
-                "postalInfo": {
-                    "name": "John Doe",
-                    "org": "Example Ltd",
-                    "type": "int",
-                    "addr": [{
-                        "street": ["742 Evergreen Terrace", "Apt b"],
-                        "city": "Springfield",
-                        "sp": "OR",
-                        "pc": "97801",
-                        "cc": "US"
-                    }]
-                }
+```javascript
+"postalInfo": {
+    "name": "John Doe",
+    "org": "Example Ltd",
+    "type": "int",
+    "addr": [{
+        "street": ["742 Evergreen Terrace", "Apt b"],
+        "city": "Springfield",
+        "sp": "OR",
+        "pc": "97801",
+        "cc": "US"
+    }]
+}
+```
 
 It will be passed to the registry in the appropriate format. The same applies
 to the _addr_ field (in _postalInfo_), which can also be specified as an Array
 or single object.
 
-                    "addr": {
-                        "street": ["742 Evergreen Terrace", "Apt b"],
-                        "city": "Springfield",
-                        "sp": "OR",
-                        "pc": "97801",
-                        "cc": "US"
-                    }
+```javascript
+"addr": {
+    "street": ["742 Evergreen Terrace", "Apt b"],
+    "city": "Springfield",
+    "sp": "OR",
+    "pc": "97801",
+    "cc": "US"
+}
+```
 
 ### updateContact
 
@@ -282,22 +294,30 @@ or single object.
 
 The following are equivalent:
 
-        {"domain": "something.com"}
+```javascript
+{"domain": "something.com"}
+```
 
 or
 
-        {"name": "something.com"}
+```javascript
+{"name": "something.com"}
+```
 
 It is possible to check more than one domain at a time.
 
 
+```javascript
         {"domain": ["test-domain.com", "test-domain2.com", "test-domain3.com"]}
+```
 
 
 ### infoDomain
 
 
+```javascript
         {"domain": "something.com"}
+```
 
 
 In case you are wondering if you can send multiple domains like in
@@ -428,13 +448,17 @@ In _createDomain_ and _updateDomain_ I've tried to account for 2 different
 types of host objects. In the simplest version you can just pass an array of
 strings:
 
+```javascript
     ["ns1.host.com", "ns2.host.co.nz"]
+```
 
 In cases where IP addresses are required, the following variants can be used:
 
+```javascript
     [{host: "ns1.host.com", addr: "62.47.23.1"}]
     [{host: "ns2.host.com", addr:[ "62.47.23.1", {ip: "53.23.1.3"}    ]}]
     [{host: "ns3.host.com", addr:[ {ip: "::F3:E2:23:::", type: "v6"}, {ip:"47.23.43.1", type: "v4"} ]}]
+```
 
 ```type``` is ```v4``` by default. You'll have to specify ```v6``` explicitly for IPv6
 addresses.
@@ -449,13 +473,17 @@ _createContact_, _createDomain_, _transferDomain_ and _updateDomain_ accept an
 
 Following are equivalent:
 
+```javascript
     authInfo: "te2tP422t"
+```
 
 or
 
+```javascript
     authInfo: {
         pw: "te2tP422t"
     }
+```
 
 In some cases you may need to supply a ```roid``` in addition to the
 ```authInfo```.  This is used to identify the registrant or contact object if
@@ -477,11 +505,13 @@ The ```period``` argument in _createDomain_ and  _transferDomain_ can be specifi
 
 1 year registration
 
-```period: 1```
+```javascript
+period: 1
+```
 
 24 month registration
 
-javascript```
+```javascript
 period: {
     unit: "m",
     value: 24
@@ -500,6 +530,7 @@ structure. By default it will be set to ```iwmn-<epoch timestamp>```.
 You can optionally add an ```extension``` property to some commands. This
 varies from registry to registry like everything else.  A good example is when
 adding ```DNSSEC``` data to a *createDomain*:
+
 
 ```javascript
 {
