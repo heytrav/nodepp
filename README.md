@@ -187,27 +187,29 @@ or
 ### createContact
 
 
-            {
-                "id": "my-id-1234",
-                "voice": "+1.9405551234",
-                "fax": "+1.9405551233",
-                "email": "john.doe@null.com",
-                "authInfo": {
-                    "pw": "xyz123"
-                },
-                "postalInfo": [{
-                    "name": "John Doe",
-                    "org": "Example Ltd",
-                    "type": "int",
-                    "addr": [{
-                        "street": ["742 Evergreen Terrace", "Apt b"],
-                        "city": "Springfield",
-                        "sp": "OR",
-                        "pc": "97801",
-                        "cc": "US"
-                    }]
-                }]
-            }
+```javascript
+{
+    "id": "my-id-1234",
+    "voice": "+1.9405551234",
+    "fax": "+1.9405551233",
+    "email": "john.doe@null.com",
+    "authInfo": {
+        "pw": "xyz123"
+    },
+    "postalInfo": [{
+        "name": "John Doe",
+        "org": "Example Ltd",
+        "type": "int",
+        "addr": [{
+            "street": ["742 Evergreen Terrace", "Apt b"],
+            "city": "Springfield",
+            "sp": "OR",
+            "pc": "97801",
+            "cc": "US"
+        }]
+    }]
+}
+```
 
 Some registries set the ```id``` by default. In such cases it's common to use
 ```auto```. The value for ```type``` may also vary for different
@@ -243,35 +245,37 @@ or single object.
 ### updateContact
 
 
-            {
-                id: "p-12345",
-                add: ['clientDeleteProhibited'],
-                rem: ['clientTransferProhibited'],
-                chg: {
-                    "postalInfo": [{
-                        "name": "John Doe",
-                        "org": "Example Ltd",
-                        "type": "loc",
-                        "addr": [{
-                            "street": ["742 Evergreen Terrace", "Apt b"],
-                            "city": "Eugene",
-                            "sp": "OR",
-                            "pc": "97801",
-                            "cc": "US"
-                        }]
-                    }],
-                    "voice": "+1.9405551234",
-                    "fax": "+1.9405551233",
-                    "email": "john.doe@null.com",
-                    "authInfo": {
-                        "pw": "xyz123"
-                    },
-                    "disclose": {
-                        "flag": 0,
-                        "disclosing": ["voice", "email"]
-                    }
-                }
-            }
+```javascript
+{
+    id: "p-12345",
+    add: ['clientDeleteProhibited'],
+    rem: ['clientTransferProhibited'],
+    chg: {
+        "postalInfo": [{
+            "name": "John Doe",
+            "org": "Example Ltd",
+            "type": "loc",
+            "addr": [{
+                "street": ["742 Evergreen Terrace", "Apt b"],
+                "city": "Eugene",
+                "sp": "OR",
+                "pc": "97801",
+                "cc": "US"
+            }]
+        }],
+        "voice": "+1.9405551234",
+        "fax": "+1.9405551233",
+        "email": "john.doe@null.com",
+        "authInfo": {
+            "pw": "xyz123"
+        },
+        "disclose": {
+            "flag": 0,
+            "disclosing": ["voice", "email"]
+        }
+    }
+}
+```
 
 
 ### checkDomain
@@ -302,32 +306,43 @@ you will get back in one _infoDomain_ will be complicated enough.
 
 ### createDomain
 
-        {
-            "name": "iwmn-test-101-domain.com",
-            "period": {
-                "unit": "y",
-                "value": 1
-            },
-            "ns":["ns1.hexonet.net","ns2.hexonet.net"],
-                "registrant": "my-id-1234",
-            "contact": [{ "admin": "my-id-1235" }, { "tech": "my-id-1236" }, {"billing": "my-id-1236"} ],
-            "authInfo": {
-                "pw": "Axri3k.XXjp"
-            }
-        }
+```javascript
+{
+    "name": "iwmn-test-101-domain.com",
+    "period": {
+        "unit": "y",
+        "value": 1
+    },
+    "ns":[
+        "ns1.hexonet.net",
+        "ns2.hexonet.net"
+    ],
+        "registrant": "my-id-1234",
+    "contact": [
+        { "admin": "my-id-1235" }, 
+        { "tech": "my-id-1236" }, 
+        {"billing": "my-id-1236"} 
+    ],
+    "authInfo": {
+        "pw": "Axri3k.XXjp"
+    }
+}
+```
 
 
 ### transferDomain
 
-            {
-                "name": "test-domain.com",
-                "op": "request",
-                "period": 1,
-                "authInfo": {
-                    "roid": "P-12345", // optional
-                    "pw": "2fooBAR"
-                }
-            }
+```javascript
+{
+    "name": "test-domain.com",
+    "op": "request",
+    "period": 1,
+    "authInfo": {
+        "roid": "P-12345", // optional
+        "pw": "2fooBAR"
+    }
+}
+```
 
 Valid values for ```op``` are _approve_, _cancel_, _query_, _reject_, and
 _request_. There uses are:
@@ -345,46 +360,48 @@ _request_. There uses are:
 
 ### updateDomain
 
-            {
-                "name": "test-domain.com",
-                "add": {
-                    "ns": ["ns3.test.com", "ns4.whatever.com"],
-                    "contact": [{
-                        "admin": "P-9876"
-                    },
-                    {
-                        "billing": "PX143"
-                    }],
-                    "status": ["clientUpdateProhibited", {
-                        "s": "clientHold",
-                        "lang": "en",
-                        "value": "Payment Overdue"
-                    }]
-                },
-                "rem": {
-                    "ns": [{
-                        "host": "ns1.test-domain.com",
-                        "addr": {
-                            "type": "v4",
-                            "ip": "192.68.2.132"
-                        }
-                    }],
-                    "contact": [{
-                        "billing": "PX147"
-                    }],
-                    "status": ["clientTransferProhibited", {
-                        "s": "clientWhatever",
-                        "lang": "en",
-                        "value": "Payment Overdue"
-                    }]
-                },
-                "chg": {
-                    "registrant": "P-49023",
-                    "authInfo": {
-                        "pw": "TestPass2"
-                    }
-                }
+```javascript
+{
+    "name": "test-domain.com",
+    "add": {
+        "ns": ["ns3.test.com", "ns4.whatever.com"],
+        "contact": [{
+            "admin": "P-9876"
+        },
+        {
+            "billing": "PX143"
+        }],
+        "status": ["clientUpdateProhibited", {
+            "s": "clientHold",
+            "lang": "en",
+            "value": "Payment Overdue"
+        }]
+    },
+    "rem": {
+        "ns": [{
+            "host": "ns1.test-domain.com",
+            "addr": {
+                "type": "v4",
+                "ip": "192.68.2.132"
             }
+        }],
+        "contact": [{
+            "billing": "PX147"
+        }],
+        "status": ["clientTransferProhibited", {
+            "s": "clientWhatever",
+            "lang": "en",
+            "value": "Payment Overdue"
+        }]
+    },
+    "chg": {
+        "registrant": "P-49023",
+        "authInfo": {
+            "pw": "TestPass2"
+        }
+    }
+}
+```
 
 This is a very complicated example but at least shows what is possible in an
 _updateDomain_. At least 1 of ```add```, ```rem```, or ```chg``` is required.
@@ -445,10 +462,12 @@ In some cases you may need to supply a ```roid``` in addition to the
 and only if the given authInfo is associated with a registrant or contact
 object, and not the domain object itself.
 
-    authInfo: {
-            pw: "te2tP422t",
-            roid: "P-1234"
-    }
+```javascript
+authInfo: {
+        pw: "te2tP422t",
+        roid: "P-1234"
+}
+```
 
 
 ### period
@@ -462,7 +481,7 @@ The ```period``` argument in _createDomain_ and  _transferDomain_ can be specifi
 
 24 month registration
 
-```
+javascript```
 period: {
     unit: "m",
     value: 24
@@ -482,40 +501,42 @@ You can optionally add an ```extension``` property to some commands. This
 varies from registry to registry like everything else.  A good example is when
 adding ```DNSSEC``` data to a *createDomain*:
 
-        {
-            "name": "iwmn-test-101-domain.com",
-            "period": {
-                "unit": "y",
-                "value": 1
-            },
-            "ns":["ns1.hexonet.net","ns2.hexonet.net"],
-                "registrant": "my-id-1234",
-            "contact": [
-                { "admin": "my-id-1235" },
-                { "tech": "my-id-1236" },
-                {"billing": "my-id-1236"}
-            ],
-            "authInfo": {
-                "pw": "Axri3k.XXjp"
-            },
-            "extension": {
-                "DNSSEC": {
-                    "maxSigLife": 604800,
-                    "dsData": {
-                        "keyTag": 12345,
-                        "alg": 3,
-                        "digestType": 1,
-                        "digest": "49FD46E6C4B45C55D4AC",
-                        "keyData": {
-                            "flags": 257,
-                            "protocol": 3,
-                            "alg": 1,
-                            "pubKey": "AQPJ////4Q=="
-                        }
-                    }
+```javascript
+{
+    "name": "iwmn-test-101-domain.com",
+    "period": {
+        "unit": "y",
+        "value": 1
+    },
+    "ns":["ns1.hexonet.net","ns2.hexonet.net"],
+        "registrant": "my-id-1234",
+    "contact": [
+        { "admin": "my-id-1235" },
+        { "tech": "my-id-1236" },
+        {"billing": "my-id-1236"}
+    ],
+    "authInfo": {
+        "pw": "Axri3k.XXjp"
+    },
+    "extension": {
+        "DNSSEC": {
+            "maxSigLife": 604800,
+            "dsData": {
+                "keyTag": 12345,
+                "alg": 3,
+                "digestType": 1,
+                "digest": "49FD46E6C4B45C55D4AC",
+                "keyData": {
+                    "flags": 257,
+                    "protocol": 3,
+                    "alg": 1,
+                    "pubKey": "AQPJ////4Q=="
                 }
             }
         }
+    }
+}
+```
 
 As stated earlier, this implementation doesn't know anything about _business
 logic_ for any of the registries. The data given is just converted to XML and
@@ -537,50 +558,56 @@ part of the EPP request):
 
 Create a domain with the ```dsData``` interface:
 
-                "extension": {
-                    "DNSSEC": {
-                        "maxSigLife": 604800,
-                        "dsData": {
-                            "keyTag": 12345,
-                            "alg": 3,
-                            "digestType": 1,
-                            "digest": "49FD46E6C4B45C55D4AC"
-                        }
-                    }
-                }
+```javascript
+"extension": {
+    "DNSSEC": {
+        "maxSigLife": 604800,
+        "dsData": {
+            "keyTag": 12345,
+            "alg": 3,
+            "digestType": 1,
+            "digest": "49FD46E6C4B45C55D4AC"
+        }
+    }
+}
+```
 
 with the ```keyData``` interface:
 
-                "extension": {
-                    "DNSSEC": {
-                        "keyData":{
-                            "flags": 257,
-                            "protocol": 3,
-                            "alg": 1,
-                            "pubKey": "AQPJ////4Q=="
-                        }
-                    }
-                }
+```javascript
+"extension": {
+    "DNSSEC": {
+        "keyData":{
+            "flags": 257,
+            "protocol": 3,
+            "alg": 1,
+            "pubKey": "AQPJ////4Q=="
+        }
+    }
+}
+```
 
 with the ```keyData``` in the ```dsData``` element:
 
-                "extension": {
-                    "DNSSEC": {
-                        "maxSigLife": 604800,
-                        "dsData": {
-                            "keyTag": 12345,
-                            "alg": 3,
-                            "digestType": 1,
-                            "digest": "49FD46E6C4B45C55D4AC",
-                            "keyData":{
-                                "flags": 257,
-                                "protocol": 3,
-                                "alg": 1,
-                                "pubKey": "AQPJ////4Q=="
-                            }
-                        }
-                    }
-                }
+```javascript
+"extension": {
+    "DNSSEC": {
+        "maxSigLife": 604800,
+        "dsData": {
+            "keyTag": 12345,
+            "alg": 3,
+            "digestType": 1,
+            "digest": "49FD46E6C4B45C55D4AC",
+            "keyData":{
+                "flags": 257,
+                "protocol": 3,
+                "alg": 1,
+                "pubKey": "AQPJ////4Q=="
+            }
+        }
+    }
+}
+```
 
 #### updateDomain
 
@@ -588,47 +615,51 @@ with the ```keyData``` in the ```dsData``` element:
 Add a ```dsData``` key and remove a ```keyData``` key and change the
 ```maxSigLife``` of the key
 
-				"extension": {
-					"DNSSEC": {
-						"add": {
-							"dsData": {
-								"keyTag": 12345,
-								"alg": 3,
-								"digestType": 1,
-								"digest": "49FD46E6C4B45C55D4AC"
-							}
-						},
-						"rem": {
-							"keyData": {
-								"flags": 257,
-								"protocol": 3,
-								"alg": 1,
-								"pubKey": "AQPJ////4Q=="
-							}
-						},
-						"chg": {
-							"maxSigLife": 604800
-						}
-					}
-				}
+```javascript
+"extension": {
+    "DNSSEC": {
+        "add": {
+            "dsData": {
+                "keyTag": 12345,
+                "alg": 3,
+                "digestType": 1,
+                "digest": "49FD46E6C4B45C55D4AC"
+            }
+        },
+        "rem": {
+            "keyData": {
+                "flags": 257,
+                "protocol": 3,
+                "alg": 1,
+                "pubKey": "AQPJ////4Q=="
+            }
+        },
+        "chg": {
+            "maxSigLife": 604800
+        }
+    }
+}
+```
 
 Remove all existing key info and replace it with something new:
 
-				"extension": {
-					"DNSSEC": {
-						"rem": {
-							"all": true
-						},
-						"add": {
-							"dsData": {
-								"keyTag": 12345,
-								"alg": 3,
-								"digestType": 1,
-								"digest": "49FD46E6C4B45C55D4AC"
-							}
-						}
-					}
-				}
+```javascript
+"extension": {
+    "DNSSEC": {
+        "rem": {
+            "all": true
+        },
+        "add": {
+            "dsData": {
+                "keyTag": 12345,
+                "alg": 3,
+                "digestType": 1,
+                "digest": "49FD46E6C4B45C55D4AC"
+            }
+        }
+    }
+}
+```
 
 
 ## Example usage:
@@ -645,7 +676,6 @@ _Note_ I just put ```time``` in there to show what the execution time is.
 
 You should get the following response (or something similar):
 
-    "response":{
         "result":{
             "code":1000,"msg":"Command completed successfully"},
             "resData":{
@@ -661,10 +691,6 @@ You should get the following response (or something similar):
                     }
                 }
             },
-        "trID":{
-            "clTRID":"test-check-1234",
-            "svTRID":"RO-5734-1406529047908280"
-            }
-        }
+        
 
 I plan to get rid of some of the EPP cruft in the near future.
