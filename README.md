@@ -16,59 +16,36 @@ should get back something in JSON format.
 You also do not have to login. The app logs into the registry when it is
 started.
 
-### What it isn't
-
-It doesn't know anything about business logic--neither ours, nor the
-registries'. It just knows how to communicate over EPP.  If you think that's
-silly, then have a look at all of the EPP RFCs (5730 onward) and you can see
-how stupidly complex it is. Just be happy that you don't have to worry about
-munging data into ugly XML.
-
-The objective of abstracting just the EPP stuff out is to *separate our
-concerns* and avoid having super-mega modules that _do all the things_ (i.e.
-core logic, communication, database , etc.). That kind of thing
-is known _tight coupling_ and results in code that needs to be
-completely rewritten every time one part of the stack changes.
-
-Keeping the communication layer and our business logic separate from
-each other means that we can more easily switch to the next *standard*
-protocol in the future and not need to completely rewrite the code.
 
 
 ## Installation
 
 
-1. git clone git@github.com:ideegeo/nodepp.git
-2. ```cd nodepp```
-3. ```npm install``` to install node dependencies.
-4. If you plan to run anything with NZRS, you'll need the key and signed
-   certificate that we got back from them. Since I wasn't really sure about
-   storing signed certificates and key files in the repository where
-   someone (who isn't us) may eventually be able to find them, I encrypted
-   them using gpg -a -c. This is just a temporary solution and I hope that we
-   will come up with something a little more scalable. At any rate, you can
-   decrypt them as follows:
-
-
-        gpg -d A000A000000000000052.pem.asc > A000A000000000000052.pem
-        gpg -d iwantmyname.com.key.org.asc > iwantmyname.com.key
-
-
+1. Clone the repository: `git clone git@github.com:ideegeo/nodepp.git`.
+2. `cd nodepp`
+3. `npm install` to install node dependencies.
 
 5.  ```source nodepp.rc``` to include ```./node_modules/.bin``` in the
     ```$PATH```. This is necessary for testing or if you plan on running it as
     a daemon.
 
 ## Configuration
+At the moment, I recommend copying `config/epp-config-template.json` to
+something like `config/epp-config-devel.json` or
+`config/epp-config-production.json` and and modifying them to fit your needs.
+This includes adding your own login/password as well as paths to any SSL certs
+you may need.
 
-    ln -s `pwd`/config/epp-config-devel.json `pwd`/config/epp-config.json
+You can add as many registries as you like. Note that you can add the same
+registry multiple times with different logins, etc. This is practical for
+testing if you want to simulate logging in as separate registrars for
+transfers.
 
-This sets up the application to connect to registry *online testing
-environments*.
+When you've got the config setup the way you like it, you will need to
+symlink this to `config/epp-config.json` to run the application.
 
-If you must change settings (i.e. to connect to a different registry
-environment or whatever), **please** create a different configuration file and
-link it to ```./config/epp-config.json```.
+ln -s `pwd`/config/epp-config-devel.json `pwd`/config/epp-config.json
+
 
 
 ## Testing
@@ -77,31 +54,18 @@ link it to ```./config/epp-config.json```.
 
 ## Running the web service
 
-You can start the process trivially using:
+You can start the process trivially using for example:
 
-    node lib/server.js -r hexonet-test1
+    node lib/server.js -r registry1
 
-This will start a single epp client that is logged into Hexonet's test API.
-
-
-On ```aldo.domarino.com``` I run it as follows:
+This will start a single epp client that is logged into "Registry1".
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js \
-        -r hexonet-test1 -r nzrs-test1 -r nzrs-test2
+        -r registry1 -r registry2 -r registry3
 
 This runs it as  daemon in the background.  This tells it to open connections
-to the Hexonet test api (```hexonet-test1```) using an OTE login, as well as
-the two OTE accounts, ```nzrs-test1``` and ```nzrs-test2``` provided to us by
-NZRS for testing.  If you want to try this locally in your VM, leave off the
-two nzrs registries. NZRS only allows us to interact with them from
-whitelisted servers so either we need to have a tunnel set up, or we can only
-use EPP from one of our production servers.
+to three different registries.
 
-At this point the service should be running on some host (depending where you
-started it) port 3000 and have logged into Hexonet's test API. You can now
-make EPP requests by posting JSON datastructures to
-```http://<host>:3000/command/<accreditation>/<command>```.  Note that this is
-to an OTE account (```travis1```) and may not reflect live data.
 
 I recommend using the program **Postman** which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
