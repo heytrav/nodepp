@@ -1,0 +1,77 @@
+{
+    "registries": {
+        "registry1": {
+            "ssl": true,
+            "key": "<optional key file>",
+            "cert": "<optional cert file>",
+            "port": 700,
+            "host": "test-epp.com",
+            "login": "<login>",
+            "password": "<password>",
+            "services": ["domain", "contact"],
+            "extensions": ["DNSSEC"],
+            "extensionClasses": [{
+                "extension": "DNSSEC",
+                "className": "SecDnsExtension"
+            }],
+            "namespaces":{
+                "epp": {
+                    "xmlns": "urn:ietf:params:xml:ns:epp-1.0"
+                },
+                "domain": {
+                    "xmlns": "urn:ietf:params:xml:ns:domain-1.0"
+                },
+                "contact": {
+                    "xmlns": "urn:ietf:params:xml:ns:contact-1.0"
+                },
+                "DNSSEC": {
+                    "xmlns": "urn:ietf:params:xml:ns:secDNS-1.1"
+                }
+            }
+        },
+        "registry2": {
+            "ssl": true,
+            "port": 1700,
+            "login": "<login>",
+            "password": "<password>",
+            "host": "test-epp-host.com",
+            "services": ["domain", "contact", "host"],
+            "extensionClasses": [{
+                "extension": "keyvalue",
+                "className": "HexonetExtension"
+            }],
+            "extensions": ["keyvalue"],
+            "namespaces":{
+                "epp": {
+                    "xmlns": "urn:ietf:params:xml:ns:epp-1.0"
+                },
+                "domain": {
+                    "xmlns": "urn:ietf:params:xml:ns:domain-1.0"
+                },
+                "contact": {
+                    "xmlns": "urn:ietf:params:xml:ns:contact-1.0"
+                },
+                "host": {
+                    "xmlns": "urn:ietf:params:xml:ns:host-1.0"
+                },
+                "keyvalue": {
+                    "xmlns": "http://schema.ispapi.net/epp/xml/keyvalue-1.0"
+                }
+            }
+        }
+    },
+    "rabbitmq": {
+        "connection": {
+            "host": "<rabbit host>",
+            "port": 5672,
+            "login": "<rabbit login>",
+            "password": "<rabbit password>",
+            "noDelay": true,
+            "vhost": "/<vhost>",
+            "ssl": {
+                "enabled": false
+            }
+        }
+    },
+    "whitelisted_ips": []
+}
