@@ -17,7 +17,7 @@ should get back something in JSON format.
 ## Installation
 
 
-1. Clone the repository: `git clone git@github.com:ideegeo/nodepp.git`.
+1. Clone the repository: `git clone https://github.com/heytrav/nodepp.git`.
 2. `cd nodepp`
 3. `npm install` to install node dependencies.
 4.  `source nodepp.rc` to include `./node_modules/.bin` in the
@@ -276,9 +276,9 @@ you will get back in one _infoDomain_ will be complicated enough.
     ],
         "registrant": "my-id-1234",
     "contact": [
-        { "admin": "my-id-1235" }, 
-        { "tech": "my-id-1236" }, 
-        {"billing": "my-id-1236"} 
+        { "admin": "my-id-1235" },
+        { "tech": "my-id-1236" },
+        {"billing": "my-id-1236"}
     ],
     "authInfo": {
         "pw": "Axri3k.XXjp"
@@ -659,6 +659,6 @@ You should get the following response (or something similar):
                     }
                 }
             },
-        
+
 
 I plan to get rid of some of the EPP cruft in the near future.
