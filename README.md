@@ -292,6 +292,29 @@ you will get back in one _infoDomain_ will be complicated enough.
 }
 ```
 
+### deleteDomain
+
+
+```javascript
+        {"domain": "something.com"}
+```
+
+### renewDomain
+
+
+```javascript
+{
+    "domain": "something.com",
+    "curExpDate": "2016-04-03",
+    "period": {
+        "unit": 'y',
+        "value": 1
+    }
+}
+```
+
+*period* is optional and will default to 1 year.
+
 
 ### transferDomain
 
@@ -371,6 +394,46 @@ _updateDomain_. At least 1 of `add`, `rem`, or `chg` is required.
 The `chg` field, if provided, must contain either a `registrant`
 and/or an `authInfo`. `add` and `rem` elements, if provided, must
 contain any one or more `ns`, `contact`, or `status` fields.
+
+
+### createHost
+
+```javascript
+{
+    "name": "ns1.host.com",
+    "addr": ["23.84.43.123", {
+        "ip": "22.4.22.5"
+    },
+    {
+        "ip": "::F3:34::BA:",
+        "type": "v6"
+    }]
+}
+```
+
+### updateHost
+
+```javascript
+{
+    "name": "ns1.host.com",
+    "chg": {
+        "name": "ns2.host.com",
+    },
+    "add": {
+        "addr": {
+            "ip": "::F3:34::BA:",
+            "type": "v6"
+        },
+        "status": ["clientUpdateProhibited"]
+    },
+    "rem": {
+        "addr": ["23.84.43.123", {
+            "ip": "22.4.22.5"
+        }],
+        "status": ["clientTransferProhibited", "sneezeAchoo"]
+    }
+}
+```
 
 
 
