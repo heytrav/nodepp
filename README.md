@@ -444,7 +444,7 @@ Some of the required datastructures might seem a bit weird. EPP has a fairly
 complex grammar that is _probably_ intended to make granular control of
 domain related entities possible. There are no flat datastructures and some
 things must be specified explicitly that would be assumed in systems like
-the Hexonet API. For example, to remove nameservers from a domain, it is
+that use *key=value* like APIs. For example, to remove nameservers from a domain, it is
 necessary to remove them explicitly. Simply updating domain with _the new
 nameservers_ will not work. The same goes for contact objects.
 
