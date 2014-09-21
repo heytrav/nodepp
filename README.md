@@ -32,10 +32,10 @@ this:
 ```javascript
 {
     "registries": {
-        "registry1": {
+        "registry-test1": {
           // registry1 data
         },
-        "registry2": {
+        "registry-test2": {
           // registry2
         }
     },
@@ -87,15 +87,16 @@ you like, but you will need to modify the tests slightly.
 
 You can start the REST based interface as follows:
 
-    node lib/server.js -r registry1
+    node lib/server.js -r registry-test1
 
 This will start a single epp client that is logged into "Registry1".
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js \
-        -r registry1 -r registry2 -r registry3
+        -r registry-test1 -r registry-test2 -r registry-test3
 
 This runs it as  daemon in the background.  This tells it to open connections
-to three different registries.
+to three different registries. The registries passed as arguments to `-r`
+correspond to the keys in the `registries` section of the configuration file.
 
 To stop the service:
 
@@ -111,12 +112,12 @@ scripting language of your choice. I put an example of this down below.
 
 This sets up a RPC service that listens for connections on RabbitMQ.
 
-    node lib/rabbit-epp.js -r registry1
+    node lib/rabbit-epp.js -r registry-test1
 
 To run it as a daemon:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/rabbit-epp.js \
-        -r registry1 -r registry2 -r registry3
+        -r registry-test1 -r registry-test2 -r registry-test3
 
 You can stop the service like so:
 
@@ -321,6 +322,10 @@ you will get back in one _infoDomain_ will be complicated enough.
 }
 ```
 
+See comments below regarding alternative formats for _ns_, _period_, and
+_authInfo_ fields.
+
+
 ### deleteDomain
 
 
@@ -484,7 +489,7 @@ types of host objects. In the simplest version you can just pass an array of
 strings:
 
 ```javascript
-    ["ns1.host.com", "ns2.host.co.nz"]
+    ["ns1.host.com", "ns2.host.tld"]
 ```
 
 In cases where IP addresses are required, the following variants can be used:
@@ -604,11 +609,6 @@ adding `DNSSEC` data to a *createDomain*:
 }
 ```
 
-As stated earlier, this implementation doesn't know anything about _business
-logic_ for any of the registries. The data given is just converted to XML and
-sent on its way. Actually determining what goes into the extension data needs
-to be done at a higher level. In the case of DNSSEC that would mean that
-signing, algorithm and key info needs to come from the caller.
 
 ### DNSSEC
 

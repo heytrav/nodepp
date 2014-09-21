@@ -1,6 +1,6 @@
 {
     "registries": {
-        "registry1": {
+        "registry-test1": {
             "ssl": true,
             "key": "<optional key file>",
             "cert": "<optional cert file>",
@@ -29,7 +29,7 @@
                 }
             }
         },
-        "registry2": {
+        "registry-test2": {
             "ssl": true,
             "port": 1700,
             "login": "<login>",
