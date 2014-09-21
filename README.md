@@ -100,8 +100,6 @@ via RabbitMQ needs to be modified as follows:
 
 ## EPP Commands
 
-At the time of this writing, the following commands have been implemented:
-
 
 ### checkContact
 
@@ -158,9 +156,9 @@ or
 }
 ```
 
-Some registries set the ```id``` by default. In such cases it's common to use
-```auto```. The value for ```type``` may also vary for different
-registries. Some require ```loc``` and some require ```int```. EPP allows for
+Some registries set the `id` by default. In such cases it's common to use
+`auto`. The value for `type` may also vary for different
+registries. Some require `loc` and some require `int`. EPP allows for
 up to 2 _postaInfo_ entries, however I've never seen a registry that accepts
 more than 1. For that reason, you can just specify it as a single object:
 
@@ -303,7 +301,7 @@ you will get back in one _infoDomain_ will be complicated enough.
 }
 ```
 
-Valid values for ```op``` are _approve_, _cancel_, _query_, _reject_, and
+Valid values for `op` are _approve_, _cancel_, _query_, _reject_, and
 _request_. There uses are:
 
    * Requesting side
