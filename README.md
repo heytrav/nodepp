@@ -26,20 +26,50 @@ should get back something in JSON format.
 
 ## Configuration
 
-I recommend copying `config/epp-config-template.json` to something like
-`config/epp-config-devel.json` or `config/epp-config-production.json` and
-modifying this file to fit your needs.  You will need to add your own
-login/password as well as the paths to any SSL certs you may need.
+In `config/epp-config-example.json` you'll find something that looks like
+this:
 
-You can add as many registries as you like. You may even need to add the same
-registry multiple times with different logins, etc. This is practical for
-testing if you want to simulate logging in as separate registrars for
-transfers.
+```javascript
+{
+    "registries": {
+        "registry1": {
+          // registry1 data
+        },
+        "registry2": {
+          // registry2
+        }
+    },
+    "rabbitmq": {
+        "connection": {
+          // RabbitMQ connection
+        }
+    },
+    "whitelisted_ips": []
+}
+```
+
+For your development and production environments, I recommend copying this
+file to `config/epp-config-devel.json` and
+`config/epp-config-production.json`, respectively, and modifying each to
+fit your needs.  You will need to add your own login/password as well as the
+paths to any SSL certificates and keys.
 
 When you've got the config setup the way you like it, symlink this to
 `config/epp-config.json` to run the application.
 
     ln -s <path to app>/config/epp-config-devel.json <path to app>/config/epp-config.json
+
+
+You can add as many registries as you like. You may even need to add the same
+registry multiple times with different logins, etc. This is practical for
+testing if you need to simulate logging in as separate registrars for
+transfers.
+
+The `rabbitmq` section is necessary if you would like to run the
+`lib/rabbit-epp.js` service.
+
+The `whitelisted_ips` tells the REST applicationt only accept certain hosts.
+
 
 
 
@@ -51,8 +81,7 @@ Note that a number of tests are currently set to *skip* automatically. These
 require a running RabbitMQ instance and that you have set up the
 configuration accordingly. They also assume that you have an OTE account with
 Hexonet (https://hexonet.net). Of course you can choose any registry interface
-you like, but you will need to modify the tests slightly. I chose Hexonet
-because they offer a good test environment.
+you like, but you will need to modify the tests slightly.
 
 ## Running the web service
 
@@ -78,9 +107,9 @@ recommend using the program **Postman** which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
 scripting language of your choice. I put an example of this down below.
 
-## RabbitMQ
+## Running the RabbitMQ service
 
-There is also a RabbitMQ interface:
+This sets up a RPC service that listens for connections on RabbitMQ.
 
     node lib/rabbit-epp.js -r registry1
 
@@ -507,7 +536,7 @@ authInfo: {
 ### period
 
 
-The `period` argument in _createDomain_ and  _transferDomain_ can be specified as follows:
+The `period` argument in _createDomain_, _renewDomain_ and  _transferDomain_ can be specified as follows:
 
 1 year registration
 
@@ -583,7 +612,7 @@ signing, algorithm and key info needs to come from the caller.
 
 ### DNSSEC
 
-I've implemented ```DNSSEC``` EPP generation for create and update. 
+I've implemented ```DNSSEC``` EPP generation for create and update.
 
 Following are some variations that you can send (I'm leaving out the standard
 part of the EPP request):
