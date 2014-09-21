@@ -82,16 +82,16 @@ scripting language of your choice. I put an example of this down below.
 
 There is also a RabbitMQ interface:
 
-    node lib/rabbitpee.js -r registry1
+    node lib/rabbit-epp.js -r registry1
 
 To run it as a daemon:
 
-    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/rabbitpee.js \
+    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/rabbit-epp.js \
         -r registry1 -r registry2 -r registry3
 
 You can stop the service like so:
 
-    foreverd stop lib/rabbitpee.js
+    foreverd stop lib/rabbit-epp.js
 
 *Note* that for all commands documented below, the datastructure that is sent
 via RabbitMQ needs to be modified as follows:
@@ -583,17 +583,14 @@ signing, algorithm and key info needs to come from the caller.
 
 ### DNSSEC
 
-I've implemented ```DNSSEC``` EPP generation for create and update. I don't
-know if we'll ever need this. NZRS has it in their extension list, but I
-didn't see any examples of it anywhere. Hexonet only references it with their
-KV interface.
+I've implemented ```DNSSEC``` EPP generation for create and update. 
 
 Following are some variations that you can send (I'm leaving out the standard
 part of the EPP request):
 
 #### createDomain
 
-Create a domain with the ```dsData``` interface:
+Create a domain with the `dsData` interface:
 
 ```javascript
 "extension": {
@@ -609,7 +606,7 @@ Create a domain with the ```dsData``` interface:
 }
 ```
 
-with the ```keyData``` interface:
+with the `keyData` interface:
 
 ```javascript
 "extension": {
@@ -624,7 +621,7 @@ with the ```keyData``` interface:
 }
 ```
 
-with the ```keyData``` in the ```dsData``` element:
+with the `keyData` in the `dsData` element:
 
 ```javascript
 "extension": {
