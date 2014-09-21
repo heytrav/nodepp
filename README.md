@@ -26,19 +26,18 @@ should get back something in JSON format.
 
 ## Configuration
 
-I recommend copying `config/epp-config-template.json` to
-something like `config/epp-config-devel.json` or
-`config/epp-config-production.json` and and modifying them to fit your needs.
-This includes adding your own login/password as well as paths to any SSL certs
-you may need.
+I recommend copying `config/epp-config-template.json` to something like
+`config/epp-config-devel.json` or `config/epp-config-production.json` and
+modifying this file to fit your needs.  You will need to add your own
+login/password as well as the paths to any SSL certs you may need.
 
-You can add as many registries as you like. Note that you can add the same
+You can add as many registries as you like. You may even need to add the same
 registry multiple times with different logins, etc. This is practical for
 testing if you want to simulate logging in as separate registrars for
 transfers.
 
-When you've got the config setup the way you like it, you will need to
-symlink this to `config/epp-config.json` to run the application.
+When you've got the config setup the way you like it, symlink this to
+`config/epp-config.json` to run the application.
 
     ln -s <path to app>/config/epp-config-devel.json <path to app>/config/epp-config.json
 
@@ -48,9 +47,16 @@ symlink this to `config/epp-config.json` to run the application.
 
         npm test
 
+Note that a number of tests are currently set to *skip* automatically. These
+require a running RabbitMQ instance and that you have set up the
+configuration accordingly. They also assume that you have an OTE account with
+Hexonet (https://hexonet.net). Of course you can choose any registry interface
+you like, but you will need to modify the tests slightly. I chose Hexonet
+because they offer a good test environment.
+
 ## Running the web service
 
-You can start the process trivially using for example:
+You can start the REST based interface as follows:
 
     node lib/server.js -r registry1
 
