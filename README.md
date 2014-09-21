@@ -4,7 +4,7 @@ An EPP implementation in node.js
 
 ##Description
 
-A _service_ for communicating with EPP registries(ars).
+A service for communicating with EPP registries(ars).
 
 ### What it is
 
@@ -13,10 +13,6 @@ takes datastructures in JSON, converts them to XML, sends them to the
 registry, and then does the whole thing in reverse with the response. You
 should get back something in JSON format.
 
-You also do not have to login. The app logs into the registry when it is
-started.
-
-
 
 ## Installation
 
@@ -24,13 +20,13 @@ started.
 1. Clone the repository: `git clone git@github.com:ideegeo/nodepp.git`.
 2. `cd nodepp`
 3. `npm install` to install node dependencies.
-
-5.  ```source nodepp.rc``` to include ```./node_modules/.bin``` in the
-    ```$PATH```. This is necessary for testing or if you plan on running it as
+4.  `source nodepp.rc` to include `./node_modules/.bin` in the
+    `$PATH`. This is necessary for testing or if you plan on running it as
     a daemon.
 
 ## Configuration
-At the moment, I recommend copying `config/epp-config-template.json` to
+
+I recommend copying `config/epp-config-template.json` to
 something like `config/epp-config-devel.json` or
 `config/epp-config-production.json` and and modifying them to fit your needs.
 This includes adding your own login/password as well as paths to any SSL certs
@@ -44,7 +40,7 @@ transfers.
 When you've got the config setup the way you like it, you will need to
 symlink this to `config/epp-config.json` to run the application.
 
-ln -s `pwd`/config/epp-config-devel.json `pwd`/config/epp-config.json
+    ln -s <path to app>/config/epp-config-devel.json <path to app>/config/epp-config.json
 
 
 
@@ -66,8 +62,13 @@ This will start a single epp client that is logged into "Registry1".
 This runs it as  daemon in the background.  This tells it to open connections
 to three different registries.
 
+To stop the service:
 
-I recommend using the program **Postman** which can be installed in
+    foreverd stop lib/server.js
+
+
+You can test the script by posting JSON requests to the server instance. I
+recommend using the program **Postman** which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
 scripting language of your choice. I put an example of this down below.
 
@@ -75,12 +76,16 @@ scripting language of your choice. I put an example of this down below.
 
 There is also a RabbitMQ interface:
 
-    node lib/rabbitpee.js -r hexonet-test1
+    node lib/rabbitpee.js -r registry1
 
 To run it as a daemon:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/rabbitpee.js \
-        -r hexonet-test1 -r nzrs-test1 -r nzrs-test2
+        -r registry1 -r registry2 -r registry3
+
+You can stop the service like so:
+
+    foreverd stop lib/rabbitpee.js
 
 *Note* that for all commands documented below, the datastructure that is sent
 via RabbitMQ needs to be modified as follows:
@@ -90,40 +95,10 @@ via RabbitMQ needs to be modified as follows:
         "data": <request data>
      }
 
-Data returned by the service should be the same.
-
-For demo purposes, I've written a small script ```lib/rabbitpoo.js``` to send
-a single rpc command to a *running* service.  It's hardcoded to send a command
-for the ```hexonet-test1``` test accreditation. You can copy/modify it
-accordingly to experiment with other registry accreditations as they
-become available.
 
 
-## Not running the service
 
-Kill the daemon process with:
-
-    foreverd stop lib/server.js
-
-When running locally, ```Ctrl-C``` will do.
-
-Sending ```kill -INT``` to the ```pid``` of the ```lib/server.js``` process
-triggers the client to send a ```logout``` command to the registries
-and then shutdown. You can use this to kill local processes instead of
-```Ctrl-C```.  With the daemon, this has the net effect of causing it to
-```logout``` and then ```login``` again since ```foreverd```  will
-automatically restart the process. This might be handy if some registries have
-connection time limits.
-
-
-Since I haven't gotten around to generating a pid file, the following command
-is useful.
-
-
-    kill -INT `ps waux | grep server.js | grep -v grep | awk '{print $2}'`
-
-
-## Commands
+## EPP Commands
 
 At the time of this writing, the following commands have been implemented:
 
@@ -388,10 +363,10 @@ _request_. There uses are:
 ```
 
 This is a very complicated example but at least shows what is possible in an
-_updateDomain_. At least 1 of ```add```, ```rem```, or ```chg``` is required.
-The ```chg``` field, if provided, must contain either a ```registrant```
-and/or an ```authInfo```. ```add``` and ```rem``` elements, if provided, must
-contain any one or more ```ns```, ```contact```, or ```status``` fields.
+_updateDomain_. At least 1 of `add`, `rem`, or `chg` is required.
+The `chg` field, if provided, must contain either a `registrant`
+and/or an `authInfo`. `add` and `rem` elements, if provided, must
+contain any one or more `ns`, `contact`, or `status` fields.
 
 
 
@@ -424,7 +399,7 @@ In cases where IP addresses are required, the following variants can be used:
     [{host: "ns3.host.com", addr:[ {ip: "::F3:E2:23:::", type: "v6"}, {ip:"47.23.43.1", type: "v4"} ]}]
 ```
 
-```type``` is ```v4``` by default. You'll have to specify ```v6``` explicitly for IPv6
+`type` is `v4` by default. You'll have to specify `v6` explicitly for IPv6
 addresses.
 
 It's up to you to know which cases glue records are required. This
@@ -433,7 +408,7 @@ implementation has no way to know that.
 ### authInfo
 
 _createContact_, _createDomain_, _transferDomain_ and _updateDomain_ accept an
-```authInfo``` parameter.
+`authInfo` parameter.
 
 Following are equivalent:
 
@@ -449,8 +424,8 @@ or
     }
 ```
 
-In some cases you may need to supply a ```roid``` in addition to the
-```authInfo```.  This is used to identify the registrant or contact object if
+In some cases you may need to supply a `roid` in addition to the
+`authInfo`.  This is used to identify the registrant or contact object if
 and only if the given authInfo is associated with a registrant or contact
 object, and not the domain object itself.
 
@@ -465,7 +440,7 @@ authInfo: {
 ### period
 
 
-The ```period``` argument in _createDomain_ and  _transferDomain_ can be specified as follows:
+The `period` argument in _createDomain_ and  _transferDomain_ can be specified as follows:
 
 1 year registration
 
@@ -486,14 +461,14 @@ The default unit is _y_ for year and default period is 1.
 
 ### transactionId
 
-A ```transactionId``` is optional. It can be added at the top level of the JSON data
-structure. By default it will be set to ```iwmn-<epoch timestamp>```.
+A `transactionId` is optional. It can be added at the top level of the JSON data
+structure. By default it will be set to `iwmn-<epoch timestamp>`.
 
 ### Extensions
 
-You can optionally add an ```extension``` property to some commands. This
+You can optionally add an `extension` property to some commands. This
 varies from registry to registry like everything else.  A good example is when
-adding ```DNSSEC``` data to a *createDomain*:
+adding `DNSSEC` data to a *createDomain*:
 
 
 ```javascript
@@ -663,7 +638,7 @@ Post the following to http://localhost:3000/command/hexonet/checkDomain
 
     prompt$ time curl -H "Content-Type: application/json" \
         -d '{"domain": "test-domain.com"}'  \
-                http://localhost:3000/command/hexonet/checkDomain
+                http://localhost:3000/command/<registry>/checkDomain
 
 _Note_ I just put ```time``` in there to show what the execution time is.
 *YMMV*
