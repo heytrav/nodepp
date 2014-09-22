@@ -12,7 +12,10 @@ should = chai.should;
 var ProtocolState = require('../lib/protocol-state.js');
 
 describe.skip('Communication protocol state machine', function() {
-    var config = nconf.get('registries')['hexonet-test1'];
+    var config;
+    if (nconf) {
+        config = nconf.get('registries')['hexonet-test1'];
+    }
 
     describe('simulate login/logout', function() {
         var stateMachine, fos;
