@@ -13,8 +13,8 @@ describe('EPP serialisation', function() {
     describe('general commands', function() {
         var epp, config;
         beforeEach(function() {
-            config = nconf.get('registries')['registry-test1'];
-            epp = EppFactory.generate('registry-test1', config);
+            config = nconf.get('registries')['registry-test2'];
+            epp = EppFactory.generate('registry-test2', config);
             if (!epp) {
                 throw new Error("Unable to initialise epp");
             }
@@ -531,8 +531,8 @@ describe('EPP serialisation', function() {
     describe('extension handling', function() {
         var epp, config;
         beforeEach(function() {
-            config = nconf.get('registries')['registry-test2'];
-            epp = EppFactory.generate('registry-test2', config);
+            config = nconf.get('registries')['registry-test1'];
+            epp = EppFactory.generate('registry-test1', config);
         });
         it('should be decorated with the secDNS extension methods', function() {
             expect(epp).to.respondTo('createDomainSecDnsExtension');
@@ -748,13 +748,13 @@ describe('EPP serialisation', function() {
         });
     });
     describe('Hexonet extension', function() {
-        var hexonetEpp, config;
+        var reg2Epp, config;
         beforeEach(function() {
-            config = nconf.get('registries')['registry-test1'];
-            hexonetEpp = EppFactory.generate('registry-test1', config);
+            config = nconf.get('registries')['registry-test2'];
+            reg2Epp = EppFactory.generate('registry-test2', config);
         });
         it('should be decorated with the secDNS extension methods', function() {
-            expect(hexonetEpp).to.respondTo('createDomainExtension');
+            expect(reg2Epp).to.respondTo('createDomainExtension');
         });
         it('should process Hexonet "keyvalue" extension', function() {
             var keyValueData = {
@@ -762,7 +762,7 @@ describe('EPP serialisation', function() {
                 "OWNERCONTACT1": "P-TAF28517",
                 "OWNERCONTACT2": "P-TAF28559"
             };
-            var processedExtension = hexonetEpp.createDomainExtension(keyValueData);
+            var processedExtension = reg2Epp.createDomainExtension(keyValueData);
             expect(processedExtension).to.have.deep.property("keyvalue:extension.keyvalue:kv[1]._attr.value", "P-TAF28517");
             expect(processedExtension).to.have.deep.property("keyvalue:extension.keyvalue:kv[2]._attr.key", "OWNERCONTACT2");
         });
