@@ -1,11 +1,12 @@
 #!/bin/sh
 
+: ${EPP_ENVIRONMENT:=devel}
 echo "Link ${EPP_ENVIRONMENT} config"
 
-CONFIG="/usr/local/d8o/nodepp/config/epp-config-${EPP_ENVIRONMENT}.json"
+CONFIG="config/epp-config-${EPP_ENVIRONMENT}.json"
 
 if [ -e $CONFIG ]; then
-    ln -sf $CONFIG  /usr/local/d8o/nodepp/config/epp-config.json
+    ln -sf $CONFIG  config/epp-config.json
 fi
 
 
