@@ -18,6 +18,8 @@ RUN apt-get install -y node-node-expat
 RUN apt-get clean
 ADD package.json /root/package.json
 RUN npm install 
+ADD test /root/test
+ADD lib /root/lib
 RUN npm test
 
 CMD ["./docker_start.sh"]
