@@ -70,7 +70,7 @@ transfers.
 The `rabbitmq` section is necessary if you would like to run the
 `lib/rabbit-epp.js` service.
 
-The `whitelisted_ips` tells the REST applicationt only accept certain hosts.
+The `whitelisted_ips` tells the REST application to only accept certain hosts.
 
 
 

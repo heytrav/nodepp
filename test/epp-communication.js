@@ -13,7 +13,7 @@ var ProtocolState = require('../lib/protocol-state.js');
 
 describe.skip('Communication protocol state machine', function() {
     var config;
-    if (nconf) {
+    if (nconf !== undefined) {
         config = nconf.get('registries')['hexonet-test1'];
     }
 
