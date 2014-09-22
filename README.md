@@ -96,7 +96,7 @@ This will start a single epp client that is logged into "Registry1".
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js \
         -r registry-test1 -r registry-test2 -r registry-test3
 
-This runs it as  daemon in the background.  This tells it to open connections
+This runs it as  daemon in the background and tells it to open connections
 to three different registries. The registries passed as arguments to `-r`
 correspond to the keys in the `registries` section of the configuration file.
 
