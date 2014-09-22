@@ -2,6 +2,8 @@
 
 An EPP implementation in node.js
 
+[![Docker Repository on Quay.io](https://quay.io/repository/heytrav/nodepp/status "Docker Repository on Quay.io")](https://quay.io/repository/heytrav/nodepp)
+
 ##Description
 
 A service for communicating with EPP registries(ars).
