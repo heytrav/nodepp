@@ -3,7 +3,6 @@ FROM ubuntu:trusty
 MAINTAINER Travis Holton <travis@ideegeo.com>
 
 
-RUN echo 'deb http://archive.ubuntu.com/ubuntu/ trusty main universe' > /etc/apt/sources.list.d/nodepp.list
 
 RUN apt-get update
 RUN apt-get install -y software-properties-common python expat
