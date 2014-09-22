@@ -13,8 +13,8 @@ describe('EPP serialisation', function() {
     describe('general commands', function() {
         var epp, config;
         beforeEach(function() {
-            config = nconf.get('registries')['hexonet-test1'];
-            epp = EppFactory.generate('hexonet-test1', config);
+            config = nconf.get('registries')['registry-test1'];
+            epp = EppFactory.generate('registry-test1', config);
             if (!epp) {
                 throw new Error("Unable to initialise epp");
             }
@@ -531,8 +531,8 @@ describe('EPP serialisation', function() {
     describe('extension handling', function() {
         var epp, config;
         beforeEach(function() {
-            config = nconf.get('registries')['nzrs-test1'];
-            epp = EppFactory.generate('nzrs-test1', config);
+            config = nconf.get('registries')['registry-test2'];
+            epp = EppFactory.generate('registry-test2', config);
         });
         it('should be decorated with the secDNS extension methods', function() {
             expect(epp).to.respondTo('createDomainSecDnsExtension');
@@ -750,8 +750,8 @@ describe('EPP serialisation', function() {
     describe('Hexonet extension', function() {
         var hexonetEpp, config;
         beforeEach(function() {
-            config = nconf.get('registries')['hexonet-test1'];
-            hexonetEpp = EppFactory.generate('hexonet-test1', config);
+            config = nconf.get('registries')['registry-test1'];
+            hexonetEpp = EppFactory.generate('registry-test1', config);
         });
         it('should be decorated with the secDNS extension methods', function() {
             expect(hexonetEpp).to.respondTo('createDomainExtension');

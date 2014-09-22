@@ -56,7 +56,8 @@ For your development and production environments, I recommend copying this
 file to `config/epp-config-devel.json` and
 `config/epp-config-production.json`, respectively, and modifying each to
 fit your needs.  You will need to add your own login/password as well as the
-paths to any SSL certificates and keys.
+paths to any SSL certificates and keys. You can of course replace the keys
+`registry-test1`, `registry-test2`, etc. with something more intuitive.
 
 When you've got the config setup the way you like it, symlink this to
 `config/epp-config.json` to run the application.
@@ -82,10 +83,9 @@ The `whitelisted_ips` tells the REST application to only accept certain hosts.
         npm test
 
 Note that a number of tests are currently set to *skip* automatically. These
-require a running RabbitMQ instance and that you have set up the
-configuration accordingly. They also assume that you have an OTE account with
-Hexonet (https://hexonet.net). Of course you can choose any registry interface
-you like, but you will need to modify the tests slightly.
+require a running RabbitMQ instance and that you have set up the configuration
+accordingly. They also assume that you have an online testing environment
+(OTE) account with some registry or registrar.
 
 ## Running the web service
 
