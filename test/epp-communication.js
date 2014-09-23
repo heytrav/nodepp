@@ -1,6 +1,6 @@
 nconf = require('nconf');
 nconf.env().file({
-    "file": "./config/epp-config.json"
+    "file": "./config/epp-config-example.json"
 });
 var fs = require('fs');
 var chai = require('chai');

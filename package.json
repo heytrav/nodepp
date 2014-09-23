@@ -1,6 +1,6 @@
 {
-  "name": "express-proto",
-  "version": "0.0.0",
+  "name": "nodepp",
+  "version": "0.5.0",
   "description": "testing express",
   "main": "index.js",
   "scripts": {
@@ -38,5 +38,21 @@
     "resumer": "0.0.0",
     "sinon": "^1.10.3",
     "sinon-chai": "^2.5.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heytrav/nodepp.git"
+  },
+  "keywords": [
+    "EPP",
+    "registry",
+    "tld"
+  ],
+  "bugs": {
+    "url": "https://github.com/heytrav/nodepp/issues"
+  },
+  "homepage": "https://github.com/heytrav/nodepp"
 }
