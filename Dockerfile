@@ -25,4 +25,3 @@ ADD config /root/config
 RUN ln -sf /root/config/epp-config-example.json /root/config/epp-config.json
 RUN npm test
 
-CMD ["./docker_start.sh"]
