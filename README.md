@@ -8,15 +8,15 @@ An EPP implementation in node.js
 
 ##Description
 
-A service for communicating with EPP registries(ars).
-
-### What it is
-
-A service for communication with registries over EPP. It
+This is a service for communication with registries over EPP. It
 takes datastructures in JSON, converts them to XML, sends them to the
-registry, and then does the whole thing in reverse with the response. You
-should get back something in JSON format.
+registry, and then does the whole thing in reverse with the response.
 
+There are two separate server scripts: 
+
+1. `lib/server.js` is designed to function as a RESTful interface that you can
+   POST json requests  
+2. `lib/rabbit-epp.js`, runs as an RPC server that accepts requests via RabbitMQ.
 
 ## Installation
 
@@ -67,10 +67,10 @@ When you've got the config setup the way you like it, symlink this to
 
 You can add as many registries as you like. You may even need to add the same
 registry multiple times with different logins, etc. This is practical for
-testing if you need to simulate logging in as separate registrars for
-transfers.
+testing if you need to simulate transferring domains between two separate
+registrars.
 
-The `rabbitmq` section is necessary if you would like to run the
+The `rabbitmq` section of the config is necessary if you would like to run the
 `lib/rabbit-epp.js` service.
 
 The `whitelisted_ips` tells the REST application to only accept certain hosts.
