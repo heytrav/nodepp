@@ -12,10 +12,10 @@ This is a service for communication with registries over EPP. It
 takes datastructures in JSON, converts them to XML, sends them to the
 registry, and then does the whole thing in reverse with the response.
 
-There are two separate server scripts: 
+There are two separate server scripts:
 
-1. `lib/server.js` is designed to function as a RESTful interface that you can
-   POST json requests  
+1. `lib/server.js` is designed to function as a RESTful interface where you can
+   POST and receive json requests.
 2. `lib/rabbit-epp.js`, runs as an RPC server that accepts requests via RabbitMQ.
 
 ## Installation
