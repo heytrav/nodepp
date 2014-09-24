@@ -57,7 +57,7 @@ file to `config/epp-config-devel.json` and
 `config/epp-config-production.json`, respectively, and modifying each to
 fit your needs.  You will need to add your own login/password as well as the
 paths to any SSL certificates and keys. You can of course replace the keys
-`registry-test1`, `registry-test2`, etc. with something more intuitive.
+`registry-test1`, `registry-test2`, etc. with something more descriptive of the registry.
 
 When you've got the config setup the way you like it, symlink this to
 `config/epp-config.json` to run the application.
@@ -91,15 +91,14 @@ The REST app is based on express.js and listens for POST requests on port 3000. 
 
     node lib/node-epp-server.js -r registry1 -r registry2
 
-The `-r` option specifies which registries the script should log into and can be used multiple times. These should correspond to the `registries` listed in the configuration file. This instance will be log into into *registry1* and *registry2*. 
+The `-r` option specifies which registries the script should log into and can be used multiple times. These should correspond to the `registries` listed in the configuration file. In this case, the client will log into into *registry1* and *registry2*. 
 
 Alternatively you can start it as a daemon:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/node-epp-server.js \
         -r registry-test1 -r registry-test2 -r registry-test3
 
-This tells it to open connections to three different registries. Again, the registries passed as arguments to `-r`
-correspond to the keys in the `registries` section of the configuration file.
+This tells it to open connections to three different registries.
 
 To stop the service:
 
@@ -109,7 +108,7 @@ To stop the service:
 You can test the script by posting JSON requests to the server instance. I
 recommend using the program *Postman* which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
-scripting language of your choice. I put an example of this down below.
+scripting language of your choice. I put an [example](https://github.com/heytrav/nodepp#example-usage) of this down below. 
 
 ## Running the RabbitMQ service
 
@@ -483,7 +482,7 @@ Some of the required datastructures might seem a bit weird. EPP has a fairly
 complex grammar that is _probably_ intended to make granular control of domain
 related entities possible. There are no flat datastructures and some things
 must be specified explicitly that would be assumed in systems that use
-*key=value* like APIs. For example, to remove nameservers from a domain, it is
+`key=value` APIs. For example, to remove nameservers from a domain, it is
 necessary to remove them explicitly. Simply updating domain with _the new
 nameservers_ will not work. The same goes for contact objects.
 
@@ -730,7 +729,7 @@ Remove all existing key info and replace it with something new:
 ```
 
 
-## Example usage:
+## Example usage
 
 Post the following to http://localhost:3000/command/hexonet/checkDomain
 
