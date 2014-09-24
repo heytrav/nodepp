@@ -89,9 +89,9 @@ accordingly. They also assume that you have an online testing environment
 
 The REST app is based on express.js and listens for POST requests on port 3000. You can start it as follows:
 
-    node lib/node-epp-server.js -r registry-test1
+    node lib/node-epp-server.js -r registry1 -r registry2
 
-You can use the `-r` option to specify which registries the script should log into. This instance will be logged into  into whatever registry "registry-test1" points to in the configuration file. Alternatively you can start it as a daemon:
+The `-r` option to specifies which registries the script should log into. You can specify multiple registries this way. This instance will be logged into  into whatever "registry1" and "registry2" point to in the configuration file. Alternatively you can start it as a daemon:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/node-epp-server.js \
         -r registry-test1 -r registry-test2 -r registry-test3
