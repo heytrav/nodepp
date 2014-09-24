@@ -89,17 +89,16 @@ accordingly. They also assume that you have an online testing environment
 
 ## Running the web service
 
-You can start the REST based interface as follows:
+The server app is based on express.js and listens for POST requests on port 3000. You can start it as follows:
 
     node lib/node-epp-server.js -r registry-test1
 
-This will start a single epp client that is logged into "Registry1".
+This will start an instance that is logged into whatever "registry-test1" points to in the configuration file. Alternatively you can start it as a daemon:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/node-epp-server.js \
         -r registry-test1 -r registry-test2 -r registry-test3
 
-This runs it as  daemon in the background and tells it to open connections
-to three different registries. The registries passed as arguments to `-r`
+This tells it to open connections to three different registries. Again, the registries passed as arguments to `-r`
 correspond to the keys in the `registries` section of the configuration file.
 
 To stop the service:
