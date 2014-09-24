@@ -1,6 +1,6 @@
 {
-  "name": "nodepp",
-  "version": "0.5.0",
+  "name": "node-epp",
+  "version": "1.0.2",
   "description": "testing express",
   "main": "index.js",
   "scripts": {
