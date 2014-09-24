@@ -14,7 +14,7 @@ registry, and then does the whole thing in reverse with the response.
 
 There are two separate server scripts:
 
-1. `lib/server.js` is designed to function as a RESTful interface where you can
+1. `lib/node-epp-server.js` is designed to function as a RESTful interface where you can
    POST and receive json requests.
 2. `lib/rabbit-epp.js`, runs as an RPC server that accepts requests via RabbitMQ.
 
@@ -91,11 +91,11 @@ accordingly. They also assume that you have an online testing environment
 
 You can start the REST based interface as follows:
 
-    node lib/server.js -r registry-test1
+    node lib/node-epp-server.js -r registry-test1
 
 This will start a single epp client that is logged into "Registry1".
 
-    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/server.js \
+    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/node-epp-server.js \
         -r registry-test1 -r registry-test2 -r registry-test3
 
 This runs it as  daemon in the background and tells it to open connections
@@ -104,7 +104,7 @@ correspond to the keys in the `registries` section of the configuration file.
 
 To stop the service:
 
-    foreverd stop lib/server.js
+    foreverd stop lib/node-epp-server.js
 
 
 You can test the script by posting JSON requests to the server instance. I
