@@ -91,7 +91,9 @@ The REST app is based on express.js and listens for POST requests on port 3000. 
 
     node lib/node-epp-server.js -r registry1 -r registry2
 
-The `-r` option to specifies which registries the script should log into. You can specify multiple registries this way. This instance will be logged into  into whatever "registry1" and "registry2" point to in the configuration file. Alternatively you can start it as a daemon:
+The `-r` option specifies which registries the script should log into and can be used multiple times. These should correspond to the `registries` listed in the configuration file. This instance will be log into into *registry1* and *registry2*. 
+
+Alternatively you can start it as a daemon:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/node-epp-server.js \
         -r registry-test1 -r registry-test2 -r registry-test3
