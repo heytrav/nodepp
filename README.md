@@ -8,7 +8,7 @@ An EPP implementation in node.js
 
 ##Description
 
-This is a service for communication with registries over EPP. It
+This is a service for communicating with registries over EPP. It
 takes datastructures in JSON, converts them to XML, sends them to the
 registry, and then does the whole thing in reverse with the response.
 
