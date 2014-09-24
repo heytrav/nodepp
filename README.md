@@ -70,8 +70,6 @@ registry multiple times with different logins, etc. This is practical for
 testing if you need to simulate transferring domains between two separate
 registrars.
 
-The `rabbitmq` section of the config is necessary if you would like to run the
-`lib/rabbit-epp.js` service.
 
 The `whitelisted_ips` tells the REST application to only accept certain hosts.
 
@@ -89,11 +87,11 @@ accordingly. They also assume that you have an online testing environment
 
 ## Running the web service
 
-The server app is based on express.js and listens for POST requests on port 3000. You can start it as follows:
+The REST app is based on express.js and listens for POST requests on port 3000. You can start it as follows:
 
     node lib/node-epp-server.js -r registry-test1
 
-This will start an instance that is logged into whatever "registry-test1" points to in the configuration file. Alternatively you can start it as a daemon:
+You can use the `-r` option to specify which registries the script should log into. This instance will be logged into  into whatever registry "registry-test1" points to in the configuration file. Alternatively you can start it as a daemon:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/node-epp-server.js \
         -r registry-test1 -r registry-test2 -r registry-test3
@@ -107,22 +105,22 @@ To stop the service:
 
 
 You can test the script by posting JSON requests to the server instance. I
-recommend using the program **Postman** which can be installed in
+recommend using the program *Postman* which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
 scripting language of your choice. I put an example of this down below.
 
 ## Running the RabbitMQ service
 
-This sets up a RPC service that listens for connections on RabbitMQ.
+This is a RPC service that listens for connections on RabbitMQ. Have a look at the `rabbitmq` section of the configuration file if you would like to run this. To run the application:
 
     node lib/rabbit-epp.js -r registry-test1
 
-To run it as a daemon:
+Or as a daemon:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/rabbit-epp.js \
         -r registry-test1 -r registry-test2 -r registry-test3
 
-You can stop the service like so:
+To stop it:
 
     foreverd stop lib/rabbit-epp.js
 
@@ -133,6 +131,8 @@ via RabbitMQ needs to be modified as follows:
         "command": "<command name>",
         "data": <request data>
      }
+     
+I wrote some scripts for interacting with the RabbitMQ service in my [epp-reg](https://github.com/heytrav/epp-reg) project. Feel free to use those as you like.
 
 
 
