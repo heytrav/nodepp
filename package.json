@@ -1,7 +1,7 @@
 {
   "name": "node-epp",
-  "version": "1.0.2",
-  "description": "testing express",
+  "version": "1.0.4",
+  "description": "EPP client for domain registrars.",
   "main": "index.js",
   "scripts": {
     "test": "mocha test/*.js",
