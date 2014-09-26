@@ -23,4 +23,5 @@ ADD lib /root/lib
 ADD test /root/test
 ADD config /root/config
 RUN npm test
+EXPOSE 3000
 
