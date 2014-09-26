@@ -87,7 +87,17 @@ accordingly. They also assume that you have an online testing environment
 
 ## Running the web service
 
-The REST app is based on express.js and listens for POST requests on port 3000. You can start it as follows:
+The REST app is based on express.js and listens for POST requests on port 3000. The general URL scheme is as follows:
+    
+    http://<host>:3000/command/<registry>/<command>
+    
+So to run a *checkDomain* for *registry1* on a local instance of the server, POST your request to:
+
+
+    http://localhost:3000/command/registry1/checkDomain
+
+
+You can start it as follows:
 
     node lib/node-epp-server.js -r registry1 -r registry2
 
