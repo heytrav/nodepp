@@ -3,6 +3,10 @@
   "version": "1.0.5",
   "description": "EPP client for domain registrars.",
   "main": "index.js",
+  "bin": {
+      "rabbit-epp": "lib/rabbit-epp.js",
+      "node-epp-rest": "lib/node-epp-server.js"
+  },
   "scripts": {
     "test": "mocha test/*.js",
     "checkVersion": "mocha --version",
