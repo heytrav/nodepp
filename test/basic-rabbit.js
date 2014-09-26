@@ -1,7 +1,8 @@
 var Amqp = require('amqp-as-promised');
 nconf = require('nconf');
+var path = require('path');
 nconf.env().file({
-    "file": "./config/epp-config.json"
+    "file": path.resolve(__dirname, '..', 'config/epp-config.json')
 });
 var uuid = require('node-uuid');
 var Q = require('q');
