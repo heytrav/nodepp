@@ -9,8 +9,11 @@
   },
   "scripts": {
     "test": "mocha test/*.js",
-    "checkVersion": "mocha --version",
-    "start": "node lib/server.js"
+    "checkVersion": "mocha --version"
+  },
+  "bin": {
+      "node-epp-rest": "lib/node-epp-server.js",
+      "node-epp-rabbit": "lib/rabbit-epp.js"
   },
   "author": "Trav Holton",
   "license": "ISC",
