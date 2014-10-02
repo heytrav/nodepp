@@ -18,7 +18,7 @@ RUN apt-get install -y node-node-expat
 RUN apt-get clean
 ADD package.json /root/package.json
 USER root
-RUN npm install  . -g
+RUN npm install   -g
 RUN export PATH="$PATH:/root/node_modules/.bin"
 ADD lib /root/lib
 ADD test /root/test
