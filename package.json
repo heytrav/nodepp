@@ -1,19 +1,15 @@
 {
   "name": "node-epp",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "EPP client for domain registrars.",
   "main": "index.js",
   "bin": {
-      "rabbit-epp": "lib/rabbit-epp.js",
-      "node-epp-rest": "lib/node-epp-server.js"
+    "node-epp-rest": "lib/node-epp-server.js",
+    "node-epp-rabbit": "lib/rabbit-epp.js"
   },
   "scripts": {
     "test": "mocha test/*.js",
     "checkVersion": "mocha --version"
-  },
-  "bin": {
-      "node-epp-rest": "lib/node-epp-server.js",
-      "node-epp-rabbit": "lib/rabbit-epp.js"
   },
   "author": "Trav Holton",
   "license": "ISC",
