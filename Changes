@@ -1,0 +1,4 @@
+2015-01-19
+
+* Implemented login/logout functionality. Should now be possible to login and
+  logout of the application without needing to restart it.
