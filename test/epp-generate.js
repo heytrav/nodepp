@@ -471,6 +471,7 @@ describe('EPP serialisation', function() {
                 };
                 var xml = epp.updateHost(updateHost, 'test-1234');
                 expect(xml).to.match(/<host:rem>(?:(?!<\/host:rem).)*clientTransferProhibited/);
+                expect(xml).to.match(/<host:update\s+xmlns:host/);
             });
             it('should create a poll request', function() {
                 var processedPoll = epp.poll({},
