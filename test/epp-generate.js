@@ -227,7 +227,6 @@ describe('EPP serialisation', function() {
             });
             it('should generate a createContact command', function() {
                 var contactData = {
-
                     "id": "auto",
                     "voice": "+1.9405551234",
                     "fax": "+1.9405551233",
@@ -257,6 +256,39 @@ describe('EPP serialisation', function() {
                 expect(xml).to.match(/<contact:name>John Doe<\/contact:name>/);
                 expect(xml).to.match(/<contact:addr>(?:(?!<contact:city>).)*<contact:city>Springfield/);
                 expect(xml).to.match(/<contact:disclose(?:(?!<contact:email>).)*<contact:email\/>/);
+            });
+            it('should generate a createContact command with higher-level characters', function() {
+                var contactData = {
+                    "id": "auto",
+                    "voice": "+1.9405551234",
+                    "fax": "+1.9405551233",
+                    "email": "john.doe@null.com",
+                    "authInfo": {
+                        "pw": "xyz123"
+                    },
+                    "disclose": {
+                        "flag": 0,
+                        "disclosing": ["voice", "email"]
+                    },
+                    "postalInfo": [{
+                        "name": "Harald Müller",
+                        "org": "Mein Geschäft",
+                        "type": "int",
+                        "addr": [{
+                            "street": ["Ludwig-Braille Straße", "10"],
+                            "city": "München",
+                            "sp": "Bayern",
+                            "pc": "86371",
+                            "cc": "DE"
+                        }]
+                    }]
+                };
+                var xml = epp.createContact(contactData, 'test-12345');
+                expect(xml).to.match(/xmlns:contact=\"urn:ietf:params:xml:ns:contact-1.0\"/);
+                expect(xml).to.match(/<contact:name>Harald Müller<\/contact:name>/);
+                expect(xml).to.match(/<contact:addr>(?:(?!<contact:city>).)*<contact:city>München/);
+                expect(xml).to.match(/<contact:disclose(?:(?!<contact:email>).)*<contact:email\/>/);
+                //console.log(xml);
 
             });
             it('should generate a "deleteContact" command', function() {

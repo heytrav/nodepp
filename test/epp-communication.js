@@ -11,6 +11,8 @@ var expect = chai.expect,
 should = chai.should;
 
 var ProtocolState = require('../lib/protocol-state.js');
+var ProtocolConnection = require('../lib/connection.js');
+
 
 describe.skip('Communication protocol state machine', function() {
     var config;
@@ -249,3 +251,16 @@ describe.skip('Communication protocol state machine', function() {
     });
 });
 
+describe('Buffer preparation', function() {
+    it('should get correct byte count for EPP with higher order byte characters', function() {
+
+        var createContactXml = fs.readFileSync('./test/createContactUnicode.xml');
+        var connection = new ProtocolConnection({});
+        var prepped = connection.processBigEndian(createContactXml);
+        var bufferedMessage = new Buffer(prepped);
+        var bigEndianPrefix = bufferedMessage.slice(0,4);
+        var actualLength = bigEndianPrefix.readUInt32BE(0);
+        expect(actualLength).to.equal(1424 + 4);
+    });
+
+});
