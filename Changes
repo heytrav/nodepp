@@ -1,3 +1,9 @@
+2015-01-21
+
+* Fix updatHost: Part of the namespace definition was missing.
+* use buffer length and not string length to calculate bigendian prefix.
+
+
 2015-01-19
 
 * Implemented login/logout functionality. Should now be possible to login and
