@@ -4,8 +4,8 @@
   "description": "EPP client for domain registrars.",
   "main": "index.js",
   "bin": {
-    "node-epp-rest": "lib/node-epp-server.js",
-    "node-epp-rabbit": "lib/rabbit-epp.js"
+    "node-epp-rest": "./lib/node-epp-server.js",
+    "node-epp-rabbit": "./lib/rabbit-epp.js"
   },
   "scripts": {
     "test": "mocha test/*.js",
