@@ -13,7 +13,6 @@ ADD supervisor /etc/supervisor/
 
 RUN apt-get purge -y git && apt-get clean
 
-RUN mkdir -p /opt/node-epp && cp -a /tmp/node_modules /opt/node-epp/
 ENV NODE_PATH /opt/node-epp/node_modules
 
 
