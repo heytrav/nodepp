@@ -31,7 +31,8 @@
     "node-uuid": "*",
     "node-expat": "*",
     "q": "*",
-    "xml2json": "*"
+    "xml2json": "*",
+    "winston": "*"
   },
   "devDependencies": {
     "chai": "*",
