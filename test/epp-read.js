@@ -19,21 +19,8 @@ describe('EPP socket connection handling', function() {
         });
     });
 
-    // TODO Can't figure out how to read strings as "streams" since the
-    // receive function is expecting one. Need to come back and test this
-    // later somehow.
-    //describe('reading EPP data from server', function() {
-    //var bufferStream;
-    //beforeEach(function() {
-    //bufferStream  = fs.createReadStream('./test/epp-hello.xml');
-    //ProtocolConnection.setStream(bufferStream);
-    //});
-    //it('should chop big endian bits off front of string', function() {
-    //bufferStream.on('readable', ProtocolConnection.receive);
-    //bufferStream.emit('data', preparedXML);
-    ////var choppedXML = ProtocolConnection.receive();
-    ////expect(choppedXML.length).to.be.equal(rawXML.length);
-    //});
-    //});
+    /*
+     * TODO come back to this commit when I know how to test stream.
+     */
 });
 

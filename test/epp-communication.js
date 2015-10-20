@@ -34,19 +34,18 @@ describe.skip('Communication protocol state machine', function() {
         });
 
         after(function() {
-            //console.info("Closing file handle");
             // Close the writable stream after each test
             fos.end();
         });
         before(function() {
-            //console.log("initialising state machine");
             try {
 
                 stateMachine = new ProtocolState('hexonet-test1', config);
                 var connection = stateMachine.connection;
-
-                // Use a file stream instead of trying to talk to the actual registry,
-                // we're only testing the "state" control here.
+                /* Use a file stream instead of trying to talk 
+                 * to the actual registry, we're only testing the 
+                 * "state" control here.
+                 */
                 connection.setStream(fos);
             } catch(e) {
                 console.error(e);
@@ -60,7 +59,6 @@ describe.skip('Communication protocol state machine', function() {
                 "password": "1234xyz"
             },
             "test-login-1234").then(function(data) {
-                //console.log("Got data in login test: ", data);
                 try {
                     expect(data).to.have.deep.property('result.code', 1000);
                     expect(stateMachine.loggedIn).to.equal(true);
@@ -101,8 +99,11 @@ describe.skip('Communication protocol state machine', function() {
             stateMachine = new ProtocolState('hexonet-test1', config);
             var connection = stateMachine.connection;
 
-            // Use a file stream instead of trying to talk to the actual registry,
-            // we're only testing the "state" control here.
+            /* 
+             * Use a file stream instead of trying to talk to 
+             * the actual registry, we're only testing the 
+             * "state" control here.
+             */
             connection.setStream(fos);
         });
 
@@ -144,7 +145,6 @@ describe.skip('Communication protocol state machine', function() {
                         "password": config.password
                     },
                     'iwmn-test-1234').then(function(data) {
-                        //console.log("Logged in: ", data);
                         done();
                     },
                     function(error) {
@@ -168,7 +168,6 @@ describe.skip('Communication protocol state machine', function() {
             },
             transactionId).then(function(data) {
                 try {
-                    //console.log("Got data back: ",data);
                     expect(data).to.have.deep.property('data.domain:chkData.domain:cd.domain:name.$t', domain);
                     done();
                 } catch(e) {
@@ -207,7 +206,6 @@ describe.skip('Communication protocol state machine', function() {
                 }]
             };
             stateMachine.command('createContact', contactData, transactionId).then(function(data) {
-                //console.log("Created contact: ", data);
                 expect(data).to.have.deep.property('result.code', 1000);
                 done();
             },

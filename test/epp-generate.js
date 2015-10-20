@@ -137,7 +137,6 @@ describe('EPP serialisation', function() {
                 expect(processed).to.have.deep.property('contact:postalInfo[0].contact:addr[0].contact:cc');
                 expect(processed).to.have.deep.property('contact:authInfo.contact:pw');
 
-                //console.log("processed contact ", processed);
             });
 
             it('should process different types of postalInfo data', function() {
@@ -205,17 +204,14 @@ describe('EPP serialisation', function() {
                     "password": "abc123"
                 },
                 'test-1234');
-                //console.log("Got xml: ", xml);
                 expect(xml).to.match(/<login>/);
             });
             it('should generate a hello command', function() {
                 var xml = epp.hello();
-                //console.log("Got hello: ", xml);
                 expect(xml).to.match(/<hello\/>/);
             });
             it('should generate a logout command', function() {
                 var xml = epp.logout('test-1235');
-                //console.log("Got logout: ", xml);
                 expect(xml).to.match(/<logout\/>/);
             });
             it('should generate a checkDomain command', function() {
@@ -288,7 +284,6 @@ describe('EPP serialisation', function() {
                 expect(xml).to.match(/<contact:name>Harald Müller<\/contact:name>/);
                 expect(xml).to.match(/<contact:addr>(?:(?!<contact:city>).)*<contact:city>München/);
                 expect(xml).to.match(/<contact:disclose(?:(?!<contact:email>).)*<contact:email\/>/);
-                //console.log(xml);
 
             });
             it('should generate a "deleteContact" command', function() {
@@ -329,7 +324,6 @@ describe('EPP serialisation', function() {
                     }
                 };
                 var xml = epp.updateContact(updateData, 'test-1234');
-                //console.log("Got xml: ", xml);
                 expect(xml).to.match(/<contact:status\ss=\"clientDeleteProhibited\"/);
                 expect(xml).to.match(/<contact:status\ss=\"clientTransferProhibited\"/);
                 expect(xml).to.match(/<contact:chg>(?:(?!<\/contact:chg>).)*<\/contact:chg>/);
@@ -355,7 +349,6 @@ describe('EPP serialisation', function() {
                     }
                 };
                 var xml = epp.createDomain(createDomain, 'test-14989');
-                //console.log(xml);
                 expect(xml).to.match(/<domain:name>test-domain\.com<\/domain:name>/);
                 expect(xml).to.match(/<domain:registrant>P-12345<\/domain:registrant/);
             });
@@ -508,13 +501,11 @@ describe('EPP serialisation', function() {
             it('should create a poll request', function() {
                 var processedPoll = epp.poll({},
                 'test-1234');
-                //console.log("processedPoll: ", processedPoll);
                 expect(processedPoll).to.match(/<poll\s+op=\"req\"/);
                 var poll2 = {
                     "msgID": 1234
                 };
                 var processedPoll2 = epp.poll(poll2, 'test-12345');
-                //console.log("processed Ack poll:", processedPoll2);
                 expect(processedPoll2).to.match(/<poll[^>]+op=\"ack\"/);
                 expect(processedPoll2).to.match(/msgID=\"1234\"/);
             });
@@ -526,7 +517,6 @@ describe('EPP serialisation', function() {
                 };
                 var processedData = epp.processAuthInfo(authData, 'domain');
                 var xml = epp.callConvert(processedData, 'test');
-                //console.log(xml);
                 expect(xml).to.match(/<domain:pw roid="P-12345">teStPass<\/domain:pw>/);
                 var authNoRoidData = {
                     pw: 'teStPass'
@@ -698,7 +688,6 @@ describe('EPP serialisation', function() {
                 "authInfo": "p349jj39f"
             };
             var xmlAuthInfo = epp.infoDomain(infoDataAuthInfo);
-            //console.log("infoDomain with Authinfo: ", xmlAuthInfo);
             expect(xmlAuthInfo).to.match(/<domain:pw>p349jj39f/);
         });
         it('should generate a renew domain command', function() {
@@ -778,7 +767,6 @@ describe('EPP serialisation', function() {
             var xml = epp.updateDomain(updateDomain);
             // Verify that some of the secDNS stuff is in there.
             expect(xml).to.match(/<extension>(?:(?!<\/extension).)*secDNS:add/);
-            //console.log(xml);
         });
     });
     describe('Hexonet extension', function() {
