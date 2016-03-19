@@ -1,15 +1,12 @@
 FROM node:latest
-MAINTAINER Travis Holton <travis@ideegeo.com>
+MAINTAINER Travis Holton <wtholton at gmail dot com>
 
-# Add project files
-WORKDIR /opt/node-epp
-ADD . /opt/node-epp
+WORKDIR /opt/project
+ADD package.json /opt/project
 
-RUN apt-get update && apt-get install -y git
 RUN npm install
 
-RUN apt-get purge -y git && apt-get clean
-
-ENV NODE_PATH /opt/node-epp/node_modules
+WORKDIR /opt/project/node-epp
+ADD . /opt/project/node-epp
 
 RUN npm test
