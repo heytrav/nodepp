@@ -1,4 +1,4 @@
-FROM node:0.12
+FROM node:latest
 MAINTAINER Travis Holton <travis@ideegeo.com>
 
 # Add project files
