@@ -8,5 +8,3 @@ RUN npm install
 
 WORKDIR /opt/project/node-epp
 ADD . /opt/project/node-epp
-
-RUN npm test
