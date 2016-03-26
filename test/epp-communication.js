@@ -144,7 +144,7 @@ describe.skip('Communication protocol state machine', function() {
                         "login": config.login,
                         "password": config.password
                     },
-                    'iwmn-test-1234').then(function(data) {
+                    'myreg-test-1234').then(function(data) {
                         done();
                     },
                     function(error) {
@@ -156,10 +156,10 @@ describe.skip('Communication protocol state machine', function() {
             });
         });
         before(function() {
-            domain = ['iwmn', moment().unix(), 'test.com'].join('-');
+            domain = ['myreg', moment().unix(), 'test.com'].join('-');
         });
         beforeEach(function() {
-            transactionId = ['iwmn', moment().unix()].join('-');
+            transactionId = ['myreg', moment().unix()].join('-');
         });
         it('should execute a checkDomain for ' + domain, function(done) {
             this.timeout(4000);
@@ -181,7 +181,7 @@ describe.skip('Communication protocol state machine', function() {
         });
         it('should create a contact', function(done) {
             this.timeout(4000);
-            var contactId = ['iwmn', moment().unix()].join('-');
+            var contactId = ['myreg', moment().unix()].join('-');
 
             var contactData = {
 
@@ -217,7 +217,7 @@ describe.skip('Communication protocol state machine', function() {
 
         it('should fail due to local validation', function() {
             this.timeout(4000);
-            var contactId = ['iwmn', moment().unix()].join('-');
+            var contactId = ['myreg', moment().unix()].join('-');
 
             var contactData = {
 
@@ -241,7 +241,7 @@ describe.skip('Communication protocol state machine', function() {
         after(function(done) {
             this.timeout(4000);
             stateMachine.command('logout', {},
-            'iwmn-logout').then(function() {
+            'myreg-logout').then(function() {
                 done();
             });
         });

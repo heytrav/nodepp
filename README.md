@@ -315,7 +315,7 @@ you will get back in one _infoDomain_ will be complicated enough.
 
 ```javascript
 {
-    "name": "iwmn-test-101-domain.com",
+    "name": "myreg-test-101-domain.com",
     "period": {
         "unit": "y",
         "value": 1
@@ -577,7 +577,7 @@ The default unit is _y_ for year and default period is 1.
 ### transactionId
 
 A `transactionId` is optional. It can be added at the top level of the JSON data
-structure. By default it will be set to `iwmn-<epoch timestamp>`.
+structure. By default it will be set to `myreg-<epoch timestamp>`.
 
 ### Extensions
 
@@ -588,7 +588,7 @@ adding `DNSSEC` data to a *createDomain*:
 
 ```javascript
 {
-    "name": "iwmn-test-101-domain.com",
+    "name": "myreg-test-101-domain.com",
     "period": {
         "unit": "y",
         "value": 1
