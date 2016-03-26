@@ -102,7 +102,7 @@ describe.skip('RabbitMQ operation', function() {
             var corrIds = [uuid.v4(), uuid.v4(), uuid.v4()];
             var domains = ["test-me.com", "test-me-2.com", "test-me-3.com"];
 
-            amqpConnection.serve('eppTest', 'serverQueue.hexonet', function(msg, headers, deliveryInfo) {
+            amqpConnection.serve('eppTest', 'serverQueue.testreg', function(msg, headers, deliveryInfo) {
                 var deferred = Q.defer();
                 expect(msg).to.have.deep.property('data.name');
                 deferred.resolve({"response": "successful", "data": msg});
@@ -125,7 +125,7 @@ describe.skip('RabbitMQ operation', function() {
                         "name": domain
                     }
                 };
-                amqpConnection.rpc('eppTest', 'serverQueue.hexonet', msg).then(handleResponse);
+                amqpConnection.rpc('eppTest', 'serverQueue.testreg', msg).then(handleResponse);
             }
 
         });

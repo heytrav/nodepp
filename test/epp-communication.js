@@ -40,7 +40,7 @@ describe.skip('Communication protocol state machine', function() {
         before(function() {
             try {
 
-                stateMachine = new ProtocolState('hexonet-test1', config);
+                stateMachine = new ProtocolState('testreg-test1', config);
                 var connection = stateMachine.connection;
                 /* Use a file stream instead of trying to talk 
                  * to the actual registry, we're only testing the 
@@ -96,7 +96,7 @@ describe.skip('Communication protocol state machine', function() {
             });
         });
         before(function() {
-            stateMachine = new ProtocolState('hexonet-test1', config);
+            stateMachine = new ProtocolState('testreg-test1', config);
             var connection = stateMachine.connection;
 
             /* 
@@ -133,7 +133,7 @@ describe.skip('Communication protocol state machine', function() {
         var stateMachine, fos, domain, transactionId;
         before(function(done) {
             this.timeout(10000);
-            stateMachine = new ProtocolState('hexonet-test1', config);
+            stateMachine = new ProtocolState('testreg-test1', config);
             var connection = stateMachine.connection;
             connection.initStream().then(
             function(data) {

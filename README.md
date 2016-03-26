@@ -321,8 +321,8 @@ you will get back in one _infoDomain_ will be complicated enough.
         "value": 1
     },
     "ns":[
-        "ns1.hexonet.net",
-        "ns2.hexonet.net"
+        "ns1.testreg.net",
+        "ns2.testreg.net"
     ],
         "registrant": "my-id-1234",
     "contact": [
@@ -593,7 +593,7 @@ adding `DNSSEC` data to a *createDomain*:
         "unit": "y",
         "value": 1
     },
-    "ns":["ns1.hexonet.net","ns2.hexonet.net"],
+    "ns":["ns1.testreg.net","ns2.testreg.net"],
         "registrant": "my-id-1234",
     "contact": [
         { "admin": "my-id-1235" },
@@ -741,7 +741,7 @@ Remove all existing key info and replace it with something new:
 
 ## Example usage
 
-Post the following to http://localhost:3000/command/hexonet/checkDomain
+Post the following to http://localhost:3000/command/testreg/checkDomain
 
     prompt$ time curl -H "Content-Type: application/json" \
         -d '{"domain": "test-domain.com"}'  \

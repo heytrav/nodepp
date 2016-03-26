@@ -194,7 +194,7 @@ describe('EPP serialisation', function() {
             });
         });
         describe('xml generation', function() {
-            it('should be an epp object with hexonet config', function() {
+            it('should be an epp object with testreg config', function() {
                 expect(epp).to.be.an.instanceof(Object);
                 expect(config.namespaces.epp.xmlns).to.be.equal('urn:ietf:params:xml:ns:epp-1.0');
             });
