@@ -1,6 +1,6 @@
 {
   "name": "node-epp",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "EPP client for domain registrars.",
   "main": "index.js",
   "bin": {
@@ -9,10 +9,11 @@
   },
   "scripts": {
     "test": "mocha test/*.js",
+    "start": "node-epp-rest",
     "checkVersion": "mocha --version"
   },
   "author": "Trav Holton",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "amqp": "*",
     "amqp-as-promised": "*",
