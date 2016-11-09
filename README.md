@@ -4,7 +4,7 @@ An EPP implementation in node.js
 
 [![Docker Repository on Quay.io](https://quay.io/repository/heytrav/nodepp/status "Docker Repository on Quay.io")](https://quay.io/repository/heytrav/nodepp)
 
-[![Build Status](https://drone.io/github.com/heytrav/nodepp/status.png)](https://drone.io/github.com/heytrav/nodepp/latest)
+[![CircleCI](https://circleci.com/gh/heytrav/nodepp/tree/master.svg?style=svg)](https://circleci.com/gh/heytrav/nodepp/tree/master)
 
 ##Description
 
