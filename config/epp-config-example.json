@@ -27,7 +27,8 @@
                 "DNSSEC": {
                     "xmlns": "urn:ietf:params:xml:ns:secDNS-1.1"
                 }
-            }
+            },
+            "connections":[10, 100]
         },
         "registry-test2": {
             "ssl": true,
@@ -57,7 +58,8 @@
                 "keyvalue": {
                     "xmlns": "http://schema.ispapi.net/epp/xml/keyvalue-1.0"
                 }
-            }
+            },
+            "connections":[10, 100]
         }
     },
     "rabbitmq": {

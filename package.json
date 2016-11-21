@@ -33,6 +33,7 @@
     "q": "*",
     "xml2json": "*",
     "winston": "*",
+    "generic-pool": "*",
     "crypto": "*"
   },
   "devDependencies": {
