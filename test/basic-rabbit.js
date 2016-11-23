@@ -4,7 +4,7 @@ var path = require('path');
 nconf.env().file({
     "file": path.resolve(__dirname, '..', 'config/epp-config.json')
 });
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var Q = require('q');
 var rabbitmqConfig = nconf.get('rabbitmq');
 var chai = require('chai');
