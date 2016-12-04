@@ -18,6 +18,7 @@
     "amqp-as-promised": "*",
     "body-parser": "*",
     "commander": "*",
+    "crypto": "*",
     "daemon": "*",
     "data2xml": "*",
     "express": "*",
@@ -28,12 +29,11 @@
     "moment": "*",
     "nano": "*",
     "nconf": "*",
-    "node-uuid": "*",
     "node-expat": "*",
     "q": "*",
-    "xml2json": "*",
+    "uuid": "^3.0.0",
     "winston": "*",
-    "crypto": "*"
+    "xml2json": "*"
   },
   "devDependencies": {
     "chai": "*",
