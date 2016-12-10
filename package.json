@@ -18,7 +18,6 @@
     "amqp": "*",
     "amqp-as-promised": "*",
     "body-parser": "*",
-    "commander": "*",
     "crypto": "*",
     "daemon": "*",
     "data2xml": "*",
@@ -34,6 +33,7 @@
     "q": "*",
     "uuid": "^3.0.0",
     "winston": "*",
+    "yargs": "*",
     "xml2json": "*"
   },
   "devDependencies": {
