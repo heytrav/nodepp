@@ -1,11 +1,8 @@
-nconf = require('nconf');
-var path = require('path');
-nconf.env().file({
-    "file": path.resolve(__dirname, '..', 'config/epp-config-example.json')
-});
 var fs = require('fs');
 var chai = require('chai');
 var moment = require('moment');
+var nconf = require('../lib/utilities/config.js').getConfig();
+var logger = require('../lib/utilities/logging.js').getLogger(nconf);
 
 var expect = chai.expect,
 should = chai.should;

@@ -14,7 +14,7 @@ registry, and then does the whole thing in reverse with the response.
 
 There are two separate server scripts:
 
-1. `lib/node-epp-server.js` is designed to function as a RESTful interface where you can
+1. `lib/node-epp-server.js` is designed to function as a web interface where you can
    POST and receive json requests.
 2. `lib/rabbit-epp.js`, runs as an RPC server that accepts requests via RabbitMQ.
 
@@ -35,7 +35,7 @@ this:
 
 ```javascript
 {
-    "registries": {
+    "app-config": {
         "registry-test1": {
           // registry1 data
         },
@@ -71,7 +71,7 @@ testing if you need to simulate transferring domains between two separate
 registrars.
 
 
-The `whitelisted_ips` tells the REST application to only accept certain hosts.
+The `whitelisted_ips` tells the  application to only accept certain hosts.
 
 
 
@@ -87,7 +87,7 @@ accordingly. They also assume that you have an online testing environment
 
 ## Running the web service
 
-The REST app is based on express.js and listens for POST requests on port 3000. The general URL scheme is as follows:
+The webservice app is based on express.js and listens for POST requests on port 3000. The general URL scheme is as follows:
     
     http://<host>:3000/command/<registry>/<command>
     
@@ -99,14 +99,15 @@ So to run a *checkDomain* for *registry1* on a local instance of the server, POS
 
 You can start it as follows:
 
-    node lib/node-epp-server.js -r registry1 -r registry2
+    node ./lib/node-epp-server.js -f my-config.json -r registrar1  [-j] [--loglevel debug] 
 
-The `-r` option specifies which registries the script should log into and can be used multiple times. These should correspond to the `registries` listed in the configuration file. In this case, the client will log into into *registry1* and *registry2*. 
+The `-f` option specifies a file containing configuration for the registries
+you wish to connect to. See *Configuration* section.
 
 Alternatively you can start it as a daemon:
 
     foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/node-epp-server.js \
-        -r registry-test1 -r registry-test2 -r registry-test3
+        -f my-config.json
 
 This tells it to open connections to three different registries.
 

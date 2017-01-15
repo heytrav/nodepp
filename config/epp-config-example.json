@@ -1,5 +1,5 @@
 {
-    "registries": {
+    "app-config": {
         "registry-test1": {
             "ssl": true,
             "key": "<optional key file>",
