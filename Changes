@@ -1,16 +1,22 @@
 2017-01-21
 
+* Integrate several fixes from a few pull requests on GitHub
+  - Fix buffer read
+  - Fix option passing and handling for some extensions
+  - Add `poll` extension for Afilias extension
 * Replace commander with yargs to parse command line options. 
 * Refactor config and winston logger setup into single location.
 * Added command line options to specify registry EPP config file (default is still epp-config.json)
 * Additional CLI options to specify output in JSON, log level (debug, info, etc.)
-* In node-epp-server.js, pass CLI arguments to workers so that same options for logging output are used
+* In node-epp-server.js, properly pass CLI arguments to workers so that same options for logging output are used
 * Changed structure of EPP config slightly. Base element now "app-config".
 * Experimenting with restify. Added node-epp-restful.js
   - Single process (no child worker processes)
   - Implement query commands like check and infoDomain as GET
   - Separate POST endpoint for other commands (createDomain, createContact,
     etc.)
+* Changed some code to ES6.
+
 
 
 2015-01-21

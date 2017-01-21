@@ -12,7 +12,7 @@ This is a service for communicating with registries over EPP. It
 takes datastructures in JSON, converts them to XML, sends them to the
 registry, and then does the whole thing in reverse with the response.
 
-There are two separate server scripts:
+There are several tools included with this package:
 
 1. `lib/node-epp-server.js` is designed to function as a web interface where you can
    POST and receive json requests to/from multiple registries.
@@ -126,7 +126,7 @@ Alternatively you can start it as a daemon:
 
 The general URL scheme is as follows:
 
-  http://<host>:3000/command/<registry>/<command>
+    http://<host>:3000/command/<registry>/<command>
     
 So to run a *checkDomain* for *registry1* on a local instance of the server, POST your request to:
 
@@ -148,8 +148,7 @@ scripting language of your choice. I put an [example](https://github.com/heytrav
 ### `node-epp-restful.js`
 
 
-This is an experiment to simplify the way the application
-runs.  Unlike `node-epp-server.js` which forks off child worker for each registry
+This is a simpler alternative to `node-epp-server`.  Unlike `node-epp-server.js` which forks off a child worker for each registry
 passed in the command line, `node-epp-restful.js` only starts one process and
 only connects to one registry. 
 
@@ -172,8 +171,12 @@ It can be started in a similar fashion to `node-epp-server.js`.
 `node-epp-restful.js` also has a couple specific GET endpoints for handling
 simple `checkDomain` and `infoDomain` commands
 
-  curl http://<local url>:3000/checkDomain/whatever.tld
+    curl http://<local url>:<port>/checkDomain/whatever.tld
 
+Note that you do not need to specify the `registry` as part of the URL. It is
+assumed that you are running each microservice with a specific location (IP
+address or local URL) and that it will always be the same for a particular
+instance.
 
 
 ## Running the RabbitMQ service
