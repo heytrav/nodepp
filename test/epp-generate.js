@@ -4,17 +4,14 @@ var expect = chai.expect,
 should = chai.should;
 
 var EppFactory = require('../lib/epp-factory.js');
-nconf = require('nconf');
-var path = require('path');
-nconf.env().file({
-    "file": path.resolve(__dirname, '..', 'config/epp-config-example.json')
-});
+var nconf = require('../lib/utilities/config.js').getConfig('epp-config-example.json');
+var logger = require('../lib/utilities/logging.js').getLogger(nconf);
 
 describe('EPP serialisation', function() {
     describe('general commands', function() {
         var epp, config;
         beforeEach(function() {
-            config = nconf.get('registries')['registry-test2'];
+            config = nconf.get('app-config')['registry-test2'];
             epp = EppFactory.generate('registry-test2', config);
             if (!epp) {
                 throw new Error("Unable to initialise epp");
@@ -555,7 +552,7 @@ describe('EPP serialisation', function() {
     describe('extension handling', function() {
         var epp, config;
         beforeEach(function() {
-            config = nconf.get('registries')['registry-test1'];
+            config = nconf.get('app-config')['registry-test1'];
             epp = EppFactory.generate('registry-test1', config);
         });
         it('should be decorated with the secDNS extension methods', function() {
@@ -772,7 +769,7 @@ describe('EPP serialisation', function() {
     describe('Hexonet extension', function() {
         var reg2Epp, config;
         beforeEach(function() {
-            config = nconf.get('registries')['registry-test2'];
+            config = nconf.get('app-config')['registry-test2'];
             reg2Epp = EppFactory.generate('registry-test2', config);
         });
         it('should be decorated with the secDNS extension methods', function() {

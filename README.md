@@ -12,10 +12,13 @@ This is a service for communicating with registries over EPP. It
 takes datastructures in JSON, converts them to XML, sends them to the
 registry, and then does the whole thing in reverse with the response.
 
-There are two separate server scripts:
+There are several tools included with this package:
 
-1. `lib/node-epp-server.js` is designed to function as a RESTful interface where you can
-   POST and receive json requests.
+1. `lib/node-epp-server.js` is designed to function as a web interface where you can
+   POST and receive json requests to/from multiple registries.
+2. `lib/node-epp-restful.js` similar to above, but only connects to one
+   registry and has a couple specific GET endpoints for `check-` and
+   `infoDomain`.
 2. `lib/rabbit-epp.js`, runs as an RPC server that accepts requests via RabbitMQ.
 
 ## Installation
@@ -35,7 +38,7 @@ this:
 
 ```javascript
 {
-    "registries": {
+    "app-config": {
         "registry-test1": {
           // registry1 data
         },
@@ -71,7 +74,7 @@ testing if you need to simulate transferring domains between two separate
 registrars.
 
 
-The `whitelisted_ips` tells the REST application to only accept certain hosts.
+The `whitelisted_ips` tells the  application to only accept certain hosts.
 
 
 
@@ -85,10 +88,44 @@ require a running RabbitMQ instance and that you have set up the configuration
 accordingly. They also assume that you have an online testing environment
 (OTE) account with some registry or registrar.
 
+### General CLI options
+
+
+* `-r`, `--registries`
+  Specify registries. For `node-epp-server.js`, this can be used multiple times to open connections to several registries at once.
+* `-f`, `--config-file`
+  The `-f` option specifies a file containing configuration for the registries you wish to connect to. See *Configuration* section.
+* `-a`, `--app-config`
+  Pass registry configuration as a JSON string. 
+* `-j`, `--json` 
+  Output logs in json
+* `--loglevel` 
+
 ## Running the web service
 
-The REST app is based on express.js and listens for POST requests on port 3000. The general URL scheme is as follows:
-    
+There are two web service scripts.
+* `node-epp-server.js`
+* `node-epp-restful.js`
+
+
+### `node-epp-server.js`
+
+This webservice app is based on express.js and listens for POST requests on port 3000. 
+You can start it as follows:
+
+    node ./lib/node-epp-server.js -f my-config.json -r registrar1 -r registrar2 [-j] [--loglevel debug] 
+
+This will startup with a child process connected to `registrar` and
+`registrar2`. Note that the `-r` arguments should correspond to a registrar in
+your `config/epp-config.json` file.
+
+Alternatively you can start it as a daemon:
+
+    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/node-epp-server.js \
+        -f my-config.json
+
+The general URL scheme is as follows:
+
     http://<host>:3000/command/<registry>/<command>
     
 So to run a *checkDomain* for *registry1* on a local instance of the server, POST your request to:
@@ -97,18 +134,6 @@ So to run a *checkDomain* for *registry1* on a local instance of the server, POS
     http://localhost:3000/command/registry1/checkDomain
 
 
-You can start it as follows:
-
-    node lib/node-epp-server.js -r registry1 -r registry2
-
-The `-r` option specifies which registries the script should log into and can be used multiple times. These should correspond to the `registries` listed in the configuration file. In this case, the client will log into into *registry1* and *registry2*. 
-
-Alternatively you can start it as a daemon:
-
-    foreverd start -o nodepp-stout.log -e nodepp-sterr.log lib/node-epp-server.js \
-        -r registry-test1 -r registry-test2 -r registry-test3
-
-This tells it to open connections to three different registries.
 
 To stop the service:
 
@@ -119,6 +144,40 @@ You can test the script by posting JSON requests to the server instance. I
 recommend using the program *Postman* which can be installed in
 Chrome/Firefox as an extension. However, you can also use curl or the
 scripting language of your choice. I put an [example](https://github.com/heytrav/nodepp#example-usage) of this down below. 
+
+### `node-epp-restful.js`
+
+
+This is a simpler alternative to `node-epp-server`.  Unlike `node-epp-server.js` which forks off a child worker for each registry
+passed in the command line, `node-epp-restful.js` only starts one process and
+only connects to one registry. 
+
+Originally `node-epp-server.js` was written with the understanding that one would
+start the app with connections for multiple registries (or the same registry
+multiple times). However, I found this to be a bit impractical for running as a
+microservice. Not to mention the config file was becoming fairly convoluted.
+It seemed more sensbile for a *microservice* to just "run more instances". I also found
+it a bit difficult to keep track of child processes that would die or hang
+because of broken connections. 
+
+`node-epp-restful.js` will just quit if the connection goes stale. This makes it easier to catch and restart if you are running the application in a docker container or with `forever`.
+
+It can be started in a similar fashion to `node-epp-server.js`.
+
+    node lib/node-epp-restful.js -r <some registry> -j --loglevel debug
+
+
+
+`node-epp-restful.js` also has a couple specific GET endpoints for handling
+simple `checkDomain` and `infoDomain` commands
+
+    curl http://<local url>:<port>/checkDomain/whatever.tld
+
+Note that you do not need to specify the `registry` as part of the URL. It is
+assumed that you are running each microservice with a specific location (IP
+address or local URL) and that it will always be the same for a particular
+instance.
+
 
 ## Running the RabbitMQ service
 
