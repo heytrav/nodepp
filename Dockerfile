@@ -1,9 +1,13 @@
 FROM node:latest
-MAINTAINER Travis Holton <wtholton at gmail dot com>
+MAINTAINER Travis Holton <heytrav at protonmail dot com>
+
+WORKDIR /var/lib/node-epp
+COPY package.json /var/lib/node-epp
+RUN npm install 
+ENV NODE_PATH /var/lib/node-epp/node_modules:$NODE_PATH
 
 WORKDIR /opt/project/node-epp
 COPY . /opt/project/node-epp
-RUN npm i
 
 EXPOSE 3000
 
