@@ -1,6 +1,7 @@
 FROM node:latest
 MAINTAINER Travis Holton <heytrav at protonmail dot com>
 
+RUN mkdir -p /var/lib/node-epp
 WORKDIR /var/lib/node-epp
 COPY package.json /var/lib/node-epp
 RUN npm install 
