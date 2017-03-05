@@ -5,7 +5,7 @@ var expect = chai.expect,
 should = chai.should;
 
 var EppFactory = require('../lib/epp-factory.js');
-var filePath = path.resolve(__dirname, '../../config', 'epp-config-example.json');
+var filePath = path.resolve(__dirname, '../config', 'epp-config-example.json');
 var nconf = require('../lib/utilities/config.js').getConfig(filePath);
 var logger = require('../lib/utilities/logging.js').getLogger(nconf);
 
