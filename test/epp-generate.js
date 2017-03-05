@@ -1,10 +1,12 @@
 var chai = require('chai');
+var path = require('path');
 
 var expect = chai.expect,
 should = chai.should;
 
 var EppFactory = require('../lib/epp-factory.js');
-var nconf = require('../lib/utilities/config.js').getConfig('epp-config-example.json');
+var filePath = path.resolve(__dirname, '../../config', 'epp-config-example.json');
+var nconf = require('../lib/utilities/config.js').getConfig(filePath);
 var logger = require('../lib/utilities/logging.js').getLogger(nconf);
 
 describe('EPP serialisation', function() {
