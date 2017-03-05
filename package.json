@@ -10,7 +10,8 @@
   "scripts": {
     "test": "mocha test/*.js",
     "start": "node-epp-rest",
-    "checkVersion": "mocha --version"
+    "checkVersion": "mocha --version",
+    "beautify": "esformatter -i 'lib/**/*.js' 'test/**/*.js'"
   },
   "author": "Trav Holton",
   "license": "MIT",
