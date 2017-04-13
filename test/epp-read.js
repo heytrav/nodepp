@@ -1,4 +1,4 @@
-var ProtocolConnection = require('../lib/connection.js'); // don't care about config atm
+var ProtocolConnection = require('../lib/connection-es6.js'); // don't care about config atm
 var fs = require('fs');
 var Stream = require('stream').Readable;
 var chai = require('chai');
