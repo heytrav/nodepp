@@ -7,8 +7,8 @@ var logger = require('../lib/utilities/logging.js').getLogger(nconf);
 var expect = chai.expect,
   should = chai.should;
 
-var ProtocolState = require('../lib/protocol-state.js');
-var ProtocolConnection = require('../lib/connection.js');
+var ProtocolState = require('../lib/protocol-state-es6.js');
+var ProtocolConnection = require('../lib/connection-es6.js');
 
 
 describe.skip('Communication protocol state machine', function() {
