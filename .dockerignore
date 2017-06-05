@@ -1,5 +1,7 @@
-
+.git*
 node_modules
-.gitignore
 Changes
+.dockerignore
+Dockerfile
+config/npm-debug.log
 
