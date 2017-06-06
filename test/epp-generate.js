@@ -132,10 +132,8 @@ describe('EPP serialisation', function() {
         };
         var processed = epp.processContactData(contactData);
         expect(processed).to.have.deep.property('contact:voice');
-        expect(processed).to.have.deep.property('contact:postalInfo[0]["contact:name"]', 'John Doe');
-        expect(processed).to.have.deep.property('contact:postalInfo[0]["contact:addr"][0].contact:cc');
-        expect(processed).to.have.deep.property('contact:authInfo.contact:pw');
-
+        let contactName = processed["contact:postalInfo"][0]["contact:name"];
+        expect(contactName).to.be.equal("John Doe")
       });
 
       it('should process different types of postalInfo data', function() {
@@ -152,8 +150,7 @@ describe('EPP serialisation', function() {
           }]
         }];
         var processedPostal1 = epp.processPostalInfo(postalInfo1);
-        expect(processedPostal1).to.have.deep.property("[0]['contact:name']", "John Doe");
-
+        expect(processedPostal1[0]["contact:name"]).to.be.equal("John Doe")
         var postalInfo2 = {
           "name": "John Doe",
           "org": "Example Ltd",
@@ -167,7 +164,7 @@ describe('EPP serialisation', function() {
           }]
         };
         var processedPostal2 = epp.processPostalInfo(postalInfo2);
-        expect(processedPostal2).to.have.deep.property("[0].contact:name", "John Doe");
+        expect(processedPostal2[0]["contact:name"]).to.be.equal("John Doe");
 
       });
       it('should handle different types of contact:addr data', function() {
@@ -179,7 +176,7 @@ describe('EPP serialisation', function() {
           "cc": "US"
         }];
         var processedAddr1 = epp.processPostalAddresses(addr1);
-        expect(processedAddr1).to.have.deep.property("[0]['contact:sp']", "OR");
+        expect(processedAddr1[0]['contact:sp']).to.be.equal("OR");
         var addr2 = {
           "street": ["742 Evergreen Terrace", "Apt b"],
           "city": "Springfield",
@@ -188,7 +185,7 @@ describe('EPP serialisation', function() {
           "cc": "US"
         };
         var processedAddr2 = epp.processPostalAddresses(addr2);
-        expect(processedAddr2).to.have.deep.property("[0]['contact:sp']", "OR");
+        expect(processedAddr2[0]['contact:sp']).to.be.equal("OR");
 
       });
     });
