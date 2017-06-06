@@ -779,8 +779,8 @@ describe('EPP serialisation', function() {
         "OWNERCONTACT2": "P-TAF28559"
       };
       var processedExtension = reg2Epp.createDomainExtension(keyValueData);
-      expect(processedExtension).to.have.deep.property("keyvalue:extension.keyvalue:kv[1]._attr.value", "P-TAF28517");
-      expect(processedExtension).to.have.deep.property("keyvalue:extension.keyvalue:kv[2]._attr.key", "OWNERCONTACT2");
+      expect(processedExtension['keyvalue:extension']['keyvalue:kv'][1]._attr.value).to.be.equal("P-TAF28517");
+      expect(processedExtension['keyvalue:extension']['keyvalue:kv'][2]._attr.key).to.be.equal("OWNERCONTACT2");
     });
   });
 });
