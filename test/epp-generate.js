@@ -132,8 +132,8 @@ describe('EPP serialisation', function() {
         };
         var processed = epp.processContactData(contactData);
         expect(processed).to.have.deep.property('contact:voice');
-        expect(processed).to.have.deep.property('contact:postalInfo[0].contact:name', 'John Doe');
-        expect(processed).to.have.deep.property('contact:postalInfo[0].contact:addr[0].contact:cc');
+        expect(processed).to.have.deep.property('contact:postalInfo[0]["contact:name"]', 'John Doe');
+        expect(processed).to.have.deep.property('contact:postalInfo[0]["contact:addr"][0].contact:cc');
         expect(processed).to.have.deep.property('contact:authInfo.contact:pw');
 
       });
@@ -152,7 +152,7 @@ describe('EPP serialisation', function() {
           }]
         }];
         var processedPostal1 = epp.processPostalInfo(postalInfo1);
-        expect(processedPostal1).to.have.deep.property("[0].contact:name", "John Doe");
+        expect(processedPostal1).to.have.deep.property("[0]['contact:name']", "John Doe");
 
         var postalInfo2 = {
           "name": "John Doe",
@@ -179,7 +179,7 @@ describe('EPP serialisation', function() {
           "cc": "US"
         }];
         var processedAddr1 = epp.processPostalAddresses(addr1);
-        expect(processedAddr1).to.have.deep.property("[0].contact:sp", "OR");
+        expect(processedAddr1).to.have.deep.property("[0]['contact:sp']", "OR");
         var addr2 = {
           "street": ["742 Evergreen Terrace", "Apt b"],
           "city": "Springfield",
@@ -188,7 +188,7 @@ describe('EPP serialisation', function() {
           "cc": "US"
         };
         var processedAddr2 = epp.processPostalAddresses(addr2);
-        expect(processedAddr2).to.have.deep.property("[0].contact:sp", "OR");
+        expect(processedAddr2).to.have.deep.property("[0]['contact:sp']", "OR");
 
       });
     });
