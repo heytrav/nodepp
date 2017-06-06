@@ -2,7 +2,6 @@ var nconf = require('../lib/utilities/config.js').getConfig();
 var logger = require('../lib/utilities/logging.js').getLogger(nconf);
 var Amqp = require('amqp-as-promised');
 var uuid = require('uuid');
-var Q = require('q');
 var rabbitmqConfig = nconf.get('rabbitmq');
 var chai = require('chai');
 var expect = chai.expect;

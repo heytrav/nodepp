@@ -132,10 +132,8 @@ describe('EPP serialisation', function() {
         };
         var processed = epp.processContactData(contactData);
         expect(processed).to.have.deep.property('contact:voice');
-        expect(processed).to.have.deep.property('contact:postalInfo[0].contact:name', 'John Doe');
-        expect(processed).to.have.deep.property('contact:postalInfo[0].contact:addr[0].contact:cc');
-        expect(processed).to.have.deep.property('contact:authInfo.contact:pw');
-
+        let contactName = processed["contact:postalInfo"][0]["contact:name"];
+        expect(contactName).to.be.equal("John Doe")
       });
 
       it('should process different types of postalInfo data', function() {
@@ -152,8 +150,7 @@ describe('EPP serialisation', function() {
           }]
         }];
         var processedPostal1 = epp.processPostalInfo(postalInfo1);
-        expect(processedPostal1).to.have.deep.property("[0].contact:name", "John Doe");
-
+        expect(processedPostal1[0]["contact:name"]).to.be.equal("John Doe")
         var postalInfo2 = {
           "name": "John Doe",
           "org": "Example Ltd",
@@ -167,7 +164,7 @@ describe('EPP serialisation', function() {
           }]
         };
         var processedPostal2 = epp.processPostalInfo(postalInfo2);
-        expect(processedPostal2).to.have.deep.property("[0].contact:name", "John Doe");
+        expect(processedPostal2[0]["contact:name"]).to.be.equal("John Doe");
 
       });
       it('should handle different types of contact:addr data', function() {
@@ -179,7 +176,7 @@ describe('EPP serialisation', function() {
           "cc": "US"
         }];
         var processedAddr1 = epp.processPostalAddresses(addr1);
-        expect(processedAddr1).to.have.deep.property("[0].contact:sp", "OR");
+        expect(processedAddr1[0]['contact:sp']).to.be.equal("OR");
         var addr2 = {
           "street": ["742 Evergreen Terrace", "Apt b"],
           "city": "Springfield",
@@ -188,7 +185,7 @@ describe('EPP serialisation', function() {
           "cc": "US"
         };
         var processedAddr2 = epp.processPostalAddresses(addr2);
-        expect(processedAddr2).to.have.deep.property("[0].contact:sp", "OR");
+        expect(processedAddr2[0]['contact:sp']).to.be.equal("OR");
 
       });
     });
@@ -573,7 +570,7 @@ describe('EPP serialisation', function() {
         }
       };
       var processedDSData = epp.createDomainSecDnsExtension(secDnsData);
-      expect(processedDSData).to.have.deep.property("secDNS:create.secDNS:dsData.secDNS:digest", "49FD46E6C4B45C55D4AC");
+      expect(processedDSData['secDNS:create']['secDNS:dsData']['secDNS:digest']).to.be.equal("49FD46E6C4B45C55D4AC");
 
       secDnsData.dsData.keyData = {
         "flags": 257,
@@ -582,7 +579,7 @@ describe('EPP serialisation', function() {
         "pubKey": "AQPJ////4Q=="
       };
       var processedWithKeyData = epp.createDomainSecDnsExtension(secDnsData);
-      expect(processedWithKeyData).to.have.deep.property("secDNS:create.secDNS:dsData.secDNS:keyData.secDNS:pubKey", "AQPJ////4Q==");
+      expect(processedWithKeyData['secDNS:create']['secDNS:dsData']['secDNS:keyData']['secDNS:pubKey']).to.be.equal("AQPJ////4Q==");
 
       var secDnsKeyData = {
         "keyData": {
@@ -593,7 +590,7 @@ describe('EPP serialisation', function() {
         }
       };
       var processedKeyData = epp.createDomainSecDnsExtension(secDnsKeyData);
-      expect(processedKeyData).to.have.deep.property("secDNS:create.secDNS:keyData.secDNS:pubKey", "AQPJ////4Q==");
+      expect(processedKeyData['secDNS:create']['secDNS:keyData']['secDNS:pubKey']).to.be.equal("AQPJ////4Q==");
 
     });
 
@@ -620,8 +617,8 @@ describe('EPP serialisation', function() {
         }
       };
       var processedUpdate = epp.updateDomainSecDnsExtension(secDnsUpdate);
-      expect(processedUpdate).to.have.deep.property("secDNS:update.secDNS:rem.secDNS:keyData.secDNS:pubKey", "AQPJ////4Q==");
-      expect(processedUpdate).to.have.deep.property("secDNS:update.secDNS:chg.secDNS:maxSigLife", 604800);
+      expect(processedUpdate['secDNS:update']['secDNS:rem']['secDNS:keyData']['secDNS:pubKey']).to.be.equal("AQPJ////4Q==");
+      expect(processedUpdate['secDNS:update']['secDNS:chg']['secDNS:maxSigLife']).to.be.equal(604800);
     });
     it('should ignore any other data when secDNS:rem contains "all".', function() {
       var secDnsUpdate = {
@@ -648,7 +645,7 @@ describe('EPP serialisation', function() {
       };
       var processedUpdate = epp.updateDomainSecDnsExtension(secDnsUpdate);
       expect(processedUpdate).to.not.have.deep.property("secDNS:update.secDNS:rem.secDNS:keyData");
-      expect(processedUpdate).to.have.deep.property("secDNS:update.secDNS:rem.secDNS:all", "true");
+      expect(processedUpdate['secDNS:update']['secDNS:rem']['secDNS:all']).to.be.equal("true");
       var secDnsUpdate2 = {
         "rem": {
           "all": 'goodtimes',
@@ -782,8 +779,8 @@ describe('EPP serialisation', function() {
         "OWNERCONTACT2": "P-TAF28559"
       };
       var processedExtension = reg2Epp.createDomainExtension(keyValueData);
-      expect(processedExtension).to.have.deep.property("keyvalue:extension.keyvalue:kv[1]._attr.value", "P-TAF28517");
-      expect(processedExtension).to.have.deep.property("keyvalue:extension.keyvalue:kv[2]._attr.key", "OWNERCONTACT2");
+      expect(processedExtension['keyvalue:extension']['keyvalue:kv'][1]._attr.value).to.be.equal("P-TAF28517");
+      expect(processedExtension['keyvalue:extension']['keyvalue:kv'][2]._attr.key).to.be.equal("OWNERCONTACT2");
     });
   });
 });
