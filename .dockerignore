@@ -1,4 +1,5 @@
 .git*
+circle.yml
 node_modules
 Changes
 .dockerignore

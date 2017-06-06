@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:6.10.3-alpine
 MAINTAINER Travis Holton <heytrav at protonmail dot com>
 
 RUN mkdir -p /var/lib/node-epp
