@@ -1,14 +1,14 @@
 var fs = require('fs');
 var chai = require('chai');
 var moment = require('moment');
-var nconf = require('../lib/utilities/config.js').getConfig();
-var logger = require('../lib/utilities/logging.js').getLogger(nconf);
+var nconf = require('../lib/utilities/config').getConfig();
+var logger = require('../lib/utilities/logging').getLogger(nconf);
 
 var expect = chai.expect,
   should = chai.should;
 
-var ProtocolState = require('../lib/protocol-state-es6.js');
-var ProtocolConnection = require('../lib/connection-es6.js');
+var ProtocolState = require('../lib/protocol-state.js');
+var ProtocolConnection = require('../lib/connection.js');
 
 
 describe.skip('Communication protocol state machine', function() {
