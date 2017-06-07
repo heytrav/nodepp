@@ -1,6 +1,6 @@
 {
   "name": "node-epp",
-  "version": "1.0.12",
+  "version": "1.2.5",
   "description": "EPP client for domain registrars.",
   "main": "index.js",
   "bin": {
