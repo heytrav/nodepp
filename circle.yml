@@ -1,3 +1,6 @@
 machine:
   node:
     version: 6.10.3
+notify:
+  webhooks:
+    - url: https://rocketchat.catalyst.net.nz/hooks/o3funWhgK5NqJJD45/56amFnPAxE6L69qutvugodL2jLDwrvNM3v4u9MvxRH45mwEk
